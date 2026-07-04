@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no" />
+  <base href="/games/unity-game/" />
+  <title>Unity WebGL</title>
+  <link rel="stylesheet" href="TemplateData/style.css" />
+  <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+</head>
+<body>
+  <div id="unity-container">
+    <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-progress-bar-full"></div>
+    </div>
+    <div id="unity-footer">
+      <p><strong>Unity WebGL slot ready</strong></p>
+      <p>Copy your build output into <code>Build/</code> and <code>TemplateData/</code>, then reload.</p>
+      <p>URL: <code>/games/unity-game/</code></p>
+    </div>
+  </div>
+  <!--
+    After exporting from Unity (WebGL), replace this file with Unity's index.html
+    or load your Build/*.loader.js here. Expected files example:
+      Build/unity-game.loader.js
+      Build/unity-game.framework.js
+      Build/unity-game.data
+      Build/unity-game.wasm
+  -->
+  <script>
+    (function () {
+      var bar = document.getElementById("unity-progress-bar-full");
+      var p = 0;
+      var t = setInterval(function () {
+        p = Math.min(100, p + 8);
+        bar.style.width = p + "%";
+        if (p >= 100) clearInterval(t);
+      }, 120);
+    })();
+  </script>
+</body>
+</html>

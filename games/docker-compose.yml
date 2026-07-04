@@ -1,0 +1,12 @@
+# Optional: local nginx for Unity WebGL only (main path uses nginx_proxy + unity-webgl.inc)
+services:
+  unity-webgl:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "${UNITY_WEBGL_PORT:-18042}:80"
+    volumes:
+      - ./unity-game:/usr/share/nginx/html:ro
+      - ./nginx-unity.conf:/etc/nginx/conf.d/default.conf:ro
+    profiles:
+      - standalone
