@@ -1,0 +1,464 @@
+# Translation of Plugins - hCaptcha for WordPress - Stable (latest release) in Persian
+# This file is distributed under the same license as the Plugins - hCaptcha for WordPress - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2023-05-10 20:16:44+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/4.0.0-alpha.4\n"
+"Language: fa\n"
+"Project-Id-Version: Plugins - hCaptcha for WordPress - Stable (latest release)\n"
+
+#. translators: 1: Plugin(s) name(s).
+#: src/php/Settings/Integrations.php:556
+msgid "Error activating plugin %s."
+msgstr "خطا در فعال‌سازی افزونه %s."
+
+#. translators: 1: Plugin(s) name(s).
+#: src/php/Settings/Integrations.php:565
+msgid "%s plugin is deactivated."
+msgstr "افزونه %s غیرفعال شده است."
+
+#. translators: 1: Plugin(s) name(s).
+#: src/php/Settings/Integrations.php:550
+msgid "%s plugin is activated."
+msgstr "افزونه %s فعال شده است."
+
+#: src/php/Settings/Integrations.php:527
+msgid "You are not allowed to perform this action."
+msgstr "شما مجاز به انجام این عمل نیستید."
+
+#: src/php/Settings/Integrations.php:522
+msgid "Your session has expired. Please reload the page."
+msgstr "نشست شما منقضی شده است. لطفا صفحه را مجددا بارگذاری کنید."
+
+#. translators: 1: Plugin name.
+#: src/php/Settings/Integrations.php:502
+msgid "Deactivate %s plugin?"
+msgstr "غیرفعال کردن ‌افزونه %s؟"
+
+#. translators: 1: Plugin name.
+#: src/php/Settings/Integrations.php:500
+msgid "Activate %s plugin?"
+msgstr "افزونه %s فعال شود؟"
+
+#: src/php/Settings/Integrations.php:447
+msgid "You can activate and deactivate a plugin by clicking on its logo."
+msgstr "شما می‌توانید با کلیک بر روی لوگوی افزونه آن را فعال و غیرفعال کنید."
+
+#: src/php/Settings/General.php:432
+msgid "To use <a href=\"https://www.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk\" target=\"_blank\">hCaptcha</a>, please register <a href=\"https://www.hcaptcha.com/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk\" target=\"_blank\">here</a> to get your site and secret keys."
+msgstr "برای استفاده از <a href=\"https://www.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk\" target=\"_blank\">hCaptcha</a>، لطفا <a href=\"https://www.hcaptcha.com/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk\" target=\"_blank\">اینجا</a> ثبت‌نام کنید تا کلیدهای خصوصی و سایت‌تان را دریافت کنید."
+
+#: src/php/Settings/Integrations.php:249
+msgid "Kadence Form"
+msgstr "فرم Kadence"
+
+#: src/php/Settings/Integrations.php:132
+msgid "ACF Extended Form"
+msgstr "فرم توسعه یافته ACF"
+
+#: src/php/Settings/General.php:390
+msgid "Delay time for loading the hCaptcha API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score."
+msgstr "زمان تأخیر برای بارگذاری اسکریپت API hCaptcha. هر مقدار منفی باعث می‌شود اسکریپت API تا زمان تعامل کاربر، مانند mouseenter، click، scroll یا touch، بارگذاری نشود. این قابلیت باعث بهبود قابل توجه امتیاز Google Pagespeed Insights می‌شود."
+
+#: src/php/Settings/General.php:384
+msgid "Delay showing hCaptcha, ms"
+msgstr "تأخیر نمایش hCaptcha، میلی‌ثانیه"
+
+#: src/php/Settings/General.php:381
+msgid "Time interval in minutes when failed login attempts are counted."
+msgstr "فاصله زمانی برحسب دقیقه که در آن تلاش‌های ورود ناموفق شمرده می‌شوند."
+
+#: src/php/Settings/General.php:376
+msgid "Failed login attempts interval, min"
+msgstr "فاصله زمانی تلاش‌های ورود ناموفق، دقیقه"
+
+#: src/php/Settings/General.php:373
+msgid "Maximum number of failed login attempts before showing hCaptcha."
+msgstr "حداکثر تعداد تلاش‌های ورود ناموفق قبل از نمایش hCaptcha."
+
+#: src/php/Settings/General.php:368
+msgid "Login attempts before hCaptcha"
+msgstr "تلاش‌های ورود قبل از hCaptcha"
+
+#: src/php/Settings/Integrations.php:146
+msgid "Avada Form"
+msgstr "فرم آوادا"
+
+#: src/php/Settings/Integrations.php:200
+msgid "Button"
+msgstr "دکمه"
+
+#: src/php/Settings/Integrations.php:124
+msgid "Post/Page Password Form"
+msgstr "فرم رمز نوشته/برگه"
+
+#: src/php/Quform/Quform.php:86
+msgid "Please enable JavaScript to submit this form."
+msgstr "لطفاً جاوا اسکریپت را برای ارسال این فرم فعال کنید."
+
+#: src/php/includes/request.php:105 src/php/includes/request.php:250
+msgid "hCaptcha error:"
+msgid_plural "hCaptcha errors:"
+msgstr[0] "خطای hCaptcha:"
+
+#: src/php/includes/request.php:78
+msgid "Bad hCaptcha nonce!"
+msgstr "خطای نامعتبر hCaptcha!"
+
+#: src/php/includes/request.php:74
+msgid "The sitekey is not registered with the provided secret."
+msgstr "کلید سایت با کلیدخصوصی ارائه شده ثبت نشده است."
+
+#: src/php/includes/request.php:73
+msgid "You have used a testing sitekey but have not used its matching secret."
+msgstr "شما از کلید سایت آزمایشی استفاده کرده‌اید، ولی از کلید خصوصی مطابق آن استفاده نکرده‌اید."
+
+#: src/php/includes/request.php:72
+msgid "The response parameter has already been checked, or has another issue."
+msgstr "پارامتر پاسخ قبلاً بررسی شده است یا مشکل دیگری دارد."
+
+#: src/php/includes/request.php:71
+msgid "The request is invalid or malformed."
+msgstr "درخواست یا نامعتبر است یا نادرست است."
+
+#: src/php/includes/request.php:70
+msgid "The response parameter (verification token) is invalid or malformed."
+msgstr "پارامتر پاسخ (توکن تأیید) نامعتبر یا نامناسب است."
+
+#: src/php/includes/request.php:69
+msgid "The response parameter (verification token) is missing."
+msgstr "پارامتر پاسخ (توکن تأیید) وجود ندارد."
+
+#: src/php/includes/request.php:68
+msgid "Your secret key is invalid or malformed."
+msgstr "کلید خصوصی شما نامعتبر یا نامناسب است."
+
+#: src/php/includes/request.php:67
+msgid "Your secret key is missing."
+msgstr "کلید مخفی شما موجود نیست."
+
+#: src/php/DownloadManager/DownloadManager.php:93
+#: src/php/WP/PasswordProtected.php:84
+msgid "hCaptcha error"
+msgstr "خطای hCaptcha"
+
+#. translators: 1: hCaptcha version.
+#: src/php/Settings/PluginSettingsBase.php:180
+msgid "Version %s"
+msgstr "نگارش %s"
+
+#. translators: 1: hCaptcha plugin name, 2: wp.org review link with stars, 3:
+#. wp.org review link with text.
+#: src/php/Settings/PluginSettingsBase.php:145
+msgid "Please rate %1$s %2$s on %3$s</a>. Thank you!"
+msgstr "لطفاً به %1$s، امتیاز %2$s در %3$s</a> بدهید. با تشکر!"
+
+#: src/php/Settings/Integrations.php:472
+msgid "Active plugins and themes"
+msgstr "پوسته‌ها و افزونه‌های فعال"
+
+#: src/php/Settings/Integrations.php:466
+msgid "request an integration"
+msgstr "درخواست یک یکپارچه‌سازی"
+
+#: src/php/Settings/Integrations.php:461
+msgid "shortcode"
+msgstr "کدکوتاه"
+
+#. translators: 1: hCaptcha shortcode doc link, 2: integration doc link.
+#: src/php/Settings/Integrations.php:457
+msgid "Don't see your plugin here? Use the `[hcaptcha]` %1$s or %2$s."
+msgstr "افزونه خود را در اینجا نمی‌بینید؟ از `[hcaptcha]` %1$s یا %2$s استفاده کنید."
+
+#: src/php/Settings/Integrations.php:444
+msgid "Manage integrations with popular plugins such as Contact Form 7, WPForms, Gravity Forms, and more."
+msgstr "مدیریت یکپارچه‌سازی با افزونه‌های محبوب مانند فرم تماس 7 ، WPForms ، Gravity Forms و غیره."
+
+#: src/php/Settings/Integrations.php:432
+msgid "Inactive plugins and themes"
+msgstr "افزونه‌ها و پوسته‌های غیرفعال"
+
+#: src/php/Settings/Integrations.php:340
+msgid "Lite"
+msgstr "ساده"
+
+#: src/php/Settings/Integrations.php:333
+msgid "Create List Form"
+msgstr "ایجاد فرم لیست"
+
+#: src/php/Settings/Integrations.php:325
+msgid "Order Tracking Form"
+msgstr "فرم پیگیری سفارش"
+
+#: src/php/Settings/Integrations.php:322
+msgid "Checkout Form"
+msgstr "فرم تسویه حساب"
+
+#: src/php/Settings/Integrations.php:161 src/php/Settings/Integrations.php:242
+msgid "Contact Form"
+msgstr "فرم تماس"
+
+#: src/php/Settings/Integrations.php:193
+msgid "Divi Login Form"
+msgstr "فرم ورود Divi"
+
+#: src/php/Settings/Integrations.php:192
+msgid "Divi Contact Form"
+msgstr "فرم تماس Divi"
+
+#: src/php/Settings/Integrations.php:191
+msgid "Divi Comment Form"
+msgstr "فرم دیدگاه Divi"
+
+#: src/php/Settings/Integrations.php:139 src/php/Settings/Integrations.php:169
+#: src/php/Settings/Integrations.php:184 src/php/Settings/Integrations.php:207
+#: src/php/Settings/Integrations.php:214 src/php/Settings/Integrations.php:221
+#: src/php/Settings/Integrations.php:228 src/php/Settings/Integrations.php:235
+#: src/php/Settings/Integrations.php:256 src/php/Settings/Integrations.php:271
+#: src/php/Settings/Integrations.php:278 src/php/Settings/Integrations.php:285
+#: src/php/Settings/Integrations.php:292 src/php/Settings/Integrations.php:299
+#: src/php/Settings/Integrations.php:306
+msgid "Form"
+msgstr "فرم"
+
+#: src/php/Settings/Integrations.php:177 src/php/Settings/Integrations.php:264
+#: src/php/Settings/Integrations.php:326
+msgid "Registration Form"
+msgstr "فرم نام‌نویسی"
+
+#: src/php/Settings/Integrations.php:176
+msgid "Create Group Form"
+msgstr "ایجاد فرم گروه"
+
+#: src/php/Settings/Integrations.php:154 src/php/Settings/Integrations.php:356
+msgid "Reply Form"
+msgstr "فرم پاسخ"
+
+#: src/php/Settings/Integrations.php:153 src/php/Settings/Integrations.php:355
+msgid "New Topic Form"
+msgstr "فرم موضوع جدید"
+
+#: src/php/Settings/Integrations.php:125 src/php/Settings/Integrations.php:315
+msgid "Register Form"
+msgstr "فرم ثبت‌نام"
+
+#: src/php/Settings/Integrations.php:123 src/php/Settings/Integrations.php:314
+#: src/php/Settings/Integrations.php:324
+msgid "Lost Password Form"
+msgstr "فرم فراموشی رمزعبور"
+
+#: src/php/Settings/Integrations.php:122 src/php/Settings/Integrations.php:162
+#: src/php/Settings/Integrations.php:263 src/php/Settings/Integrations.php:313
+#: src/php/Settings/Integrations.php:323
+msgid "Login Form"
+msgstr "فرم ورود"
+
+#: src/php/Settings/Integrations.php:121 src/php/Settings/Integrations.php:348
+msgid "Comment Form"
+msgstr "فرم دیدگاه"
+
+#: src/php/Settings/Integrations.php:82
+msgid "Integrations"
+msgstr "یکپارچگی‌ها"
+
+#: src/php/Settings/General.php:449
+msgid "Other"
+msgstr "سایر"
+
+#: src/php/Settings/General.php:446
+msgid "Custom"
+msgstr "سفارشی"
+
+#: src/php/Settings/General.php:443
+msgid "Appearance"
+msgstr "ظاهر"
+
+#: src/php/Settings/General.php:440
+msgid "Keys"
+msgstr "کلیدها"
+
+#: src/php/Settings/General.php:359
+msgid "On multisite, use same settings for all sites of the network."
+msgstr "در چند سایتی، برای همه سایت‌های شبکه از تنظیمات یکسان استفاده کنید."
+
+#: src/php/Settings/General.php:357
+msgid "Use network-wide settings"
+msgstr "استفاده از تنظیمات شبکه"
+
+#: src/php/Settings/General.php:365
+msgid "Do not show hCaptcha for listed IP addresses. Please specify one IP address per line."
+msgstr "hCaptcha را برای آدرس های IP فهرست شده نشان ندهید. لطفاً یک آدرس IP در هر خط مشخص کنید."
+
+#: src/php/Settings/General.php:362
+msgid "Whitelisted IPs"
+msgstr "آی‌پی‌های لیست سفید"
+
+#: src/php/Settings/General.php:351
+msgid "Use if including both hCaptcha and reCAPTCHA on the same page."
+msgstr "در صورت استفاده از hCaptcha و reCAPTCHA در یک صفحه، استفاده کنید."
+
+#: src/php/Settings/General.php:349
+msgid "Disable reCAPTCHA Compatibility"
+msgstr "غیرفعال کردن سازگاری با reCAPTCHA"
+
+#: src/php/Settings/General.php:343
+msgid "Do not show hCaptcha to logged-in users."
+msgstr "hCaptcha را به کاربران وارد شده نشان ندهید."
+
+#: src/php/Settings/General.php:337
+msgid "Other Settings"
+msgstr "سایر پیکربندی‌ها"
+
+#: src/php/Settings/General.php:332
+msgid "parameters"
+msgstr "پارامترها"
+
+#. translators: 1: hCaptcha render params doc link.
+#: src/php/Settings/General.php:329
+msgid "hCaptcha render %s (optional). Must be a valid JSON."
+msgstr "رندر hCaptcha %s (اختیاری)، باید یک JSON معتبر باشد."
+
+#: src/php/Settings/General.php:324
+msgid "Config Params"
+msgstr "پارامترهای پیکربندی"
+
+#: src/php/Settings/General.php:319
+msgid "Enterprise"
+msgstr "سازمانی"
+
+#: src/php/Settings/General.php:315 src/php/Settings/Integrations.php:341
+msgid "Pro"
+msgstr "پیشرفته"
+
+#. translators: 1: hCaptcha Pro link, 2: hCaptcha Enterprise link.
+#: src/php/Settings/General.php:312
+msgid "Note: only works on hCaptcha %1$s and %2$s site keys."
+msgstr "توجه: فقط برای کلیدهای سایت hCaptcha %1$s و %2$s کار می‌کند."
+
+#: src/php/Settings/General.php:308
+msgid "Enable Custom Themes"
+msgstr "فعال کردن پوسته‌های سفارشی"
+
+#: src/php/Settings/General.php:304
+msgid "Custom Themes"
+msgstr "پوسته‌های سفارشی"
+
+#: src/php/Settings/General.php:298
+msgid "Select live or test mode. In test mode, predefined keys are used."
+msgstr "حالت زنده یا آزمایشی را انتخاب کنید. در حالت آزمایشی، کلیدهای پیش‌فرض استفاده می‌شود."
+
+#: src/php/Settings/General.php:286
+msgid "Mode"
+msgstr "حالت"
+
+#: src/php/Settings/General.php:280
+msgid "By default, hCaptcha will automatically detect the user's locale and localize widgets accordingly."
+msgstr "به طور پیش‌فرض، hCaptcha به طور خودکار منطقه کاربر را تشخیص داده و ویجت‌ها را محلی می‌کند."
+
+#: src/php/Settings/General.php:164
+msgid "Language"
+msgstr "زبان"
+
+#: src/php/Settings/General.php:161
+msgid "Select hCaptcha size."
+msgstr "اندازه hCaptcha را انتخاب کنید."
+
+#: src/php/Settings/General.php:153
+msgid "Size"
+msgstr "سایز"
+
+#: src/php/Settings/General.php:150
+msgid "Select hCaptcha theme."
+msgstr "پوسته hCaptcha را انتخاب کنید."
+
+#: src/php/Settings/General.php:143
+msgid "Theme"
+msgstr "پوسته"
+
+#: src/php/Settings/General.php:138
+msgid "Secret Key"
+msgstr "کلید رمز"
+
+#: src/php/Settings/General.php:133
+msgid "Site Key"
+msgstr "کلید سایت"
+
+#: src/php/Settings/General.php:106
+msgid "General"
+msgstr "عمومی"
+
+#. Description of the plugin
+msgid "hCaptcha keeps out bots and spam while putting privacy first. It is a drop-in replacement for reCAPTCHA."
+msgstr "hCaptcha از ربات‌ها و هرزنامه‌ها جلوگیری می‌کند و در عین حال حریم خصوصی را در اولویت قرار می‌دهد. جایگزینی برای reCAPTCHA است."
+
+#. Plugin Name of the plugin
+msgid "hCaptcha for WordPress"
+msgstr "hCaptcha برای وردپرس"
+
+#: src/php/ElementorPro/HCaptchaHandler.php:157
+msgid "To use hCaptcha, you need to add the Site and Secret keys."
+msgstr "برای استفاده از hCaptcha، باید کلیدهای سایت و خصوصی را اضافه کنید."
+
+#: src/php/Settings/General.php:159
+msgid "Invisible"
+msgstr "نامرئی"
+
+#: src/php/Settings/General.php:341
+msgid "Turn Off When Logged In"
+msgstr "خاموش کردن در زمان وارد شده"
+
+#: src/php/WP/Comment.php:154
+msgid "Invalid Captcha"
+msgstr "کپچای نادرست"
+
+#: src/php/Settings/PluginSettingsBase.php:73
+msgid "Settings"
+msgstr "پیکربندی"
+
+#: src/php/Kadence/Form.php:124
+msgid "hCaptcha Failed"
+msgstr "hCaptcha ناموفق بود"
+
+#: src/php/includes/request.php:76
+msgid "Please complete the hCaptcha."
+msgstr "لطفا hCaptcha را تکمیل کنید."
+
+#: src/php/Settings/General.php:158
+msgid "Compact"
+msgstr "فشرده"
+
+#: src/php/Settings/General.php:157
+msgid "Normal"
+msgstr "معمولی"
+
+#: src/php/Settings/General.php:148
+msgid "Dark"
+msgstr "تیره"
+
+#: src/php/Settings/General.php:147
+msgid "Light"
+msgstr "روشن"
+
+#: src/php/Settings/PluginSettingsBase.php:64
+msgid "hCaptcha Settings"
+msgstr "پیکردبندی‌های hCaptcha"
+
+#: src/php/includes/request.php:77 src/php/includes/request.php:273
+msgid "The hCaptcha is invalid."
+msgstr "hCaptcha نامعتبر است."
+
+#. Author of the plugin
+#: src/php/ElementorPro/HCaptchaHandler.php:330 src/php/NF/Fields.php:59
+#: src/php/Settings/General.php:115 src/php/Settings/Integrations.php:91
+#: src/php/UM/Base.php:125 src/php/UM/Base.php:128
+msgid "hCaptcha"
+msgstr "hCaptcha"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://www.hcaptcha.com/"
+msgstr "https://www.hcaptcha.com/"

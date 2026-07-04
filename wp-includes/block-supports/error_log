@@ -1,0 +1,112 @@
+[18-Oct-2021 20:46:41 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/border.php:170
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/border.php on line 170
+[18-Oct-2021 20:47:04 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php:426
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php on line 426
+[18-Oct-2021 20:47:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/hamidsha/public_html/wp-includes/block-supports/elements.php:71
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/elements.php on line 71
+[18-Oct-2021 20:47:38 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/layout.php:99
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/layout.php on line 99
+[18-Oct-2021 20:47:52 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php:89
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php on line 89
+[07-Nov-2021 17:52:56 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/border.php:170
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/border.php on line 170
+[07-Nov-2021 17:52:58 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php:426
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php on line 426
+[07-Nov-2021 17:52:59 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/hamidsha/public_html/wp-includes/block-supports/elements.php:71
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/elements.php on line 71
+[07-Nov-2021 17:53:00 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/layout.php:99
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/layout.php on line 99
+[07-Nov-2021 17:53:02 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php:89
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php on line 89
+[05-May-2022 21:52:57 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/border.php:189
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/border.php on line 189
+[05-May-2022 21:53:20 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/dimensions.php:84
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/dimensions.php on line 84
+[05-May-2022 21:53:47 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php:580
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php on line 580
+[05-May-2022 21:54:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/hamidsha/public_html/wp-includes/block-supports/elements.php:76
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/elements.php on line 76
+[05-May-2022 21:54:25 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/layout.php:184
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/layout.php on line 184
+[05-May-2022 21:54:47 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php:99
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php on line 99
+[06-May-2022 07:55:54 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/border.php:189
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/border.php on line 189
+[06-May-2022 07:55:59 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/dimensions.php:84
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/dimensions.php on line 84
+[06-May-2022 07:56:04 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php:580
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php on line 580
+[06-May-2022 07:56:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/hamidsha/public_html/wp-includes/block-supports/elements.php:76
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/elements.php on line 76
+[06-May-2022 07:56:12 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/layout.php:184
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/layout.php on line 184
+[06-May-2022 07:56:17 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php:99
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php on line 99
+[07-May-2022 00:04:44 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/border.php:189
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/border.php on line 189
+[07-May-2022 00:04:50 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/dimensions.php:84
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/dimensions.php on line 84
+[07-May-2022 00:04:52 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php:580
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/duotone.php on line 580
+[07-May-2022 00:04:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in /home/hamidsha/public_html/wp-includes/block-supports/elements.php:76
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/elements.php on line 76
+[07-May-2022 00:05:00 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/layout.php:184
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/layout.php on line 184
+[07-May-2022 00:05:02 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_Block_Supports' not found in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php:99
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-supports/spacing.php on line 99

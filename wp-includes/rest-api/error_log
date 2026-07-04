@@ -1,0 +1,4 @@
+[09-Jun-2022 22:26:33 UTC] PHP Fatal error:  Uncaught Error: Class 'WP_HTTP_Response' not found in /home/hamidsha/public_html/wp-includes/rest-api/class-wp-rest-response.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/rest-api/class-wp-rest-response.php on line 17

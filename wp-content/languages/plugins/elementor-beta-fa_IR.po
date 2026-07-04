@@ -1,0 +1,244 @@
+# Translation of Plugins - Elementor Beta (Developer Edition) - Stable (latest release) in Persian
+# This file is distributed under the same license as the Plugins - Elementor Beta (Developer Edition) - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2025-02-23 17:28:17+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: fa\n"
+"Project-Id-Version: Plugins - Elementor Beta (Developer Edition) - Stable (latest release)\n"
+
+#: views/admin-notices/elementor-not-active.php:33
+msgid "Activate Now"
+msgstr "هم اکنون فعال کن"
+
+#: modules/developer-edition/admin-bar.php:103
+#: modules/developer-edition/settings-page.php:52
+msgid "Elementor Pro"
+msgstr "المنتور پرو"
+
+#: modules/developer-edition/views/settings-page-get-updates.php:28
+msgid "and Elementor Pro %s"
+msgstr "و المنتور پرو %s"
+
+#: modules/developer-edition/views/settings-page-get-updates-pro.php:43
+msgid "Elementor Rollback screen."
+msgstr "صفحه نمایش المنتور Rollback."
+
+#: modules/developer-edition/views/settings-page-get-updates-pro.php:42
+msgid "If you wish to revert to the latest stable Pro version please use %s"
+msgstr "اگر می خواهید به آخرین نسخه پایدار پرو برگردید، لطفاً از %s استفاده کنید"
+
+#: modules/developer-edition/views/settings-page-get-updates-pro.php:23
+msgid "Hooray! You’re up to date with the latest versions of Elementor Pro."
+msgstr "هورا! شما با آخرین نسخه های المنتور پرو به روز هستید."
+
+#: modules/developer-edition/views/settings-page-get-updates-pro.php:22
+msgid "Updated version of Elementor Pro is available."
+msgstr "نسخه به روز شده المنتور پرو در دسترس است."
+
+#: views/admin-notices/elementor-not-installed.php:27
+msgid "Install & Activate"
+msgstr "نصب و فعالسازی"
+
+#. translators: %s: Name of plugin
+#: views/admin-notices/elementor-not-installed.php:11
+msgid "%s requires Elementor for functioning properly. Please Install and Activate Elementor plugin"
+msgstr "%s برای عملکرد صحیح به المنتور نیاز دارد. لطفا افزونه المنتور را نصب و فعال کنید"
+
+#. translators: %s: Name of plugin
+#: views/admin-notices/elementor-not-active.php:13
+msgid "%s requires Elementor to be activate."
+msgstr "%s باید المنتور فعال شود."
+
+#: modules/developer-edition/settings-page.php:164
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: modules/developer-edition/settings-page.php:149
+msgid "Let us know."
+msgstr "به ما اطلاع دهید."
+
+#. translators: %s: Link to issues report
+#: modules/developer-edition/settings-page.php:148
+msgid "See something that isn’t working properly? %s"
+msgstr "چیزی را می بینید که به درستی کار نمی کند؟ %s"
+
+#: modules/developer-edition/settings-page.php:107
+msgid "Usage Data Sharing"
+msgstr "استفاده از اشتراک گذاری داده ها"
+
+#: modules/developer-edition/settings-page.php:98
+msgid "Improve Elementor"
+msgstr "المنتور را بهبود ببخشید"
+
+#: modules/developer-edition/settings-page.php:86
+msgid "Auto update Elementor"
+msgstr "به روز رسانی خودکار المنتور"
+
+#: modules/developer-edition/settings-page.php:75
+msgid "Auto Plugin Updates"
+msgstr "به روز رسانی خودکار افزونه"
+
+#: modules/developer-edition/settings-page.php:31
+msgid "Get updates"
+msgstr "دریافت به‌روزرسانی ها"
+
+#: modules/developer-edition/views/settings-page-auto-update.php:28
+msgid "Activating auto updates will periodically update your Elementor plugin to the latest available release."
+msgstr "فعال کردن به‌روزرسانی‌های خودکار به‌طور دوره‌ای افزونه المنتور شما را به آخرین نسخه موجود به‌روزرسانی می‌کند."
+
+#: modules/developer-edition/views/settings-page-auto-update.php:24
+msgid "Activate Auto Updates"
+msgstr "فعال نمودن به‌روزرسانی خودکار"
+
+#: modules/developer-edition/views/settings-page.php:25
+msgid "This plugin gives you direct access into Elementor’s development process, and lets you take an active part in perfecting our product. Each Developer Edition release will contain experimental functionalities that developers will be able to use to get familiar with the next releases before they are published."
+msgstr "این افزونه به شما امکان دسترسی مستقیم به فرآیند توسعه المنتور را می دهد و به شما امکان می دهد در تکمیل محصول ما مشارکت فعال داشته باشید. هر نسخه نسخه توسعه دهنده دارای قابلیت‌های آزمایشی است که توسعه‌دهندگان می‌توانند از آنها برای آشنایی با نسخه‌های بعدی قبل از انتشار استفاده کنند."
+
+#: modules/developer-edition/views/settings-page-get-updates-description.php:30
+msgid "Click here"
+msgstr "اینجا کلیک نمائید"
+
+#. translators: %s: email updates link
+#: modules/developer-edition/views/settings-page-get-updates-description.php:29
+msgid "%s to join our first-to-know email updates."
+msgstr "%s برای پیوستن به به‌روزرسانی‌های ایمیلی که اولین بار می‌دانید."
+
+#: modules/developer-edition/views/settings-page-get-updates-description.php:16
+msgid "%1$s about %2$s."
+msgstr "%1$s درباره %2$s."
+
+#. translators: %s: Plugin name.
+#: modules/developer-edition/settings-page.php:24
+#: modules/developer-edition/settings-page.php:123
+#: modules/developer-edition/views/settings-page-get-updates-description.php:10
+#: modules/developer-edition/views/settings-page-get-updates-description.php:18
+#: views/admin-notices/elementor-not-active.php:18
+#: views/admin-notices/elementor-not-installed.php:16
+msgid "Elementor Developer Edition"
+msgstr "نسخه توسعه دهنده المنتور"
+
+#. translators: %s: Plugin name.
+#: modules/developer-edition/views/settings-page-get-updates-description.php:10
+msgid "%s is a testing tool for new features and should not be used on live sites. Use staging environments only, and backup all your data before updating."
+msgstr "%s یک ابزار تست برای ویژگی های جدید است و نباید در سایت های زنده استفاده شود. فقط از محیط‌های مرحله‌بندی استفاده کنید و قبل از به‌روزرسانی از همه داده‌های خود نسخه پشتیبان تهیه کنید."
+
+#: modules/developer-edition/views/settings-page-get-updates-core.php:71
+msgid "Re-install Now"
+msgstr "هم اکنون مجدد نصب کن"
+
+#: modules/developer-edition/views/settings-page-get-updates-core.php:69
+msgid "Re-installing..."
+msgstr "در حال نصب مجدد..."
+
+#: modules/developer-edition/views/settings-page-get-updates-core.php:61
+msgid "If you need to re-install the latest stable version, you can do so here:"
+msgstr "اگر نیاز به نصب مجدد آخرین نسخه پایدار دارید، می توانید این کار را در اینجا انجام دهید:"
+
+#: modules/developer-edition/views/settings-page-get-updates-core.php:55
+#: modules/developer-edition/views/settings-page-get-updates-pro.php:34
+msgid "Update Now"
+msgstr "اکنون به‌روزرسانی نمائید"
+
+#: modules/developer-edition/views/settings-page-get-updates-core.php:53
+#: modules/developer-edition/views/settings-page-get-updates-pro.php:32
+msgid "Updating..."
+msgstr "در حال به‌روزرسانی..."
+
+#: modules/developer-edition/views/settings-page-get-updates-core.php:44
+msgid "Hooray! You’re up to date with the latest versions of Elementor."
+msgstr "هورا! شما با آخرین نسخه های المنتور به روز هستید."
+
+#: modules/developer-edition/views/settings-page-get-updates-core.php:43
+msgid "Updated version of Elementor is available."
+msgstr "نسخه به روز شده المنتور موجود است."
+
+#: modules/developer-edition/views/settings-page-get-updates.php:33
+msgid "You can update to the latest development builds automatically:"
+msgstr "می‌توانید به‌طور خودکار به آخرین بیلدهای توسعه به‌روزرسانی کنید:"
+
+#. translators: %s: elementor version.
+#: modules/developer-edition/views/settings-page-get-updates.php:23
+msgid "You are using Elementor %s"
+msgstr "شما از المنتور %s استفاده می کنید"
+
+#: modules/developer-edition/views/settings-page-get-updates-description.php:17
+#: modules/developer-edition/views/settings-page-improve-elementor.php:15
+msgid "Learn more"
+msgstr "بیشتر بدانید"
+
+#: modules/developer-edition/views/settings-page-improve-elementor.php:14
+msgid "Become a super contributor by opting in to share non-sensitive plugin data and to receive periodic email updates from us."
+msgstr "با اشتراک‌گذاری داده‌های غیرحساس افزونه و دریافت به‌روزرسانی‌های ایمیلی دوره‌ای از ما، به یک مشارکت‌کننده فوق‌العاده تبدیل شوید."
+
+#: modules/developer-edition/views/settings-page-get-updates-modal.php:32
+msgid "By clicking Sign Up, you agree to Elementor's <a href=\"%1$s\">Terms of Service</a> and <a href=\"%2$s\">Privacy Policy</a>"
+msgstr "با کلیک کردن روی ثبت نام، با <a href=\"%1$s\">شرایط خدمات</a> و <a href=\"%2$s\">خط‌مشی رازداری</a> المنتور موافقت می‌کنید."
+
+#: modules/developer-edition/views/settings-page-get-updates-modal.php:28
+msgid "Sign Up"
+msgstr "ثبت‌نام"
+
+#: modules/developer-edition/views/settings-page-get-updates-modal.php:23
+msgid "Your Email"
+msgstr "ایمیل شما"
+
+#: modules/developer-edition/views/settings-page-get-updates-modal.php:21
+msgid "You’ll receive an update that includes a developer version of Elementor, and it’s content directly to your Email"
+msgstr "یک به‌روزرسانی دریافت خواهید کرد که شامل نسخه توسعه‌دهنده المنتور است و محتوای آن مستقیماً در ایمیل شما قرار می‌گیرد"
+
+#: modules/developer-edition/views/settings-page-get-updates-modal.php:20
+msgid "Get Developer Updates"
+msgstr "به‌روزرسانی‌های برنامه‌نویس را دریافت کنید"
+
+#: modules/developer-edition/admin-bar.php:95
+#: modules/developer-edition/settings-page.php:41
+msgid "Elementor"
+msgstr "المنتور"
+
+#: modules/developer-edition/admin-bar.php:66
+msgid "System info"
+msgstr "اطلاعات سیستم"
+
+#: modules/developer-edition/admin-bar.php:58
+#: modules/developer-edition/settings-page.php:124
+msgid "Developer Edition"
+msgstr "نسخه توسعه دهنده"
+
+#: modules/developer-edition/admin-bar.php:52
+msgid "Elementor Debugger"
+msgstr "دیباگر المنتور"
+
+#: modules/developer-edition/admin-bar.php:38
+#: modules/developer-edition/admin-bar.php:77
+msgid "Report an issue"
+msgstr "گزارش مشکل"
+
+#. Author URI of the plugin
+#: elementor-beta.php
+msgid "https://elementor.com/?utm_source=wp-plugins&utm_campaign=dev-author-uri&utm_medium=wp-dash"
+msgstr "https://elementor.com/?utm_source=wp-plugins&utm_campaign=dev-author-uri&utm_medium=wp-dash"
+
+#. Author of the plugin
+#: elementor-beta.php
+msgid "Elementor.com"
+msgstr "Elementor.com"
+
+#. Description of the plugin
+#: elementor-beta.php
+msgid "Elementor Developer Edition gives you direct access into Elementor’s development process, and lets you take an active part in perfecting our product. Each Developer Edition release will contain experimental functionalities that developers will be able to use to get familiar with the next releases before they are published."
+msgstr "نسخه توسعه دهنده المنتور به شما امکان دسترسی مستقیم به فرآیند توسعه المنتور را می دهد و به شما امکان می دهد در تکمیل محصول ما مشارکت فعال داشته باشید. هر نسخه نسخه توسعه دهنده دارای قابلیت‌های آزمایشی است که توسعه‌دهندگان می‌توانند از آنها برای آشنایی با نسخه‌های بعدی قبل از انتشار استفاده کنند."
+
+#. Plugin URI of the plugin
+#: elementor-beta.php
+msgid "https://elementor.com"
+msgstr "https://elementor.com"
+
+#. Plugin Name of the plugin
+#: elementor-beta.php
+msgid "Elementor Beta (Developer Edition)"
+msgstr "المنتور پرو (نسخه توسعه دهنده)"

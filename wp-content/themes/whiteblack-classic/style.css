@@ -1,0 +1,717 @@
+/*
+Theme Name: WhiteBlack Classic
+Theme URI: 
+Author: masino1967
+Author URI: https://profiles.wordpress.org/masino1967/
+Description: Simple white and black theme. This theme offers nine different filter effects for images and featured images. It also offers an effect that shows or hides the filter as the cursor hovers over the image. This is the classic version of the WhiteBlack theme. This theme runs in two columns. In this version, besides image filter effects, there are four widget areas, a menu area, an extra single column template for pages, an extra single column template for posts, custom logo, responsive design, the option to add copyright in the footer, a selector to show or hide the login link.
+Requires at least: 6.7
+Tested up to: 6.7
+Requires PHP: 5.7
+Version: 1.0.5
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: whiteblack-classic
+Tags: blog, portfolio, photography, two-columns, threaded-comments, block-patterns, block-styles, custom-logo, custom-menu, featured-images, footer-widgets, full-width-template, template-editing, theme-options, translation-ready, wide-blocks
+*/
+
+:root {
+	--colore1: #333333;
+	--colore2: #999999;
+	--colore3: #CCCCCC;
+	--colore4: #EEEEEE;
+	--colore5: #cf2e2e;
+}
+
+* {
+	box-sizing: border-box;
+}
+@font-face {
+	font-family: notoSans;
+	src: url(assets/fonts/noto-sans/noto-sans-100-900-normal.ttf);
+	font-style: normal;
+}
+@font-face {
+	font-family: notoSans;
+	src: url(assets/fonts/noto-sans/noto-sans-100-900-italic.ttf);
+	font-style: italic;
+}
+
+body {
+	margin: 0px 0px 0px 0px;
+	color: var(--colore1);
+	background: var(--colore4);
+	font-family: notoSans;
+	font-size: 18px;
+}
+a:link, a:visited {
+	color: var(--colore1);
+}
+a:hover {
+	color: var(--colore5);
+}
+h1 {
+	font-size: 42px;
+}
+h2 {
+	font-size: 36px;
+}
+h3, h4, h5, h6 {
+	font-size: 20px;
+}
+button {
+	background-color: var(colore5);
+	border: 1px solid black;
+	color: var(colore4);
+	padding: 10px 15px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 18px;
+	margin: 0;
+	cursor: pointer;
+}
+.ombra {
+	box-shadow: 0 2px 5px var(--colore1);
+}
+.ombra-testo {
+	text-shadow: 0 2px 5px var(--colore2);
+}
+.colore-3 {
+	background-color: var(--colore3);
+}
+.spazio15 {
+	padding: 15px 15px 15px 15px;
+}
+.margine15 {
+	margin: 15px 15px 15px 15px;
+}
+.spezzare {
+	word-wrap: break-word;
+}
+.in-colonna {
+	flex-direction: column;
+}
+.a-destra {
+	float:right;
+}
+.flex-a-destra {
+	float:right;
+}
+.a-sinistra {
+	float:left;
+}
+.bordato {
+	border: 1px solid var(--colore1);
+}
+.no-decorazione {
+	text-decoration: none;
+}
+.blocco {
+	display: block;
+}
+.flex {
+	display: flex;
+}
+
+.sticky { /* richiesto da WordPress */
+	position: sticky;
+	top: 0;
+}
+.gallery-caption { /* richiesto da WordPress */
+	display: block;
+}
+.bypostauthor { /* richiesto da WordPress */
+	display: block;
+}
+.custom-logo { /* è una classe di wordpress */
+	padding: 0px;
+	box-shadow: 0 2px 5px var(--colore1);
+}
+.nome-sito-descrizione-sito {
+	margin: 0px 0px 0px 0px;
+	padding: 5px 15px 5px 15px;
+}
+.titolo-archivi {
+	padding: 0px 15px 0px 15px;
+}
+.immagine-in-evidenza-loop {
+	display: block;
+	float:right;
+	margin: 0px 0px 15px 100%;
+	filter: grayscale(100%);
+	border: 1px solid var(--colore1);
+	box-shadow: 0 2px 5px var(--colore1);
+	transition: filter 0.3s ease;
+}
+.immagine-in-evidenza-loop:hover {
+	display: block;
+	float:right;
+	margin: 0px 0px 15px 100%;
+	filter: none;
+	border: 1px solid var(--colore1);
+}
+img.quattrocentoquattro {
+	box-shadow: 0 2px 5px var(--colore1);
+	border: 1px solid var(--colore1);
+	display: block;
+	margin-top: 15px;
+	padding: 15px;
+	margin-bottom: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	height: auto;
+}
+.giustifica-a-destra {
+	text-align: right;
+}
+.colonna-barra { /* non è un doppione,serve per essere differenziato con @media */
+	text-align: right;
+}
+
+.contenitore-mille { /* larghezza della visualizzazione - applicato a div */
+	max-width: 1000px;
+	justify-content: center;
+	margin: auto;
+	display: block;
+}
+.flex-container {
+	display: flex;
+	flex-direction: row;
+}
+.flex-item-left {
+	margin: 0px 0px 0px 0px;
+	background-color: var(--colore3);
+	flex: 40%;
+	text-align: right;
+}
+.flex-item-right {
+	margin: 0px 0px 0px 0px;
+	background-color: var(--colore3);
+	flex: 60%;
+	text-align: left;
+}
+
+.flex-paginazione {
+	margin: 0px 0px 0px 0px;
+	display: flex;
+	flex-direction: row;
+}
+.paginazione-sinistra {
+	margin: 0px 0px 0px 0px;
+	padding: 15px;
+	flex: 50%; 
+	text-align: left;
+}
+.paginazione-destra {
+	margin: 0px 0px 0px 0px;
+	padding: 15px;
+	flex: 50%;
+	text-align: right;
+}
+
+.flex-colonna-sinistra {
+	margin: 15px 15px 15px 15px;
+	padding: 15px 15px 15px 15px;
+	width: 40%;
+	box-shadow: 0 2px 5px var(--colore1);
+}
+.flex-colonna-destra {
+	margin: 0px 0px 0px 0px;
+	padding: 5px 15px 10px 15px;
+	width: 60%;
+}
+@media only screen and (orientation: portrait) {     /* schermi verticali */
+  .flex-container {
+	  flex-direction: column;
+	}
+  .colonna-barra {
+	  text-align: left;
+	}
+  .immagine-in-evidenza-loop {
+	  display: block;
+	  float:left;
+	  margin: 0px 95% 15px 0px;
+	  border: 1px solid var(--colore1);
+	  transition: filter 0.3s ease;
+	}
+  .immagine-in-evidenza-loop:hover {
+	  display: block;
+	  float:left;
+	  margin: 0px 95% 15px 0px;
+	  filter: none;
+	  border: 1px solid var(--colore1);
+	}
+  .flex-item-left {
+	  margin: 0px 0px 0px 0px;
+	  background-color: var(--colore3);
+	  flex: 40%;
+	  text-align: left; }
+	 .flex-a-destra { float:left;
+	}
+	.flex-colonna-sinistra {
+	display: block;
+	margin: 15px 15px 15px 15px;
+	padding: 15px 15px 15px 15px;
+	width: auto;	
+	box-shadow: 0 2px 5px var(--colore1);
+	}
+	.flex-colonna-destra {
+	display: block;
+	margin: 0px 0px 0px 0px;
+	padding: 5px 15px 10px 15px;
+	width: auto;	
+	}
+}
+@media only screen and (max-width: 768px) {     /* schermi piccoli */
+  .flex-container {
+	  flex-direction: column;
+	}
+  .colonna-barra {
+	  text-align: left;
+	}
+  .immagine-in-evidenza-loop {
+	  display: block;
+	  float:left;
+	  margin: 0px 100% 15px 0px;
+	  transition: filter 0.3s ease;
+	}
+  .immagine-in-evidenza-loop:hover {
+	  display: block;
+	  float:left;
+	  margin: 0px 100% 15px 0px;
+	  filter: none;
+	}
+  .flex-item-left {
+	  margin: 0px 0px 0px 0px;
+	  background-color: var(--colore3);
+	  flex: 40%;
+	  text-align: left;
+	}
+	.flex-colonna-sinistra {
+	display: block;
+	margin: 15px 15px 15px 15px;
+	padding: 15px 15px 15px 15px;
+	width: auto;	
+	box-shadow: 0 2px 5px var(--colore1);
+	}
+	.flex-colonna-destra {
+	display: block;
+	margin: 0px 0px 0px 0px;
+	padding: 5px 15px 10px 15px;
+	width: auto;	
+	}
+  .flex-a-destra {
+	  float:left;
+	}
+}
+
+/* ------------------------ inizio CSS menu ------------------------------------ */
+
+/* Style base per il menu */
+.main-navigation {
+    text-align: left;
+    position: relative; /* Aggiungi questa riga per posizionare i sottomenu correttamente */
+
+}
+
+.main-navigation .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-navigation .menu li {
+    display: inline-block;
+    position: relative;
+}
+
+.main-navigation .menu li a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.main-navigation .menu li a:hover {
+	color: var(--colore4);
+    background-color: var(--colore1);
+	box-shadow: 0 2px 5px var(--colore1);
+}
+
+/* Menu a discesa - i sottomenu devono essere nascosti per default */
+.main-navigation .menu li ul,
+.main-navigation .menu li ul li ul,
+.main-navigation .menu li ul li ul li ul {
+    transform: translateY(-100%);
+    position: absolute; /* Posiziona il sottomenu sopra gli altri contenuti */
+    left: 0px;
+    top: 100%;
+	color: var(--colore1);
+    background-color: var(--colore3);
+	border: 0px solid var(--colore1);
+	list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: -10;
+}
+
+.main-navigation .menu li:hover > ul,
+.main-navigation .menu li:focus-within > ul,
+.main-navigation .menu li:hover > ul li ul,
+.main-navigation .menu li:focus-within > ul li ul,
+.main-navigation .menu li:hover > ul li ul li ul,
+.main-navigation .menu li:focus-within > ul li ul li ul {
+    display: block;
+	color: var(--colore4);
+	min-width: 200px;
+	transform: translateY(0%);
+	z-index: 10;
+	box-shadow: 0 2px 5px var(--colore1);
+}
+.main-navigation .menu li ul li,
+.main-navigation .menu li ul li ul li,
+.main-navigation .menu li ul li ul li ul li {
+    display: block;
+}
+
+/*-------------------da qui mobile ---------------------------*/
+
+/* Nascondi il pulsante su schermi larghi */
+.menu-toggle {
+    display: none; /* Nascondi di default */
+}
+
+/* Visualizza il pulsante solo su schermi piccoli (max-width: 768px) */
+@media (max-width: 768px) {
+    /* Mostra il pulsante solo su dispositivi piccoli */
+    .menu-toggle {
+        display: block;
+        background-color: var(--colore1);
+        color: var(--colore4);
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+    }
+}
+@media (max-width: 768px) {
+    /* Nascondi il menu di default sui dispositivi mobili */
+    .main-navigation .menu {
+        display: none;
+    }
+
+    /* Mostra il menu quando viene cliccato */
+    .main-navigation .menu.open {
+        display: block;
+        margin-left: 0; /* Annulla il margine sinistro precedente */
+    }
+
+    /* Stile per il menu mobile */
+    .main-navigation .menu li {
+        display: block; /* Elementi uno sotto l'altro */
+        width: 100%; /* Larghezza al 100% */
+    }
+
+    .main-navigation .menu li a {
+        padding: 10px;
+    }
+
+    /* Elimina gli stili per i sottomenu su mobile */
+    .main-navigation .menu li ul,
+    .main-navigation .menu li ul li ul,
+    .main-navigation .menu li ul li ul li ul {
+        position: static; /* Posizione statica */
+        transform: translateY(0%); /* Annulla la trasformazione */
+        display: block; /* Mostra i sottomenu */
+        background-color: transparent; /* Sfondo trasparente */
+        border: none; /* Nessun bordo */
+        box-shadow: none; /* Nessuna ombra */
+        min-width: auto; /* Larghezza automatica */
+        z-index: auto; /* Indice z automatico */
+        list-style: none; /* Rimuovi i pallini */
+        padding-left: 20px; /* Indenta i sottomenu */
+    }
+
+    .main-navigation .menu li:hover > ul,
+    .main-navigation .menu li:focus-within > ul,
+    .main-navigation .menu li:hover > ul li ul,
+    .main-navigation .menu li:focus-within > ul li ul,
+    .main-navigation .menu li:hover > ul li ul li ul,
+    .main-navigation .menu li:focus-within > ul li ul li ul {
+        display: block; /* Mostra i sottomenu */
+        color: var(--colore4);
+        box-shadow: none; /* Nessuna ombra */
+    }
+
+    .main-navigation .menu li ul li,
+    .main-navigation .menu li ul li ul li,
+    .main-navigation .menu li ul li ul li ul li {
+        display: block; /* Sottomenu uno sotto l'altro */
+    }
+}
+
+/* ----------------------------- fine CSS menu ----------------------------------- */
+
+/* -------------------------fine css menu ---------------------------------------*/
+
+
+/* --- inizio CSS form di ricerca --- */
+.stg-search-form {
+    display: flex;
+    max-width: 450px;
+  /*  margin: 5px auto; */
+  /*  border-radius: 25px; */
+    overflow: hidden;
+    box-shadow: 0 2px 5px var(--colore1);
+	margin-bottom: 15px;
+}
+
+.stg-search-field {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--colore1);
+    font-size: 16px;
+    outline: none;
+}
+
+.stg-search-submit {
+    background-color: var(--colore1);
+    color: var(--colore4);
+    border: 1px solid var(--colore1);
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.stg-search-submit:hover {
+    background-color: var(--colore5);
+}
+
+.stg-search-submit svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+/* --- fine CSS form di ricerca --- */
+
+/* ----------------css per comments.php------------------------------*/
+.comment-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.comment-body {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--colore4);
+    border: 1px solid var(--colore1);
+	box-shadow: 0 2px 5px var(--colore1);
+}
+
+.comment-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.comment-avatar {
+	border: 1px solid var(--colore1);
+	box-shadow: 0 2px 5px var(--colore1);
+}
+.comment-author {
+    display: flex;
+    align-items: center;
+
+}
+
+.comment-author .fn {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.comment-content {
+    margin-bottom: 10px;
+}
+
+.comment-metadata time {
+    font-size: 0.875em;
+    color: var(--colore1);
+}
+
+.reply a {
+    color: var(--colore1);
+    text-decoration: underline;
+}
+
+.reply a:hover {
+    text-decoration: underline;
+	color: var(--colore5);
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--colore1);
+    box-shadow: 0 2px 5px var(--colore1) inset;
+}
+.comment-form input {
+	width: 100%;
+	padding: 10px;
+    margin: 10px auto;
+    border: 1px solid var(--colore1);
+    box-shadow: 0 2px 5px var(--colore1);
+	font-size: 1em;
+	font-weight: bold;
+	color: var(--colore4);
+	background-color: var(--colore5);
+	cursor: pointer;
+}
+.stg-table td {
+  border: none;
+}
+/* ----------------fine css per comments.php------------------------ */
+
+
+/* ----- inizio WordPress Core (queste righe ci devono essere) ----- */
+
+.alignnone {
+  margin: 15px 15px 15px 0;
+}
+
+.aligncenter,
+div.aligncenter {
+	display: block;
+	padding-top: 15px;
+	margin: 15px auto 15px auto;
+}
+
+.alignright {
+	float:right;
+	margin: 15px 0 15px 15px;
+}
+
+.alignleft {
+	float: left;
+	margin: 15px 15px 15px 0;
+}
+
+a img.alignright {
+  float: right;
+  margin: 15px 0 15px 15px;
+}
+
+a img.alignnone {
+  margin: 15px 15px 150px 0;
+}
+
+a img.alignleft {
+  float: left;
+  margin: 15px 15px 15px 0;
+}
+
+a img.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wp-caption {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  max-width: 96%; /* Image does not overflow the content area */
+  padding: 5px 5px 5px 5px;
+  text-align: center;
+}
+
+.wp-caption.alignnone {
+  margin: 15px 15px 15px 0;
+}
+
+.wp-caption.alignleft {
+  margin: 15px 15px 15px 0;
+}
+
+.wp-caption.alignright {
+  margin: 15px 0 15px 15px;
+}
+
+.wp-caption img {
+  border: 0 none;
+  height: auto;
+  margin: 0;
+  max-width: 98.5%;
+  padding: 0;
+  width: auto;
+}
+
+.wp-caption p.wp-caption-text {
+  font-size: 11px;
+  line-height: 17px;
+  margin: 0;
+  padding: 0 4px 5px;
+}
+
+/* Text meant only for screen readers. */
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important; /* Many screen reader and browser combinations announce broken words as they would appear visually. */
+}
+
+.screen-reader-text:focus {
+  background-color: #eee;
+  clip: auto !important;
+  clip-path: none;
+  color: #444;
+  display: block;
+  font-size: 1em;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000;
+  /* Above WP toolbar. */
+}
+
+/* -------  Fine WordPress Core   ---------------------------------- */
+
+/* solo per skip link. */
+.screen-reader-text2 {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important; 
+}
+
+.screen-reader-text2:focus {
+  background-color: var(--colore5);
+  clip: auto !important;
+  clip-path: none;
+  color: var(--colore4);
+  display: block;
+  font-size: 1em;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000;
+  /* fine di solo per skip link */
+}

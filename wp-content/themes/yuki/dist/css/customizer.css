@@ -1,0 +1,81 @@
+:root {
+  scroll-behavior: smooth;
+}
+
+[data-yuki-theme=light] {
+  --yuki-primary-color: var(--yuki-light-primary-color);
+  --yuki-primary-active: var(--yuki-light-primary-active);
+  --yuki-accent-color: var(--yuki-light-accent-color);
+  --yuki-accent-active: var(--yuki-light-accent-active);
+  --yuki-base-color: var(--yuki-light-base-color);
+  --yuki-base-100: var(--yuki-light-base-100);
+  --yuki-base-200: var(--yuki-light-base-200);
+  --yuki-base-300: var(--yuki-light-base-300);
+}
+[data-yuki-theme=light] .yuki-theme-switch .dark-mode {
+  display: inline;
+}
+[data-yuki-theme=light] .yuki-theme-switch .light-mode {
+  display: none;
+}
+
+[data-yuki-theme=dark] {
+  --yuki-primary-color: var(--yuki-dark-primary-color);
+  --yuki-primary-active: var(--yuki-dark-primary-active);
+  --yuki-accent-color: var(--yuki-dark-accent-color);
+  --yuki-accent-active: var(--yuki-dark-accent-active);
+  --yuki-base-color: var(--yuki-dark-base-color);
+  --yuki-base-100: var(--yuki-dark-base-100);
+  --yuki-base-200: var(--yuki-dark-base-200);
+  --yuki-base-300: var(--yuki-dark-base-300);
+}
+[data-yuki-theme=dark] .yuki-theme-switch .light-mode {
+  display: inline;
+}
+[data-yuki-theme=dark] .yuki-theme-switch .dark-mode {
+  display: none;
+}
+
+#fs_customizer_support,
+#accordion-section-yuki_header,
+#accordion-section-yuki_global,
+#accordion-section-yuki_archive,
+#accordion-section-custom_css,
+#accordion-section-title_tagline,
+#yuki_update_customizer_cache {
+  margin-top: 12px;
+}
+#fs_customizer_support .accordion-section-title,
+#accordion-section-yuki_header .accordion-section-title,
+#accordion-section-yuki_global .accordion-section-title,
+#accordion-section-yuki_archive .accordion-section-title,
+#accordion-section-custom_css .accordion-section-title,
+#accordion-section-title_tagline .accordion-section-title,
+#yuki_update_customizer_cache .accordion-section-title {
+  border-top: 1px solid #dcdcde;
+}
+
+#accordion-section-yuki_single_post .accordion-section-title,
+#accordion-section-yuki_pages .accordion-section-title,
+#accordion-panel-woocommerce .accordion-section-title,
+#accordion-section-yuki_store .accordion-section-title {
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+}
+#accordion-section-yuki_single_post .accordion-section-title::before,
+#accordion-section-yuki_pages .accordion-section-title::before,
+#accordion-panel-woocommerce .accordion-section-title::before,
+#accordion-section-yuki_store .accordion-section-title::before {
+  content: "\f474";
+  font-family: dashicons;
+  font-weight: 400;
+  font-style: normal;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  font-size: 12px;
+  margin: 0 8px;
+  color: #a7aaad;
+  transform: scaleX(-1);
+}

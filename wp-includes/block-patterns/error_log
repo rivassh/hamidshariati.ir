@@ -1,0 +1,136 @@
+[18-Oct-2021 20:44:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php on line 9
+[18-Oct-2021 20:44:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php on line 9
+[18-Oct-2021 20:44:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php on line 9
+[18-Oct-2021 20:45:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-offset-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-offset-posts.php on line 9
+[18-Oct-2021 20:45:28 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php on line 9
+[18-Oct-2021 20:45:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php on line 9
+[18-Oct-2021 20:46:03 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php on line 9
+[07-Nov-2021 17:52:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php on line 9
+[07-Nov-2021 17:52:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php on line 9
+[07-Nov-2021 17:52:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php on line 9
+[07-Nov-2021 17:52:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-offset-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-offset-posts.php on line 9
+[07-Nov-2021 17:52:49 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php on line 9
+[07-Nov-2021 17:52:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php on line 9
+[07-Nov-2021 17:52:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php on line 9
+[05-May-2022 21:50:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php on line 9
+[05-May-2022 21:50:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php on line 9
+[05-May-2022 21:50:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php on line 9
+[05-May-2022 21:51:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php on line 9
+[05-May-2022 21:51:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php on line 9
+[05-May-2022 21:52:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php on line 9
+[06-May-2022 07:54:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php on line 9
+[06-May-2022 07:55:00 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php on line 9
+[06-May-2022 07:55:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php on line 9
+[06-May-2022 07:55:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-offset-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-offset-posts.php on line 9
+[06-May-2022 07:55:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php on line 9
+[06-May-2022 07:55:24 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php on line 9
+[06-May-2022 07:55:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php on line 9
+[07-May-2022 00:04:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-grid-posts.php on line 9
+[07-May-2022 00:04:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-large-title-posts.php on line 9
+[07-May-2022 00:04:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-medium-posts.php on line 9
+[07-May-2022 00:04:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-offset-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-offset-posts.php on line 9
+[07-May-2022 00:04:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-small-posts.php on line 9
+[07-May-2022 00:04:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/query-standard-posts.php on line 9
+[07-May-2022 00:04:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _x() in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hamidsha/public_html/wp-includes/block-patterns/social-links-shared-background-color.php on line 9

@@ -1,0 +1,26 @@
+# Sensitive files
+wp-config.php
+wp-config.php0
+
+# Large directories
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/upgrade-temp-backup/
+
+# Logs
+*.log
+debug.log
+
+# Temp files
+temp-write-test-*
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+
+# Vendor (if composer used)
+vendor/

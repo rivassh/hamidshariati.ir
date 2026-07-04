@@ -1,0 +1,950 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-14 22:53+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: sfs-admin.php:136
+msgid " or higher, and has been deactivated! "
+msgstr ""
+
+#: sfs-admin.php:928
+msgid ""
+"Add custom key/value parameter for either &ldquo;custom&rdquo; or &ldquo;"
+"alt&rdquo; tracking methods."
+msgstr ""
+
+#: sfs-admin.php:591
+msgid "All feed stats deleted"
+msgstr ""
+
+#: sfs-admin.php:327
+msgid "Alternate tracking"
+msgstr ""
+
+#: support-panel.php:61
+msgid "and is greatly appreciated."
+msgstr ""
+
+#: sfs-admin.php:606
+msgid "and/or"
+msgstr ""
+
+#: support-panel.php:63
+msgid ""
+"Any size donation helps me to continue developing this free plugin and other "
+"awesome WordPress resources."
+msgstr ""
+
+#: sfs-admin.php:963
+msgid "Applies to &ldquo;Subscriber Info&rdquo; panel on this page"
+msgstr ""
+
+#: sfs-admin.php:1095
+msgid "Approx. Time:"
+msgstr ""
+
+#: sfs-admin.php:1203
+msgid ""
+"Are you sure you want to delete all the feed stats? (this action cannot be "
+"undone)"
+msgstr ""
+
+#: sfs-admin.php:1222
+msgid ""
+"Are you sure you want to delete the stats table and all of its data? (this "
+"action cannot be undone)"
+msgstr ""
+
+#: sfs-admin.php:1211
+msgid ""
+"Are you sure you want to restore all default options? (this action cannot be "
+"undone)"
+msgstr ""
+
+#: sfs-admin.php:408 sfs-admin.php:665 sfs-admin.php:707
+msgid "Atom"
+msgstr ""
+
+#: support-panel.php:53
+msgid "books"
+msgstr ""
+
+#: sfs-admin.php:1188
+msgid "by"
+msgstr ""
+
+#: sfs-admin.php:949
+msgid "By default, WordPress does not enable shortcodes in widgets."
+msgstr ""
+
+#: sfs-admin.php:587
+msgid "Cache cleared"
+msgstr ""
+
+#: sfs-admin.php:614
+msgid "Check this box if you have shown support"
+msgstr ""
+
+#: sfs-admin.php:1010
+msgid "Clear cache"
+msgstr ""
+
+#: sfs-admin.php:1008
+msgid "Clear the cache"
+msgstr ""
+
+#: sfs-admin.php:409 sfs-admin.php:666 sfs-admin.php:708
+msgid "Comments"
+msgstr ""
+
+#: sfs-admin.php:1081
+msgid "Comments Atom"
+msgstr ""
+
+#: simple-feed-stats.php:532
+msgid "Comments for "
+msgstr ""
+
+#: sfs-admin.php:1080
+msgid "Comments RSS2"
+msgstr ""
+
+#: sfs-admin.php:1079
+msgid "Content Atom"
+msgstr ""
+
+#: sfs-admin.php:1077
+msgid "Content RDF"
+msgstr ""
+
+#: sfs-admin.php:1078
+msgid "Content RSS2"
+msgstr ""
+
+#: sfs-admin.php:654 sfs-admin.php:696
+msgid ""
+"Count totals are cached and updated every 12 hours for better performance. "
+msgstr ""
+
+#: sfs-admin.php:976
+msgid "CSS/text only, no markup"
+msgstr ""
+
+#: sfs-admin.php:867
+msgid "Current image being used for Open Tracking:"
+msgstr ""
+
+#: sfs-admin.php:401
+msgid "Current Subscriber Count"
+msgstr ""
+
+#: sfs-admin.php:904
+msgid "Custom count"
+msgstr ""
+
+#: sfs-admin.php:972
+msgid "Custom CSS for count badge"
+msgstr ""
+
+#: sfs-admin.php:927
+msgid "Custom key"
+msgstr ""
+
+#: sfs-admin.php:923
+msgid "Custom key/value"
+msgstr ""
+
+#: sfs-admin.php:323
+msgid "Custom tracking"
+msgstr ""
+
+#: sfs-admin.php:933
+msgid "Custom value"
+msgstr ""
+
+#: sfs-admin.php:652
+msgid "Daily feed statistics"
+msgstr ""
+
+#: sfs-admin.php:649
+msgid "Daily Stats"
+msgstr ""
+
+#: sfs-admin.php:319
+msgid "Default setting. Recommended for most users."
+msgstr ""
+
+#: sfs-admin.php:978
+msgid ""
+"Default styles replicate the FeedBurner chicklet. Leave blank to disable."
+msgstr ""
+
+#: sfs-admin.php:319
+msgid "Default tracking"
+msgstr ""
+
+#: sfs-admin.php:1031
+msgid "Delete database table"
+msgstr ""
+
+#: sfs-admin.php:1034
+msgid "Delete the stats table the next time plugin is deactivated"
+msgstr ""
+
+#: sfs-admin.php:1096
+msgid ""
+"Denotes date/time of most recent page-load (useful when monitoring feed "
+"stats)."
+msgstr ""
+
+#: sfs-admin.php:779
+msgid "Details"
+msgstr ""
+
+#: sfs-admin.php:893
+msgid "Disable collection of all IP address data"
+msgstr ""
+
+#: sfs-admin.php:891
+msgid "Disable IP"
+msgstr ""
+
+#: sfs-admin.php:315
+msgid "Disable tracking"
+msgstr ""
+
+#: sfs-admin.php:315
+msgid "disables all tracking"
+msgstr ""
+
+#: sfs-admin.php:993
+msgid "Display after each feed item"
+msgstr ""
+
+#: sfs-admin.php:983
+msgid "Display before each feed item"
+msgstr ""
+
+#: sfs-admin.php:1111 sfs-admin.php:1136
+msgid "Display daily count for all feeds in plain-text:"
+msgstr ""
+
+#: sfs-admin.php:1115 sfs-admin.php:1140
+msgid "Display daily count for all feeds with a FeedBurner-style badge:"
+msgstr ""
+
+#: sfs-admin.php:1121 sfs-admin.php:1146
+msgid "Display daily count for all feeds with a simple (linked) badge:"
+msgstr ""
+
+#: sfs-admin.php:1130
+msgid "Display daily count for comment feeds in plain-text:"
+msgstr ""
+
+#: sfs-admin.php:1127
+msgid "Display daily count for RSS2 feeds in plain-text:"
+msgstr ""
+
+#: sfs-admin.php:1152
+msgid "Display total count for all feeds as plain-text:"
+msgstr ""
+
+#: sfs-admin.php:914
+msgid "Display your custom feed count instead of the recorded value"
+msgstr ""
+
+#: support-panel.php:51
+msgid "Donate via PayPal, credit card, or cryptocurrency"
+msgstr ""
+
+#: support-panel.php:55
+msgid "donation"
+msgstr ""
+
+#: sfs-admin.php:911
+msgid "Enable custom count"
+msgstr ""
+
+#: sfs-admin.php:948
+msgid "Enable shortcodes in widget areas and post content"
+msgstr ""
+
+#: sfs-admin.php:875
+msgid "Enable strict reporting of feed statistics"
+msgstr ""
+
+#: sfs-admin.php:945
+msgid "Enable Widget Shortcodes"
+msgstr ""
+
+#: sfs-admin.php:849
+msgid "Example code:"
+msgstr ""
+
+#: sfs-admin.php:1163
+msgid "Example of the FeedBurner-style badge:"
+msgstr ""
+
+#: sfs-admin.php:1158
+msgid "Example of the plain-text shortcodes/tags:"
+msgstr ""
+
+#: sfs-admin.php:1169
+msgid "Example of the simple (linked) badge:"
+msgstr ""
+
+#: sfs-admin.php:1156
+msgid "Examples"
+msgstr ""
+
+#: sfs-admin.php:327
+msgid "Experimental tracking method. Use only for testing purposes."
+msgstr ""
+
+#: sfs-shortcodes.php:45
+msgid "Feed Statistics"
+msgstr ""
+
+#: sfs-admin.php:748
+msgid "Feed Type"
+msgstr ""
+
+#: sfs-admin.php:746
+msgid "Filter data by.."
+msgstr ""
+
+#: sfs-admin.php:860
+msgid "For Open Tracking. Optional custom tracking image:"
+msgstr ""
+
+#: sfs-admin.php:841
+msgid "For Open Tracking. Use this URL as the"
+msgstr ""
+
+#: sfs-admin.php:842
+msgid "for your tracking image:"
+msgstr ""
+
+#: sfs-admin.php:607 sfs-admin.php:639
+msgid "give it a 5-star rating"
+msgstr ""
+
+#: sfs-admin.php:64
+msgid "Give us a 5-star rating at WordPress.org"
+msgstr ""
+
+#: sfs-admin.php:1089
+msgid "Google/Feedburner"
+msgstr ""
+
+#: sfs-admin.php:1056
+msgid "Here are some helpful things to know when working with feeds."
+msgstr ""
+
+#: sfs-admin.php:59
+msgid "Homepage"
+msgstr ""
+
+#: sfs-admin.php:877 sfs-admin.php:886
+msgid ""
+"however, if you have been using SFS for awhile, you may notice that the feed "
+"count is lower with this option enabled."
+msgstr ""
+
+#. URI of the plugin
+msgid "https://perishablepress.com/simple-feed-stats/"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://plugin-planet.com/"
+msgstr ""
+
+#: sfs-admin.php:777
+msgid "ID"
+msgstr ""
+
+#: sfs-admin.php:638
+msgid "If you like this plugin, please"
+msgstr ""
+
+#: sfs-admin.php:882
+msgid "Ignore bots"
+msgstr ""
+
+#: sfs-admin.php:884
+msgid "Ignore feed requests from the most common bots"
+msgstr ""
+
+#: sfs-admin.php:843
+msgid ""
+"Important: any ampersands in the tracking URL must be encoded as HTML "
+"entities."
+msgstr ""
+
+#: sfs-admin.php:929
+msgid ""
+"Important: include only alphanumeric characters, underscores, and hyphens. "
+"Leave blank to disable."
+msgstr ""
+
+#: sfs-admin.php:934
+msgid ""
+"Including a custom key/value in the tracking URL can be used with 3rd-party "
+"services such as Google Analytics."
+msgstr ""
+
+#: sfs-admin.php:749
+msgid "IP Address"
+msgstr ""
+
+#: sfs-admin.php:1093
+msgid "IP Address:"
+msgstr ""
+
+#: simple-feed-stats.php:189
+msgid "IP data disabled"
+msgstr ""
+
+#. Author of the plugin
+msgid "Jeff Starr"
+msgstr ""
+
+#: sfs-admin.php:1189
+msgid "Jeff Starr on Twitter"
+msgstr ""
+
+#: sfs-admin.php:88
+msgid "Like this plugin? Give it a"
+msgstr ""
+
+#: sfs-admin.php:747
+msgid "Log Time"
+msgstr ""
+
+#: sfs-admin.php:605
+msgid "make a donation"
+msgstr ""
+
+#: sfs-admin.php:605
+msgid "Make a donation via PayPal"
+msgstr ""
+
+#: support-panel.php:105
+msgid "Make a donation&nbsp;&raquo;"
+msgstr ""
+
+#: sfs-admin.php:778
+msgid "Meta"
+msgstr ""
+
+#: sfs-admin.php:1084
+msgid "More about WordPress feeds"
+msgstr ""
+
+#: sfs-admin.php:422
+msgid "More stats, tools, and options &raquo;"
+msgstr ""
+
+#: sfs-admin.php:770
+msgid "Next"
+msgstr ""
+
+#: sfs-admin.php:315
+msgid "No data will be deleted when using this option."
+msgstr ""
+
+#: sfs-admin.php:1011
+msgid ""
+"Note: it is safe to clear the cache at any time. WordPress automatically "
+"will cache fresh data."
+msgstr ""
+
+#: sfs-admin.php:951
+msgid ""
+"Note: this setting applies to any/all shortcodes, even those of other "
+"plugins."
+msgstr ""
+
+#: sfs-admin.php:1036
+msgid ""
+"Note: this setting applies to plugin *deactivation* only. If you *uninstall* "
+"(i.e., delete) the plugin, all data including feed stats will be removed."
+msgstr ""
+
+#: sfs-admin.php:1027
+msgid ""
+"Note: this setting applies to plugin options only, does not affect feed "
+"stats."
+msgstr ""
+
+#: sfs-admin.php:960
+msgid "Number of results per page"
+msgstr ""
+
+#: sfs-admin.php:1190
+msgid "Obsessive Web Design &amp; Development"
+msgstr ""
+
+#: sfs-admin.php:766
+msgid "of"
+msgstr ""
+
+#: sfs-admin.php:667 sfs-admin.php:709
+msgid "Open"
+msgstr ""
+
+#: sfs-admin.php:331
+msgid "Open tracking"
+msgstr ""
+
+#: sfs-admin.php:857
+msgid "Open Tracking Image"
+msgstr ""
+
+#: sfs-admin.php:838
+msgid "Open Tracking URL"
+msgstr ""
+
+#: sfs-admin.php:331
+msgid "open tracking via image"
+msgstr ""
+
+#: support-panel.php:59
+msgid "or"
+msgstr ""
+
+#: support-panel.php:59
+msgid "or by making a"
+msgstr ""
+
+#: sfs-admin.php:668 sfs-admin.php:710
+msgid "Other"
+msgstr ""
+
+#: sfs-admin.php:625
+msgid "Overview"
+msgstr ""
+
+#: support-panel.php:49
+msgid "Perishable Press Books"
+msgstr ""
+
+#: sfs-admin.php:604
+msgid "Please"
+msgstr ""
+
+#: support-panel.php:102
+msgid "Please Donate"
+msgstr ""
+
+#: support-panel.php:58
+msgid "Please show support by purchasing one of my"
+msgstr ""
+
+#: sfs-admin.php:137
+msgid "Please upgrade WordPress and try again. Return to the"
+msgstr ""
+
+#: sfs-admin.php:58 sfs-admin.php:634 sfs-admin.php:1188
+msgid "Plugin Homepage"
+msgstr ""
+
+#: support-panel.php:50
+msgid "Plugin Planet: Pro WordPress Plugins"
+msgstr ""
+
+#: sfs-admin.php:632 sfs-admin.php:810
+msgid "Plugin Settings"
+msgstr ""
+
+#: support-panel.php:54
+msgid "plugins"
+msgstr ""
+
+#: sfs-admin.php:761
+msgid "Previous"
+msgstr ""
+
+#: sfs-admin.php:65
+msgid "Rate this plugin"
+msgstr ""
+
+#: sfs-admin.php:406 sfs-admin.php:663 sfs-admin.php:705
+msgid "RDF"
+msgstr ""
+
+#: sfs-shortcodes.php:44
+msgid "reader"
+msgid_plural "readers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: sfs-admin.php:323
+msgid "Recommended if redirecting your feed to a service like FeedBurner."
+msgstr ""
+
+#: sfs-admin.php:752 sfs-admin.php:793
+msgid "Referrer"
+msgstr ""
+
+#: sfs-admin.php:794
+msgid "Request"
+msgstr ""
+
+#: sfs-admin.php:135
+msgid "requires WordPress "
+msgstr ""
+
+#: sfs-admin.php:739
+msgid "reset"
+msgstr ""
+
+#: sfs-admin.php:1015
+msgid "Reset feed stats"
+msgstr ""
+
+#: sfs-admin.php:1017
+msgid "Reset stats"
+msgstr ""
+
+#: sfs-admin.php:1025
+msgid "Restore default options upon plugin deactivation/reactivation"
+msgstr ""
+
+#: sfs-admin.php:1022
+msgid "Restore default settings"
+msgstr ""
+
+#: sfs-admin.php:407 sfs-admin.php:664 sfs-admin.php:706
+msgid "RSS2"
+msgstr ""
+
+#: sfs-admin.php:1303
+msgid "Save Preference"
+msgstr ""
+
+#: sfs-admin.php:1043
+msgid "Save Settings"
+msgstr ""
+
+#: sfs-admin.php:40
+msgid "Settings"
+msgstr ""
+
+#: support-panel.php:7
+msgid "SFS"
+msgstr ""
+
+#: sfs-admin.php:629
+msgid ""
+"SFS tracks your feeds automatically and displays the statistics on this page "
+"and via the Dashboard widget. Note: this plugin was formerly named &ldquo;"
+"Simple Feed Stats&rdquo;."
+msgstr ""
+
+#: sfs-admin.php:1109
+msgid "Shortcodes"
+msgstr ""
+
+#: sfs-admin.php:633 sfs-admin.php:1106
+msgid "Shortcodes &amp; Template Tags"
+msgstr ""
+
+#. Name of the plugin
+#: sfs-admin.php:584
+msgid "Simple Statistics for Feeds"
+msgstr ""
+
+#: sfs-admin.php:1086
+msgid "Simple Statistics for Feeds Homepage"
+msgstr ""
+
+#: sfs-admin.php:628
+msgid ""
+"Simple Statistics for Feeds tracks your feeds, adds custom content, and "
+"displays your feed statistics on your site."
+msgstr ""
+
+#: sfs-admin.php:655 sfs-admin.php:697
+msgid ""
+"So the count total may not always equal the sum of the individual counts, "
+"which are reported in real-time. "
+msgstr ""
+
+#: sfs-admin.php:873
+msgid "Strict reporting"
+msgstr ""
+
+#: sfs-shortcodes.php:93
+msgid "subscriber"
+msgid_plural "subscribers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: sfs-admin.php:733
+msgid "Subscriber Info"
+msgstr ""
+
+#: sfs-admin.php:738
+msgid "Subscriber info filtered by"
+msgstr ""
+
+#: sfs-admin.php:1134
+msgid "Template Tags"
+msgstr ""
+
+#: sfs-admin.php:987 sfs-admin.php:997
+msgid "Text and basic markup allowed"
+msgstr ""
+
+#: support-panel.php:57
+msgid "Thank you for using"
+msgstr ""
+
+#: sfs-admin.php:607 sfs-admin.php:639
+msgid "THANK YOU for your support!"
+msgstr ""
+
+#: sfs-admin.php:935
+msgid ""
+"This feature will be extended in future versions, send feedback with any "
+"requests."
+msgstr ""
+
+#: sfs-admin.php:895
+msgid "This is useful for things like GDPR compliance."
+msgstr ""
+
+#: sfs-admin.php:600
+msgid "This plugin needs your support!"
+msgstr ""
+
+#: sfs-admin.php:950
+msgid ""
+"This setting enables shortcodes to work when they are added to widgets, and "
+"also ensures that shortcodes will work when they are added to post/page "
+"content."
+msgstr ""
+
+#: sfs-admin.php:876 sfs-admin.php:885
+msgid "This will result in a more accurate reporting of feed stats;"
+msgstr ""
+
+#: sfs-admin.php:878
+msgid ""
+"Tip: after changing this option, click the &ldquo;Clear the cache&rdquo; "
+"link below to reset the cache."
+msgstr ""
+
+#: sfs-admin.php:861
+msgid ""
+"Tip: change the name of the image to tracker.gif to use a transparent 1x1 "
+"pixel image."
+msgstr ""
+
+#: sfs-admin.php:1035
+msgid ""
+"Tip: leave this setting unchecked to keep your feed stats if the plugin is "
+"deactivated."
+msgstr ""
+
+#: sfs-admin.php:1026
+msgid ""
+"Tip: leave this setting unchecked to keep your options if the plugin is "
+"deactivated."
+msgstr ""
+
+#: sfs-admin.php:977
+msgid ""
+"Tip: see the &ldquo;Shortcodes &amp; Template Tags&rdquo; panel for count-"
+"badge shortcode and template tag."
+msgstr ""
+
+#: sfs-admin.php:887
+msgid ""
+"Tip: the bot list for this feature may be customized via the hook, "
+"sfs_filter_bots."
+msgstr ""
+
+#: sfs-admin.php:1164
+msgid ""
+"Tip: the FeedBurner badge can be displayed using a shortcode or template tag."
+msgstr ""
+
+#: sfs-admin.php:1159
+msgid ""
+"Tip: the plain-text shortcodes/tags enable you to create custom badges, "
+"links, and so forth."
+msgstr ""
+
+#: sfs-admin.php:1170
+msgid ""
+"Tip: the simple badge can be displayed using a shortcode or template tag."
+msgstr ""
+
+#: sfs-admin.php:1057
+msgid ""
+"Tip: to generate some feed data to look at, click on a few of these links "
+"and then refresh the SFS settings page."
+msgstr ""
+
+#: sfs-admin.php:656
+msgid ""
+"Tip: to get the numbers to match up, you can manually clear the cache via "
+"the &ldquo;Plugin Settings&rdquo; panel."
+msgstr ""
+
+#: sfs-admin.php:698
+msgid ""
+"Tip: to get the numbers to match up, you can manually clear the cache via "
+"the &ldquo;Plugin Settings&rdquo; panel. "
+msgstr ""
+
+#: sfs-admin.php:1122
+msgid ""
+"Tip: to wrap the badge with a link to your feed, include the &ldquo;"
+"link&rdquo; attribute with your feed URL. See the second example below."
+msgstr ""
+
+#: sfs-admin.php:1147
+msgid ""
+"Tip: to wrap the badge with a link to your feed, use the second example "
+"below and replace the example URL with your own."
+msgstr ""
+
+#: sfs-admin.php:907
+msgid ""
+"Tip: use this feature for a day or so after resetting the feed stats (check "
+"the next box to enable)."
+msgstr ""
+
+#: sfs-admin.php:1116 sfs-admin.php:1141
+msgid ""
+"Tip: visit the &ldquo;Plugin Settings&rdquo; panel to style your badge with "
+"some custom CSS. Also, check out the plugin FAQs for info on wrapping the "
+"FeedBurner count badge with a link to your feed."
+msgstr ""
+
+#: sfs-admin.php:988 sfs-admin.php:998
+msgid "Tip: you can has shortcodes. Leave blank to disable."
+msgstr ""
+
+#: sfs-admin.php:594
+msgid "Toggle all panels"
+msgstr ""
+
+#: sfs-admin.php:694
+msgid "Total feed statistics"
+msgstr ""
+
+#: sfs-admin.php:691
+msgid "Total Stats"
+msgstr ""
+
+#: sfs-admin.php:331
+msgid ""
+"Track any feed or web page by using the open-tracking URL as the src for any "
+"image. Tip: this is a good way to track FeedBurner summary feeds. Visit m0n."
+"co/a for details."
+msgstr ""
+
+#: sfs-admin.php:751
+msgid "Tracking"
+msgstr ""
+
+#: sfs-admin.php:788
+msgid "tracking"
+msgstr ""
+
+#: sfs-admin.php:818
+msgid "Tracking method"
+msgstr ""
+
+#: sfs-admin.php:327
+msgid "tracks via embedded feed image"
+msgstr ""
+
+#: sfs-admin.php:323
+msgid "tracks via embedded post image"
+msgstr ""
+
+#: sfs-admin.php:319
+msgid "tracks via feed requests"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Tracks your feeds, adds custom content, and displays your feed statistics on "
+"your site."
+msgstr ""
+
+#: sfs-admin.php:750 sfs-admin.php:795
+msgid "User Agent"
+msgstr ""
+
+#: sfs-admin.php:1098
+msgid "User Agent:"
+msgstr ""
+
+#: sfs-admin.php:1018
+msgid ""
+"Warning: this will delete all feed stats! Note: deletes data only, not "
+"options."
+msgstr ""
+
+#: sfs-admin.php:1088
+msgid "What is my WordPress Feed URL?"
+msgstr ""
+
+#: sfs-admin.php:894
+msgid "When this setting is enabled, no IP address data will be collected."
+msgstr ""
+
+#: sfs-admin.php:138
+msgid "WordPress Admin area"
+msgstr ""
+
+#: sfs-admin.php:1087
+msgid "WP Codex: WordPress Feeds"
+msgstr ""
+
+#: sfs-admin.php:1179
+msgid "WP Resources"
+msgstr ""
+
+#: sfs-admin.php:1091
+msgid "Your browser/IP info"
+msgstr ""
+
+#: sfs-admin.php:1053
+msgid "Your Feed Info"
+msgstr ""
+
+#: sfs-admin.php:1074
+msgid "Your feed URLs"
+msgstr ""
+
+#: sfs-admin.php:609
+msgid ""
+"Your generous support enables continued development of this free plugin. "
+"Thank you!"
+msgstr ""
+
+#: support-panel.php:60
+msgid "Your generous support helps to ensure future development of"
+msgstr ""
+
+#: sfs-admin.php:92
+msgid "★★★★★ rating&nbsp;&raquo;"
+msgstr ""

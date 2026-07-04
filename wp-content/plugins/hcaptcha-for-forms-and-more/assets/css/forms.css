@@ -1,0 +1,55 @@
+#hcaptcha-options #hcaptcha-forms-wrap table tbody tr td {
+	padding: 8px 10px;
+}
+
+.hcaptcha-forms-sample-bg {
+	background-image: url('../images/forms-page.png');
+	filter: blur(1px);
+	-webkit-filter: blur(1px);
+	width: 100%;
+	aspect-ratio: 2845 / 1637;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	box-sizing: border-box;
+}
+
+.hcaptcha-forms-sample-text {
+	background-color: rgb(92, 111, 138, 0.8);
+	color: #f0f2f5;
+	border: 3px solid #f0f2f5;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+	width: 80%;
+	padding: 20px;
+	text-align: center;
+}
+
+.hcaptcha-forms-sample-text p {
+	font-size: 1.3em;
+}
+
+#hcaptcha-options .hcaptcha-forms-sample-text p a {
+	color: #f0f2f5;
+}
+
+#hcaptcha-forms-chart {
+	background-color: #ffffff;
+	position: relative;
+	margin: auto;
+	width: 100%;
+	aspect-ratio: 3/1;
+}
+
+@media (max-width: 600px) {
+	#hcaptcha-options #hcaptcha-forms-wrap table tbody tr td {
+		padding: 3px 8px 3px 35%;
+	}
+
+	#hcaptcha-options #hcaptcha-forms-wrap table tbody tr td.column-primary {
+		padding: 3px 10px;
+	}
+}

