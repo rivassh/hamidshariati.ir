@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درخواست ارتقاء بازی | hamidshariati.ir</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0f0f23; color: #e2e8f0; min-height: 100vh; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        
+        h1 { font-size: 2.2rem; margin-bottom: 8px; background: linear-gradient(90deg, #22d3ee, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: #94a3b8; margin-bottom: 40px; font-size: 1.1rem; }
+        
+        .games-section { margin-bottom: 40px; }
+        .games-section h2 { color: #22d3ee; font-size: 1.3rem; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        
+        .game-list { display: grid; gap: 12px; }
+        .game-item { background: #1e293b; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; border: 1px solid #334155; transition: border-color 0.2s; }
+        .game-item:hover { border-color: #22d3ee; }
+        .game-item.selected { border-color: #a855f7; background: #1e1b4b; }
+        .game-item input[type="checkbox"] { display: none; }
+        .game-item label { cursor: pointer; display: flex; align-items: center; gap: 16px; flex: 1; }
+        .game-icon { font-size: 1.8rem; width: 50px; text-align: center; }
+        .game-info h3 { color: #f1f5f9; font-size: 1.1rem; margin-bottom: 4px; }
+        .game-info p { color: #94a3b8; font-size: 0.9rem; }
+        .game-badge { background: #334155; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; color: #94a3b8; margin-right: auto; }
+        
+        .form-section { margin-bottom: 40px; }
+        .form-section h2 { color: #a855f7; font-size: 1.3rem; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px 16px; background: #1e293b; border: 1px solid #334155;
+            border-radius: 8px; color: #e2e8f0; font-size: 1rem; font-family: inherit;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: #22d3ee; box-shadow: 0 0 0 3px rgba(34,211,238,0.15);
+        }
+        .form-group textarea { min-height: 150px; resize: vertical; direction: rtl; }
+        .form-group select { cursor: pointer; }
+        .form-group select option { background: #1e293b; }
+        
+        .hint { color: #64748b; font-size: 0.85rem; margin-top: 6px; }
+        
+        .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn { padding: 14px 28px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+        .btn-primary { background: linear-gradient(135deg, #22d3ee, #a855f7); color: #0f0f23; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34,211,238,0.3); }
+        .btn-secondary { background: #334155; color: #e2e8f0; }
+        .btn-secondary:hover { background: #475569; }
+        .btn-danger { background: #dc2626; color: white; }
+        .btn-danger:hover { background: #ef4444; }
+        
+        .output-section { margin-top: 40px; display: none; }
+        .output-section.visible { display: block; }
+        .output-section h2 { color: #4ade80; font-size: 1.3rem; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        
+        .output-box { background: #0c0a18; border: 1px solid #334155; border-radius: 12px; padding: 20px; position: relative; }
+        .output-box pre { white-space: pre-wrap; word-wrap: break-word; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.95rem; line-height: 1.6; color: #a5f3fc; direction: ltr; text-align: left; }
+        
+        .copy-btn { position: absolute; top: 12px; left: 12px; background: #334155; border: none; color: #94a3b8; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+        .copy-btn:hover { background: #475569; color: #e2e8f0; }
+        .copy-btn.copied { background: #166534; color: #4ade80; }
+        
+        .templates { margin-top: 20px; }
+        .templates h3 { color: #94a3b8; font-size: 1rem; margin-bottom: 12px; }
+        .template-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip { background: #1e293b; border: 1px solid #334155; padding: 8px 14px; border-radius: 20px; font-size: 0.85rem; color: #cbd5e1; cursor: pointer; transition: all 0.2s; }
+        .chip:hover { border-color: #22d3ee; color: #22d3ee; }
+        .chip.active { background: #164e63; border-color: #22d3ee; color: #22d3ee; }
+        
+        .history-section { margin-top: 40px; }
+        .history-section h2 { color: #f59e0b; font-size: 1.3rem; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        .history-list { display: grid; gap: 8px; }
+        .history-item { background: #1e293b; border-radius: 8px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; }
+        .history-item span { color: #94a3b8; font-size: 0.9rem; }
+        .history-item button { background: none; border: none; color: #22d3ee; cursor: pointer; font-size: 0.85rem; }
+        .history-item button:hover { text-decoration: underline; }
+        
+        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; margin-right: 8px; }
+        .status-pending { background: #ff9800; color: #000; }
+        .status-processing { background: #2196f3; color: #fff; }
+        .status-done { background: #00ff88; color: #000; }
+        .status-failed { background: #f44336; color: #fff; }
+        
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-overlay.visible { display: flex; }
+        .modal { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; }
+        .modal h3 { color: #22d3ee; margin-bottom: 16px; }
+        .modal pre { white-space: pre-wrap; word-wrap: break-word; font-family: 'Consolas', monospace; font-size: 0.9rem; line-height: 1.6; color: #a5f3fc; direction: ltr; text-align: left; background: #0c0a18; padding: 16px; border-radius: 8px; }
+        .modal .close-btn { float: left; background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
+        .modal .close-btn:hover { color: #fff; }
+        
+        footer { margin-top: 60px; text-align: center; color: #475569; font-size: 0.85rem; border-top: 1px solid #1e293b; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>درخواست ارتقاء بازی</h1>
+        <p class="subtitle">تغییرات مورد نظرتون رو توضیح بدید تا mimo code اجرا کنه</p>
+
+        <div class="games-section">
+            <h2>بازی‌های موجود</h2>
+            <div class="game-list">
+                <div class="game-item" data-game="snake">
+                    <input type="checkbox" id="game-snake" checked>
+                    <label for="game-snake">
+                        <span class="game-icon">🐍</span>
+                        <div class="game-info">
+                            <h3>مار نئون</h3>
+                            <p>بازی کلاسیک مار با گرافیک نئون - Phaser.js</p>
+                        </div>
+                        <span class="game-badge">/game-platform/</span>
+                    </label>
+                </div>
+                <div class="game-item" data-game="game1">
+                    <input type="checkbox" id="game-game1">
+                    <label for="game-game1">
+                        <span class="game-icon">🎯</span>
+                        <div class="game-info">
+                            <h3>بازی ۱</h3>
+                            <p>Unity WebGL - نسخه ۱.۰</p>
+                        </div>
+                        <span class="game-badge">/games/game1/</span>
+                    </label>
+                </div>
+                <div class="game-item" data-game="game2">
+                    <input type="checkbox" id="game-game2">
+                    <label for="game-game2">
+                        <span class="game-icon">🎲</span>
+                        <div class="game-info">
+                            <h3>بازی ۲</h3>
+                            <p>Unity WebGL - نسخه آزمایشی</p>
+                        </div>
+                        <span class="game-badge">/games/game2/</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>توضیح تغییرات</h2>
+            
+            <div class="templates">
+                <h3>نمونه درخواست‌ها:</h3>
+                <div class="template-chips">
+                    <span class="chip" data-template="add-powerup">افزودن قدرت ویژه</span>
+                    <span class="chip" data-template="new-theme">موضوع جدید</span>
+                    <span class="chip" data-template="fix-bug">رفع باگ</span>
+                    <span class="chip" data-template="improve-ux">بهبود تجربه کاربری</span>
+                    <span class="chip" data-template="add-level">افزودن مرحله</span>
+                    <span class="chip" data-template="multiplayer">چندنفره</span>
+                    <span class="chip" data-template="mobile">بهینه‌سازی موبایل</span>
+                    <span class="chip" data-template="sound">افزودن صدا</span>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 24px;">
+                <label for="change-type">نوع تغییر</label>
+                <select id="change-type">
+                    <option value="feature">ویژگی جدید</option>
+                    <option value="bugfix">رفع باگ</option>
+                    <option value="enhancement">بهبود عملکرد</option>
+                    <option value="visual">تغییرات بصری</option>
+                    <option value="gameplay">تغییر گیم‌پلی</option>
+                    <option value="other">سایر</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">توضیحات تغییرات</label>
+                <div style="position: relative;">
+                    <textarea id="description" placeholder="مثال: می‌خوام وقتی مار غذا می‌خوره، یه افکت درخشش بیفته و یه صدا پخش بشه. همچنین سرعت بازی آروم‌تر شروع بشه..."></textarea>
+                    <button id="voice-btn" type="button" style="position: absolute; top: 12px; left: 12px; background: #dc2626; border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s;" title="ضبط صدا - کلیک کنید و صحبت کنید">🎤</button>
+                    <div id="voice-status" style="display: none; margin-top: 8px; padding: 8px 12px; background: #1e293b; border-radius: 8px; color: #94a3b8; font-size: 0.85rem; border: 1px solid #334155;">
+                        <span style="color: #ef4444;">●</span> در حال ضبط صدا...
+                    </div>
+                </div>
+                <p class="hint">هر چی دقیق‌تر توضیح بدید، نتیجه بهتر میشه — یا روی دکمه میکروفون کلیک کنید و صحبت کنید</p>
+            </div>
+
+            <div class="form-group">
+                <label for="priority">اولویت</label>
+                <select id="priority">
+                    <option value="low">کم</option>
+                    <option value="medium" selected>متوسط</option>
+                    <option value="high">زیاد</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">نکات اضافی (اختیاری)</label>
+                <input type="text" id="notes" placeholder="هر نکته‌ای که فکر می‌کنید مهمه...">
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" onclick="submitRequest()">ارسال درخواست</button>
+                <button class="btn btn-secondary" onclick="saveToLocal()">ذخیره در مرورگر</button>
+                <button class="btn btn-danger" onclick="clearForm()">پاک کردن</button>
+            </div>
+            <div id="submit-status" style="margin-top: 12px; display: none;"></div>
+        </div>
+
+        <div class="output-section" id="output-section">
+            <h2>خروجی درخواست</h2>
+            <div class="output-box">
+                <button class="copy-btn" onclick="copyOutput()">کپی</button>
+                <pre id="output-text"></pre>
+            </div>
+            <p class="hint" style="margin-top: 12px;">این متن رو کپی کنید و به mimo code بدید تا تغییرات رو اعمال کنه</p>
+        </div>
+
+        <div class="history-section">
+            <h2>درخواست‌های قبلی</h2>
+            <div class="history-list" id="history-list">
+                <p style="color: #64748b;">هنوز درخواستی ذخیره نشده</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="status-modal">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h3 id="modal-title">وضعیت درخواست</h3>
+            <pre id="modal-content"></pre>
+        </div>
+    </div>
+
+    <footer>
+        <p>hamidshariati.ir &copy; 2026 — صفحه مدیریت ارتقاء بازی‌ها</p>
+    </footer>
+
+    <script>
+        const templates = {
+            'add-powerup': `می‌خوام یه سیستم قدرت ویژه (Power-up) اضافه بشه:\n- غذای خاصی بیاد که مار رو سریع‌تر کنه\n- غذایی که مار رو بزرگ‌تر کنه (بدون امتیاز)\n- غذایی که امتیاز مضاعف بده\nهر کدوم ۵ ثانیه فعال باشن.`,
+            'new-theme': `می‌خوام یه تم جدید اضافه بشه:\n- تم فضایی با ستاره‌ها و سیاره‌ها\n- تم جنگل با درخت‌ها و حیوانات\n- تم ساحل با موج و صدف\nقابلیت انتخاب تم از منوی اصلی`,
+            'fix-bug': `باگی هست که باید رفع بشه:\n[توضیح باگ رو اینجا بنویسید]\n\nچطور تکرار میشه:\n[مراحل تکرار]\n\nرفتار مورد انتظار:\n[چی باید بشه]`,
+            'improve-ux': `بهبود تجربه کاربری:\n- انیمیشن نرم‌تر برای حرکت مار\n- افکت ذرات هنگام خوردن غذا\n- نمایش بهتر منو و دکمه‌ها\n- پشتیبانی بهتر از صفحه‌های کوچک`,
+            'add-level': `افزودن سیستم مراحل:\n- مرحله ۱: دیوارها ساده\n- مرحله ۲: دیوارهای متحرک\n- مرحله ۳: موانع جدید\nانتقال خودکار بین مراحل`,
+            'multiplayer': `حالت چندنفره:\n- دو بازیکن روی یک صفحه\n- کنترل با WASD و فلش‌ها\n- هر کی زودتر بخوره ببره\nیا آنلاین با WebSocket`,
+            'mobile': `بهینه‌سازی موبایل:\n- دکمه‌های لمسی جهت‌دار\n- اندازه مناسب صفحه‌های کوچک\n- Swipe برای تغییر جهت\n- عملکرد روان روی گوشی`,
+            'sound': `افزودن صدا:\n- صدای خوردن غذا\n- صدای گیم‌اور\n- صدای حرکت مار\n- موزیک پس‌زمینه ملایم\nقابلیت قطع صدا از منو`
+        };
+
+        document.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                const template = chip.dataset.template;
+                document.getElementById('description').value = templates[template] || '';
+            });
+        });
+
+        document.querySelectorAll('.game-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (e.target.tagName === 'INPUT') return;
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+                item.classList.toggle('selected', checkbox.checked);
+            });
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            if (checkbox.checked) item.classList.add('selected');
+        });
+
+        function getSelectedGames() {
+            const games = [];
+            document.querySelectorAll('.game-item input:checked').forEach(cb => {
+                games.push(cb.closest('.game-item').dataset.game);
+            });
+            return games;
+        }
+
+        async function submitRequest() {
+            const games = getSelectedGames();
+            const changeType = document.getElementById('change-type').value;
+            const description = document.getElementById('description').value.trim();
+            const priority = document.getElementById('priority').value;
+            const notes = document.getElementById('notes').value.trim();
+
+            if (!games.length) {
+                alert('لطفاً حداقل یک بازی رو انتخاب کنید');
+                return;
+            }
+            if (!description) {
+                alert('لطفاً توضیحات تغییرات رو بنویسید');
+                return;
+            }
+
+            const statusEl = document.getElementById('submit-status');
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#94a3b8';
+            statusEl.textContent = 'در حال ارسال...';
+
+            try {
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ games, changeType, description, priority, notes })
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    statusEl.style.color = '#4ade80';
+                    statusEl.innerHTML = '✓ درخواست ارسال شد! (ID: ' + result.id + ')<br>mimo code ظرف یک دقیقه درخواست رو دریافت می‌کنه.';
+                    saveToHistory(games, changeType, description);
+                    generateOutput(games, changeType, description, priority, notes);
+                } else {
+                    statusEl.style.color = '#f87171';
+                    statusEl.textContent = 'خطا: ' + (result.error || 'ارسال ناموفق');
+                }
+            } catch (err) {
+                statusEl.style.color = '#f87171';
+                statusEl.textContent = 'خطا در اتصال: ' + err.message;
+            }
+        }
+
+        function generateOutput(games, changeType, description, priority, notes) {
+            const typeLabels = {
+                'feature': 'ویژگی جدید',
+                'bugfix': 'رفع باگ',
+                'enhancement': 'بهبود عملکرد',
+                'visual': 'تغییرات بصری',
+                'gameplay': 'تغییر گیم‌پلی',
+                'other': 'سایر'
+            };
+            const priorityLabels = { 'low': 'کم', 'medium': 'متوسط', 'high': 'زیاد' };
+            const gameNames = { 'snake': 'مار نئون', 'game1': 'بازی ۱', 'game2': 'بازی ۲' };
+            const gamePaths = { 'snake': '/game-platform/', 'game1': '/games/game1/', 'game2': '/games/game2/' };
+
+            const output = `# درخواست ارتقاء بازی
+## تاریخ: ${new Date().toLocaleDateString('fa-IR')}
+
+## بازی‌های هدف
+${games.map(g => `- ${gameNames[g]} (${gamePaths[g]})`).join('\n')}
+
+## نوع تغییر
+${typeLabels[changeType]}
+
+## اولویت
+${priorityLabels[priority]}
+
+## توضیحات
+${description}
+${notes ? `\n## نکات اضافی\n${notes}` : ''}
+
+---
+## دستورات mimo code
+
+برای اجرای این تغییرات، مراحل زیر رو دنبال کنید:
+
+1. فایل‌های بازی مربوطه رو بخونید:
+\`\`\`bash
+# بازی مار نئون
+cat /root/nginx-certbot/websites/hamidshariati.ir/game-platform/game.js
+
+# یا بازی‌های Unity
+cat /root/nginx-certbot/websites/hamidshariati.ir/games/game1/builds/v1.0/index.html
+\`\`\`
+
+2. تغییرات رو اعمال کنید
+
+3. تست کنید که بازی درست کار کنه
+
+4. فایل‌ها رو ذخیره کنید
+`;
+
+            document.getElementById('output-text').textContent = output;
+            document.getElementById('output-section').classList.add('visible');
+            document.getElementById('output-section').scrollIntoView({ behavior: 'smooth' });
+
+            saveToHistory(games, changeType, description);
+        }
+
+        function copyOutput() {
+            const text = document.getElementById('output-text').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'کپی شد!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'کپی';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function saveToLocal() {
+            const data = {
+                games: getSelectedGames(),
+                changeType: document.getElementById('change-type').value,
+                description: document.getElementById('description').value,
+                priority: document.getElementById('priority').value,
+                notes: document.getElementById('notes').value,
+                timestamp: Date.now()
+            };
+            const saved = JSON.parse(localStorage.getItem('game-upgrades') || '[]');
+            saved.push(data);
+            localStorage.setItem('game-upgrades', JSON.stringify(saved));
+            alert('درخواست ذخیره شد!');
+        }
+
+        function clearForm() {
+            document.querySelectorAll('.game-item').forEach(item => {
+                item.classList.remove('selected');
+                item.querySelector('input').checked = false;
+            });
+            document.querySelector('.game-item[data-game="snake"]').classList.add('selected');
+            document.querySelector('.game-item[data-game="snake"] input').checked = true;
+            document.getElementById('change-type').value = 'feature';
+            document.getElementById('description').value = '';
+            document.getElementById('priority').value = 'medium';
+            document.getElementById('notes').value = '';
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        }
+
+        function saveToHistory(games, type, desc) {
+            const history = JSON.parse(localStorage.getItem('game-upgrades-history') || '[]');
+            history.unshift({ games, type, desc: desc.substring(0, 80), time: Date.now() });
+            if (history.length > 10) history.pop();
+            localStorage.setItem('game-upgrades-history', JSON.stringify(history));
+            renderHistory();
+        }
+
+        async function fetchServerRequests() {
+            try {
+                const r = await fetch('api.php');
+                return await r.json();
+            } catch(e) { return []; }
+        }
+
+        async function renderHistory() {
+            const history = JSON.parse(localStorage.getItem('game-upgrades-history') || '[]');
+            const serverReqs = await fetchServerRequests();
+            const list = document.getElementById('history-list');
+            
+            const allItems = [];
+            serverReqs.forEach(r => {
+                allItems.push({
+                    id: r.id,
+                    games: r.games,
+                    desc: (r.description || '').substring(0, 80),
+                    time: new Date(r.timestamp).getTime(),
+                    status: r.status || 'pending',
+                    summary: r.summary || null,
+                    error: r.error || null,
+                    source: 'server'
+                });
+            });
+            history.forEach(h => {
+                if (!allItems.find(a => a.desc === h.desc && Math.abs(a.time - h.time) < 60000)) {
+                    allItems.push({
+                        id: null,
+                        games: h.games,
+                        desc: h.desc,
+                        time: h.time,
+                        status: 'local',
+                        source: 'local'
+                    });
+                }
+            });
+            
+            allItems.sort((a, b) => b.time - a.time);
+            
+            if (!allItems.length) {
+                list.innerHTML = '<p style="color: #64748b;">هنوز درخواستی ذخیره نشده</p>';
+                return;
+            }
+            
+            const gameNames = { 'snake': 'مار', 'game1': 'بازی۱', 'game2': 'بازی۲' };
+            const statusLabels = { pending: 'در انتظار', processing: 'در حال اجرا', done: 'انجام شد', failed: 'ناموفق', local: 'محلی' };
+            
+            list.innerHTML = allItems.map(h => {
+                const statusClass = h.source === 'server' ? `status-${h.status}` : '';
+                const badge = h.source === 'server' ? `<span class="status-badge ${statusClass}">${statusLabels[h.status] || h.status}</span>` : '';
+                const btn = h.source === 'server' && h.id ? `<button onclick="showStatus('${h.id}')">وضعیت</button>` : '';
+                return `
+                    <div class="history-item">
+                        <span>${badge}${h.games.map(g => gameNames[g] || g).join(', ')} — ${h.desc}</span>
+                        <span>${btn}${new Date(h.time).toLocaleDateString('fa-IR')}</span>
+                    </div>`;
+            }).join('');
+        }
+
+        async function showStatus(id) {
+            try {
+                const r = await fetch('api.php');
+                const data = await r.json();
+                const req = data.find(d => d.id === id);
+                if (!req) { alert('درخواست یافت نشد'); return; }
+                
+                const gameNames = { snake: 'مار نئون', game1: 'بازی ۱', game2: 'بازی ۲' };
+                const statusLabels = { pending: 'در انتظار', processing: 'در حال اجرا', done: 'انجام شد', failed: 'ناموفق' };
+                
+                let content = `وضعیت: ${statusLabels[req.status] || req.status}\n`;
+                content += `بازی: ${(req.games || []).map(g => gameNames[g] || g).join('، ')}\n`;
+                content += `تاریخ: ${new Date(req.timestamp).toLocaleString('fa-IR')}\n`;
+                if (req.started) content += `شروع: ${new Date(req.started).toLocaleString('fa-IR')}\n`;
+                if (req.finished) content += `پایان: ${new Date(req.finished).toLocaleString('fa-IR')}\n`;
+                content += `\nتوضیحات:\n${req.description}\n`;
+                if (req.summary) content += `\nنتیجه:\n${req.summary}\n`;
+                if (req.error) content += `\nخطا:\n${req.error}\n`;
+                
+                document.getElementById('modal-title').textContent = `درخواست ${req.id}`;
+                document.getElementById('modal-content').textContent = content;
+                document.getElementById('status-modal').classList.add('visible');
+            } catch(e) { alert('خطا در دریافت اطلاعات'); }
+        }
+
+        function closeModal() {
+            document.getElementById('status-modal').classList.remove('visible');
+        }
+
+        document.getElementById('status-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        const voiceBtn = document.getElementById('voice-btn');
+        const voiceStatus = document.getElementById('voice-status');
+        const descArea = document.getElementById('description');
+        let recognition = null;
+        let isRecording = false;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'fa-IR';
+
+            let finalTranscript = '';
+
+            recognition.onresult = (event) => {
+                let interim = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript + ' ';
+                        descArea.value = finalTranscript;
+                    } else {
+                        interim += event.results[i][0].transcript;
+                    }
+                }
+                if (interim) {
+                    descArea.value = finalTranscript + interim;
+                }
+            };
+
+            recognition.onend = () => {
+                isRecording = false;
+                voiceBtn.style.background = '#dc2626';
+                voiceBtn.textContent = '🎤';
+                voiceStatus.style.display = 'none';
+            };
+
+            recognition.onerror = (e) => {
+                console.error('Speech error:', e.error);
+                isRecording = false;
+                voiceBtn.style.background = '#dc2626';
+                voiceBtn.textContent = '🎤';
+                voiceStatus.style.display = 'none';
+                if (e.error === 'not-allowed') {
+                    alert('لطفاً اجازه دسترسی به میکروفون رو بدید');
+                }
+            };
+
+            voiceBtn.addEventListener('click', () => {
+                if (isRecording) {
+                    recognition.stop();
+                } else {
+                    finalTranscript = descArea.value;
+                    recognition.start();
+                    isRecording = true;
+                    voiceBtn.style.background = '#16a34a';
+                    voiceBtn.textContent = '⏹';
+                    voiceStatus.style.display = 'block';
+                }
+            });
+        } else {
+            voiceBtn.style.display = 'none';
+            console.warn('Speech recognition not supported');
+        }
+
+        renderHistory();
+        setInterval(renderHistory, 15000);
+    </script>
+</body>
+</html>

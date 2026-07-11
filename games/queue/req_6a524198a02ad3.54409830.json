@@ -1,0 +1,13 @@
+{
+  "id": "req_6a524198a02ad3.54409830",
+  "timestamp": "2026-07-11T13:14:00+00:00",
+  "games": [
+    "snake"
+  ],
+  "changeType": "feature",
+  "description": "دیواره‌هاش قابل عبور باشه",
+  "priority": "medium",
+  "notes": "",
+  "status": "processing",
+  "started": "2026-07-11T16:44:01+03:30"
+}
