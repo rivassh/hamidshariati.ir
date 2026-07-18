@@ -521,22 +521,9 @@
             
             <div class="sidebar-content">
                 <div class="section-title">موضوع فعال</div>
-                <div class="games-list">
-                    <button class="game-link selected" data-target="snake" onclick="selectTarget('snake', '🐍 مار نئون', '/game-platform/')">
-                        <span class="game-icon">🐍</span>
-                        <span class="game-name">مار نئون</span>
-                        <span class="game-check">✓</span>
-                    </button>
-                    <button class="game-link" data-target="game2" onclick="selectTarget('game2', '🎲 بازی کلمات', '/games/game2/web/')">
-                        <span class="game-icon">🎲</span>
-                        <span class="game-name">بازی کلمات</span>
-                        <span class="game-check">✓</span>
-                    </button>
-                    <button class="game-link" data-target="game1" onclick="selectTarget('game1', '🎯 بازی ۱', '/games/game1/builds/v1.0/')">
-                        <span class="game-icon">🎯</span>
-                        <span class="game-name">بازی ۱</span>
-                        <span class="game-check">✓</span>
-                    </button>
+                <div class="games-list" id="games-list">
+                    <!-- Loaded dynamically from games.json -->
+                </div>
                     <button class="game-link new-game-link" onclick="requestNewGame()">
                         <span class="game-icon">✨</span>
                         <span class="game-name" id="new-item-text">بازی جدید</span>
@@ -1141,9 +1128,12 @@
             try { 
                 const r = await fetch(`${API_URL}/mimo-api/config`); 
                 const d = await r.json(); 
-                botName = d.botName || 'دана';
+                botName = d.botName || 'دانا';
                 CONFIG.topic = d.topic || 'games';
             } catch(e) {}
+            
+            // Load games from games.json
+            await loadGames();
             
             // Update new item button text based on topic
             newItemText = getNewItemText();
@@ -1153,6 +1143,30 @@
             setupVoice();
             renderChatList();
             messageInput.focus();
+        }
+
+        async function loadGames() {
+            try {
+                const res = await fetch(`${API_URL}/games/games.json`);
+                const games = await res.json();
+                const gamesList = document.getElementById('games-list');
+                if (gamesList && games.length > 0) {
+                    gamesList.innerHTML = games.map((g, i) => `
+                        <button class="game-link ${i === 0 ? 'selected' : ''}" data-target="${g.id}" onclick="selectTarget('${g.id}', '${g.icon} ${g.name}', '${g.url}')">
+                            <span class="game-icon">${g.icon}</span>
+                            <span class="game-name">${g.name}</span>
+                            <span class="game-check">✓</span>
+                        </button>
+                    `).join('');
+                    // Set first game as default
+                    if (games[0]) {
+                        currentTarget = { id: games[0].id, name: `${games[0].icon} ${games[0].name}`, url: games[0].url };
+                        selectedGames = [games[0].id];
+                    }
+                }
+            } catch(e) {
+                console.log('Could not load games.json');
+            }
         }
         init();
 
