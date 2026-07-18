@@ -5,6 +5,24 @@ const { randomBytes } = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
+// Dataset logger
+const DATASET_DIR = '/opt/webapp-data/datasets';
+if (!fs.existsSync(DATASET_DIR)) fs.mkdirSync(DATASET_DIR, { recursive: true });
+let datasetBuffer = [];
+function logToDataset(entry) {
+  datasetBuffer.push(entry);
+  if (datasetBuffer.length >= 5) flushDataset();
+}
+function flushDataset() {
+  if (datasetBuffer.length === 0) return;
+  const filename = `dataset_${new Date().toISOString().split('T')[0]}.jsonl`;
+  const lines = datasetBuffer.map(e => JSON.stringify(e)).join('\n') + '\n';
+  fs.appendFileSync(path.join(DATASET_DIR, filename), lines, 'utf8');
+  datasetBuffer = [];
+}
+setInterval(flushDataset, 10000);
+process.on('exit', flushDataset);
+
 const PORT = process.env.PORT || 3457;
 const TMUX_SESSION = process.env.TMUX_SESSION || '2';
 const TMUX_WINDOW = process.env.TMUX_WINDOW || '0';
@@ -56,7 +74,20 @@ function pollJob(job, attempt = 0) {
       if (response && response.length > 5 && !response.includes('[WEBAPP') && response !== job.lastContent) {
         job.lastContent = response;
         job.stableCount = (job.stableCount || 0) + 1;
-        if (job.stableCount >= 2) { job.status = 'done'; job.response = response; return; }
+        if (job.stableCount >= 2) {
+          job.status = 'done';
+          job.response = response;
+          // Log to dataset
+          logToDataset({
+            id: job.id,
+            timestamp: new Date().toISOString(),
+            topic: TOPIC,
+            prompt: job.message,
+            response: response,
+            metadata: { model: 'mimo-auto', language: 'fa' }
+          });
+          return;
+        }
       } else if (response) { job.lastContent = response; job.stableCount = 0; }
       pollJob(job, attempt + 1);
     } catch (e) { pollJob(job, attempt + 1); }
@@ -80,6 +111,39 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'GET' && req.url === '/api/health') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 'ok' }));
+    return;
+  }
+
+  // Dataset stats
+  if (req.method === 'GET' && req.url === '/api/dataset/stats') {
+    const files = fs.readdirSync(DATASET_DIR).filter(f => f.endsWith('.jsonl'));
+    let totalEntries = 0;
+    files.forEach(f => {
+      const content = fs.readFileSync(path.join(DATASET_DIR, f), 'utf8');
+      totalEntries += content.split('\n').filter(l => l.trim()).length;
+    });
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ files: files.length, entries: totalEntries, dir: DATASET_DIR }));
+    return;
+  }
+
+  // Dataset export
+  if (req.method === 'GET' && req.url === '/api/dataset/export') {
+    flushDataset();
+    const files = fs.readdirSync(DATASET_DIR).filter(f => f.endsWith('.jsonl'));
+    const allEntries = [];
+    files.forEach(f => {
+      const content = fs.readFileSync(path.join(DATASET_DIR, f), 'utf8');
+      content.split('\n').filter(l => l.trim()).forEach(line => allEntries.push(JSON.parse(line)));
+    });
+    // Convert to training format (instruction/output)
+    const trainingData = allEntries.map(e => ({
+      instruction: e.prompt,
+      output: e.response,
+      system: `You are a helpful assistant for topic: ${e.topic}`
+    }));
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ total: trainingData.length, data: trainingData }));
     return;
   }
 
