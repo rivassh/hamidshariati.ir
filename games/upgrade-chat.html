@@ -46,6 +46,11 @@
         
         .sidebar-title { font-size: 1rem; font-weight: 600; color: #94a3b8; }
         
+        .sidebar-header-btns {
+            display: flex;
+            gap: 6px;
+        }
+        
         .new-chat-btn {
             width: 36px;
             height: 36px;
@@ -60,11 +65,38 @@
             justify-content: center;
         }
         
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid #1e293b;
+        }
+        
+        .sidebar-tab {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: #64748b;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .sidebar-tab:hover { color: #94a3b8; }
+        .sidebar-tab.active { color: #22d3ee; border-bottom-color: #22d3ee; }
+        
         .sidebar-content {
             flex: 1;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
+        
+        .tab-content {
+            padding: 8px;
+        }
+        
+        .tab-content.hidden { display: none; }
         
         .section-title {
             font-size: 0.7rem;
@@ -516,22 +548,27 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <span class="sidebar-title">منو</span>
-                <button class="new-chat-btn" onclick="newChat()" title="چت جدید">+</button>
+                <div class="sidebar-header-btns">
+                    <button class="new-chat-btn" onclick="requestNewGame()" title="جدید">✨</button>
+                    <button class="new-chat-btn" onclick="newChat()" title="چت جدید">+</button>
+                </div>
+            </div>
+            
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab active" onclick="switchTab('games')">بازی‌ها</button>
+                <button class="sidebar-tab" onclick="switchTab('history')">تاریخچه</button>
             </div>
             
             <div class="sidebar-content">
-                <div class="section-title">موضوع فعال</div>
-                <div class="games-list" id="games-list">
-                    <!-- Loaded dynamically from games.json -->
-                </div>
-                    <button class="game-link new-game-link" onclick="requestNewGame()">
-                        <span class="game-icon">✨</span>
-                        <span class="game-name" id="new-item-text">بازی جدید</span>
-                    </button>
+                <div class="tab-content" id="tab-games">
+                    <div class="games-list" id="games-list">
+                        <!-- Loaded dynamically from games.json -->
+                    </div>
                 </div>
                 
-                <div class="section-title">تاریخچه چت</div>
-                <div class="chat-list" id="chat-list"></div>
+                <div class="tab-content hidden" id="tab-history">
+                    <div class="chat-list" id="chat-list"></div>
+                </div>
             </div>
             
             <div class="sidebar-footer">
@@ -1009,6 +1046,14 @@
             const isOpen = open !== undefined ? open : !sidebar.classList.contains('open');
             sidebar.classList.toggle('open', isOpen);
             sidebarOverlay.classList.toggle('open', isOpen);
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            
+            document.querySelector(`.sidebar-tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
         }
 
         function renderChatList() {
