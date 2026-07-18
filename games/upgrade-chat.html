@@ -1192,7 +1192,7 @@
 
         async function loadGames() {
             try {
-                const res = await fetch(`${API_URL}/games/games.json`);
+                const res = await fetch(`${API_URL}/games.json`);
                 const games = await res.json();
                 const gamesList = document.getElementById('games-list');
                 if (gamesList && games.length > 0) {
