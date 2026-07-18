@@ -722,15 +722,92 @@
             if (currentChatId === id) newChat(); else renderChatList();
         }
 
+        // ========== New Game Request ==========
+        function requestNewGame() {
+            // Reset mode
+            currentMode = 'chat';
+            currentChatId = 'chat_' + Date.now();
+            messages = [];
+            
+            // Deselect all games
+            document.querySelectorAll('.game-link[data-target]').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            currentTarget = { id: null, name: 'بازی جدید', url: null };
+            selectedGames = [];
+            
+            chatTitle.textContent = '✨ بازی جدید';
+            messagesEl.innerHTML = `
+                <div class="message message-system">بازی جدید می‌خوای؟ 🎮</div>
+                <div class="message message-system">چه بازی‌ای مد نظرته؟</div>
+            `;
+            renderChatList();
+            toggleSidebar(false);
+            messageInput.focus();
+        }
+
         // ========== Bug Report ==========
-        function requestBugReport() {
+        let lastScreenshot = null;
+
+        async function captureScreenshot() {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = window.innerWidth * 2;
+                canvas.height = window.innerHeight * 2;
+                const ctx = canvas.getContext('2d');
+                ctx.scale(2, 2);
+                
+                ctx.fillStyle = '#0f0f23';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.font = '14px Segoe UI, Tahoma, sans-serif';
+                ctx.fillStyle = '#e2e8f0';
+                ctx.fillText(`Screenshot: ${new Date().toLocaleTimeString('fa-IR')}`, 20, 30);
+                ctx.fillText(`URL: ${window.location.pathname}`, 20, 50);
+                
+                const messages = document.querySelectorAll('.message');
+                let y = 80;
+                messages.forEach(msg => {
+                    const isUser = msg.classList.contains('message-user');
+                    const text = msg.textContent;
+                    ctx.fillStyle = isUser ? '#0ea5e9' : '#1e293b';
+                    const boxWidth = Math.min(ctx.measureText(text).width + 20, canvas.width / 2 - 40);
+                    if (isUser) {
+                        ctx.fillRect(canvas.width / 2 - boxWidth - 16, y, boxWidth, 28);
+                    } else {
+                        ctx.fillRect(16, y, boxWidth, 28);
+                    }
+                    ctx.fillStyle = '#e2e8f0';
+                    ctx.fillText(text.slice(0, 60), isUser ? canvas.width / 2 - boxWidth - 6 : 26, y + 18);
+                    y += 36;
+                });
+                
+                return canvas.toDataURL('image/png').split(',')[1];
+            } catch (e) {
+                return null;
+            }
+        }
+
+        async function requestBugReport() {
+            // Capture screenshot first
+            lastScreenshot = await captureScreenshot();
+            
             if (messages.length > 0 && currentMode === 'chat') saveCurrentChat();
             currentChatId = 'bug_' + Date.now();
             currentMode = 'bug';
             messages = [];
             gameSelector.classList.remove('visible');
             chatTitle.textContent = '🐛 گزارش خطا';
+            
+            let screenshotHtml = '';
+            if (lastScreenshot) {
+                screenshotHtml = `<div class="message message-system"><img src="data:image/png;base64,${lastScreenshot}" style="max-width:100%;border-radius:8px;margin-top:8px;" /></div>`;
+            }
+            
             messagesEl.innerHTML = `
+                <div class="message message-system">اسکرین‌شات صفحه گرفته شد 👆</div>
+                ${screenshotHtml}
                 <div class="message message-system">کدوم بازی مشکل داره؟</div>
                 <div class="message message-system">یا مستقیم بگو چه باگی هست.</div>
             `;
@@ -987,74 +1064,60 @@
             const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
             
             if (SR) {
-                // Web Speech API supported
+                // Web Speech API supported - real-time transcription
                 recognition = new SR();
                 recognition.continuous = false;
-                recognition.interimResults = true;
+                recognition.interimResults = false;
                 recognition.lang = 'fa-IR';
-                recognition.onstart = () => { isRecording = true; voiceBtn.classList.add('recording'); };
-                recognition.onresult = (e) => {
-                    let t = '';
-                    for (let i = e.resultIndex; i < e.results.length; i++) t += e.results[i][0].transcript;
-                    messageInput.value = t;
-                    messageInput.dispatchEvent(new Event('input'));
+                
+                let lastTranscript = '';
+                
+                recognition.onstart = () => { 
+                    isRecording = true; 
+                    lastTranscript = '';
+                    voiceBtn.classList.add('recording'); 
                 };
-                recognition.onend = () => { isRecording = false; voiceBtn.classList.remove('recording'); };
+                recognition.onresult = (e) => {
+                    const result = e.results[e.results.length - 1];
+                    const transcript = result[0].transcript;
+                    
+                    // Only add if it's new text
+                    if (transcript !== lastTranscript) {
+                        const newText = transcript.slice(lastTranscript.length);
+                        if (newText) {
+                            messageInput.value += (messageInput.value ? ' ' : '') + newText;
+                            messageInput.dispatchEvent(new Event('input'));
+                        }
+                        lastTranscript = transcript;
+                    }
+                };
+                recognition.onend = () => { 
+                    isRecording = false; 
+                    voiceBtn.classList.remove('recording'); 
+                };
                 recognition.onerror = (e) => { 
                     isRecording = false; 
                     voiceBtn.classList.remove('recording');
                     if (e.error === 'not-allowed') {
                         addMessage('system', 'دسترسی میکروفون رد شد.');
+                    } else if (e.error === 'no-speech') {
+                        addMessage('system', 'صدایی شنیده نشد. دوباره امتحان کن.');
                     }
                 };
-                voiceBtn.addEventListener('click', () => { isRecording ? recognition.stop() : recognition.start(); });
-            } else if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                // Fallback: MediaRecorder (records audio file)
-                voiceBtn.addEventListener('click', async () => {
-                    if (isRecording) return;
-                    try {
-                        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                        const mediaRecorder = new MediaRecorder(stream);
-                        const chunks = [];
-                        
-                        isRecording = true;
-                        voiceBtn.classList.add('recording');
-                        addMessage('system', 'در حال ضبط صدا... دوباره کلیک کن تا تموم بشه.');
-                        
-                        mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
-                        mediaRecorder.onstop = () => {
-                            stream.getTracks().forEach(t => t.stop());
-                            isRecording = false;
-                            voiceBtn.classList.remove('recording');
-                            
-                            if (chunks.length === 0) return;
-                            
-                            const blob = new Blob(chunks, { type: 'audio/webm' });
-                            const reader = new FileReader();
-                            reader.onload = () => {
-                                const base64 = reader.result.split(',')[1];
-                                addMessage('system', `فایل صوتی ضبط شد (${(blob.size/1024).toFixed(1)} KB). برای تبدیل به متن نیاز به API key داریم.`);
-                            };
-                            reader.readAsDataURL(blob);
-                        };
-                        
-                        mediaRecorder.start();
-                        
-                        // Auto-stop after 30 seconds
-                        setTimeout(() => { if (mediaRecorder.state === 'recording') mediaRecorder.stop(); }, 30000);
-                        
-                        // Click again to stop
-                        voiceBtn.onclick = () => { if (mediaRecorder.state === 'recording') mediaRecorder.stop(); };
-                    } catch (e) {
-                        addMessage('system', 'دسترسی به میکروفون فراهم نیست.');
+                voiceBtn.addEventListener('click', () => { 
+                    if (isRecording) {
+                        recognition.stop();
+                    } else {
+                        lastTranscript = '';
+                        recognition.start();
                     }
                 });
             } else {
-                // No support at all
-                voiceBtn.style.opacity = '0.3';
-                voiceBtn.title = 'مرورگر شما از صدا پشتیبانی نمی‌کند';
+                // No Web Speech API - show message
+                voiceBtn.style.opacity = '0.5';
+                voiceBtn.title = 'تبدیل صدا در این مرورگر پشتیبانی نمی‌شود';
                 voiceBtn.addEventListener('click', () => {
-                    addMessage('system', 'مرورگر شما از تبدیل صدا به متن پشتیبانی نمی‌کند.');
+                    addMessage('system', 'مرورگر شما از تبدیل صدا به متن پشتیبانی نمی‌کند.\n\nلطفاً از Chrome Android استفاده کنید یا متن تایپ کنید.');
                 });
             }
         }

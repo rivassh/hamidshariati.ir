@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>شطرنج ساده | hamidshariati.ir</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .status {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        .status.active { color: #22c55e; }
+        .status.check { color: #ef4444; }
+
+        .board-container {
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 0;
+            border: 4px solid #475569;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .square {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .square.light { background: #f5deb3; }
+        .square.dark { background: #8b4513; }
+        .square.selected { background: #22d3ee !important; }
+        .square.valid { background: #22c55e40 !important; }
+        .square.last-move { background: #fbbf2460 !important; }
+
+        .piece {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: transform 0.1s;
+        }
+
+        .piece:hover { transform: scale(1.1); }
+
+        .captured {
+            display: flex;
+            gap: 4px;
+            margin: 10px 0;
+            min-height: 30px;
+        }
+
+        .captured-pieces {
+            font-size: 1.5rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22d3ee, #0ea5e9);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #334155;
+            color: #cbd5e1;
+        }
+
+        .btn:hover { transform: translateY(-2px); }
+
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #1e293b;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .square { width: 40px; height: 40px; font-size: 1.6rem; }
+            .title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">♟ شطرنج ساده</div>
+        <div class="status active" id="status">نوبت سفید</div>
+    </div>
+
+    <div class="captured">
+        <span class="captured-pieces" id="white-captured"></span>
+    </div>
+
+    <div class="board-container">
+        <div class="board" id="board"></div>
+    </div>
+
+    <div class="captured">
+        <span class="captured-pieces" id="black-captured"></span>
+    </div>
+
+    <div class="controls">
+        <button class="btn btn-primary" onclick="resetGame()">بازی جدید</button>
+        <button class="btn btn-secondary" onclick="undoMove()">بازگشت</button>
+    </div>
+
+    <div class="info">
+        مهره رو انتخاب کن و خانه مورد نظر رو کلیک کن
+    </div>
+
+    <script>
+        const PIECES = {
+            'K': '♔', 'Q': '♕', 'R': '♖', 'B': '♗', 'N': '♘', 'P': '♙',
+            'k': '♚', 'q': '♛', 'r': '♜', 'b': '♝', 'n': '♞', 'p': '♟'
+        };
+
+        let board = [];
+        let turn = 'white';
+        let selected = null;
+        let validMoves = [];
+        let capturedWhite = [];
+        let capturedBlack = [];
+        let lastMove = null;
+        let moveHistory = [];
+
+        function initBoard() {
+            board = [
+                ['r','n','b','q','k','b','n','r'],
+                ['p','p','p','p','p','p','p','p'],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['P','P','P','P','P','P','P','P'],
+                ['R','N','B','Q','K','B','N','R']
+            ];
+        }
+
+        function isWhite(piece) { return piece && piece === piece.toUpperCase(); }
+        function isBlack(piece) { return piece && piece === piece.toLowerCase(); }
+
+        function getPieceColor(piece) {
+            if (!piece) return null;
+            return isWhite(piece) ? 'white' : 'black';
+        }
+
+        function renderBoard() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const square = document.createElement('div');
+                    const isLight = (row + col) % 2 === 0;
+                    square.className = `square ${isLight ? 'light' : 'dark'}`;
+                    square.dataset.row = row;
+                    square.dataset.col = col;
+
+                    if (selected && selected.row === row && selected.col === col) {
+                        square.classList.add('selected');
+                    }
+
+                    if (validMoves.some(m => m.row === row && m.col === col)) {
+                        square.classList.add('valid');
+                    }
+
+                    if (lastMove && ((lastMove.from.row === row && lastMove.from.col === col) || 
+                        (lastMove.to.row === row && lastMove.to.col === col))) {
+                        square.classList.add('last-move');
+                    }
+
+                    const piece = board[row][col];
+                    if (piece) {
+                        const pieceEl = document.createElement('span');
+                        pieceEl.className = 'piece';
+                        pieceEl.textContent = PIECES[piece];
+                        square.appendChild(pieceEl);
+                    }
+
+                    square.addEventListener('click', () => handleSquareClick(row, col));
+                    boardEl.appendChild(square);
+                }
+            }
+
+            document.getElementById('white-captured').textContent = capturedWhite.map(p => PIECES[p]).join(' ');
+            document.getElementById('black-captured').textContent = capturedBlack.map(p => PIECES[p]).join(' ');
+        }
+
+        function handleSquareClick(row, col) {
+            const piece = board[row][col];
+
+            if (selected) {
+                const move = validMoves.find(m => m.row === row && m.col === col);
+                if (move) {
+                    makeMove(selected.row, selected.col, row, col);
+                    selected = null;
+                    validMoves = [];
+                } else if (piece && getPieceColor(piece) === turn) {
+                    selectPiece(row, col);
+                } else {
+                    selected = null;
+                    validMoves = [];
+                }
+            } else if (piece && getPieceColor(piece) === turn) {
+                selectPiece(row, col);
+            }
+
+            renderBoard();
+        }
+
+        function selectPiece(row, col) {
+            selected = { row, col };
+            validMoves = getValidMoves(row, col);
+        }
+
+        function getValidMoves(row, col) {
+            const piece = board[row][col];
+            if (!piece) return [];
+
+            const moves = [];
+            const color = getPieceColor(piece);
+            const type = piece.toUpperCase();
+
+            switch (type) {
+                case 'P':
+                    const dir = color === 'white' ? -1 : 1;
+                    const startRow = color === 'white' ? 6 : 1;
+                    
+                    if (!board[row + dir]?.[col]) {
+                        moves.push({ row: row + dir, col });
+                        if (row === startRow && !board[row + dir * 2]?.[col]) {
+                            moves.push({ row: row + dir * 2, col });
+                        }
+                    }
+                    
+                    if (board[row + dir]?.[col - 1] && getPieceColor(board[row + dir][col - 1]) !== color) {
+                        moves.push({ row: row + dir, col: col - 1 });
+                    }
+                    if (board[row + dir]?.[col + 1] && getPieceColor(board[row + dir][col + 1]) !== color) {
+                        moves.push({ row: row + dir, col: col + 1 });
+                    }
+                    break;
+
+                case 'R':
+                    addLineMoves(moves, row, col, color, [[0,1],[0,-1],[1,0],[-1,0]]);
+                    break;
+
+                case 'N':
+                    const knightMoves = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+                    knightMoves.forEach(([dr, dc]) => {
+                        const nr = row + dr, nc = col + dc;
+                        if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8 && getPieceColor(board[nr][nc]) !== color) {
+                            moves.push({ row: nr, col: nc });
+                        }
+                    });
+                    break;
+
+                case 'B':
+                    addLineMoves(moves, row, col, color, [[1,1],[1,-1],[-1,1],[-1,-1]]);
+                    break;
+
+                case 'Q':
+                    addLineMoves(moves, row, col, color, [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]);
+                    break;
+
+                case 'K':
+                    const kingMoves = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+                    kingMoves.forEach(([dr, dc]) => {
+                        const nr = row + dr, nc = col + dc;
+                        if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8 && getPieceColor(board[nr][nc]) !== color) {
+                            moves.push({ row: nr, col: nc });
+                        }
+                    });
+                    break;
+            }
+
+            return moves.filter(m => m.row >= 0 && m.row < 8 && m.col >= 0 && m.col < 8);
+        }
+
+        function addLineMoves(moves, row, col, color, directions) {
+            directions.forEach(([dr, dc]) => {
+                let nr = row + dr, nc = col + dc;
+                while (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+                    const target = board[nr][nc];
+                    if (!target) {
+                        moves.push({ row: nr, col: nc });
+                    } else {
+                        if (getPieceColor(target) !== color) {
+                            moves.push({ row: nr, col: nc });
+                        }
+                        break;
+                    }
+                    nr += dr;
+                    nc += dc;
+                }
+            });
+        }
+
+        function makeMove(fromRow, fromCol, toRow, toCol) {
+            moveHistory.push({
+                board: JSON.parse(JSON.stringify(board)),
+                turn,
+                capturedWhite: [...capturedWhite],
+                capturedBlack: [...capturedBlack]
+            });
+
+            const piece = board[fromRow][fromCol];
+            const captured = board[toRow][toCol];
+
+            if (captured) {
+                if (isWhite(captured)) {
+                    capturedBlack.push(captured);
+                } else {
+                    capturedWhite.push(captured);
+                }
+            }
+
+            board[toRow][toCol] = piece;
+            board[fromRow][fromCol] = '';
+
+            // Pawn promotion
+            if (piece.toUpperCase() === 'P') {
+                if ((isWhite(piece) && toRow === 0) || (isBlack(piece) && toRow === 7)) {
+                    board[toRow][toCol] = isWhite(piece) ? 'Q' : 'q';
+                }
+            }
+
+            lastMove = { from: { row: fromRow, col: fromCol }, to: { row: toRow, col: toCol } };
+            turn = turn === 'white' ? 'black' : 'white';
+
+            updateStatus();
+        }
+
+        function updateStatus() {
+            const statusEl = document.getElementById('status');
+            const hasMoves = board.some((row, r) => row.some((piece, c) => {
+                if (!piece || getPieceColor(piece) !== turn) return false;
+                return getValidMoves(r, c).length > 0;
+            }));
+
+            if (!hasMoves) {
+                statusEl.textContent = 'بازی تمام شد!';
+                statusEl.className = 'status';
+            } else {
+                statusEl.textContent = `نوبت ${turn === 'white' ? 'سفید' : 'سیاه'}`;
+                statusEl.className = 'status active';
+            }
+        }
+
+        function resetGame() {
+            initBoard();
+            turn = 'white';
+            selected = null;
+            validMoves = [];
+            capturedWhite = [];
+            capturedBlack = [];
+            lastMove = null;
+            moveHistory = [];
+            updateStatus();
+            renderBoard();
+        }
+
+        function undoMove() {
+            if (moveHistory.length === 0) return;
+            const prev = moveHistory.pop();
+            board = prev.board;
+            turn = prev.turn;
+            capturedWhite = prev.capturedWhite;
+            capturedBlack = prev.capturedBlack;
+            selected = null;
+            validMoves = [];
+            lastMove = null;
+            updateStatus();
+            renderBoard();
+        }
+
+        initBoard();
+        renderBoard();
+    </script>
+</body>
+</html>
