@@ -1,6 +1,7 @@
 /**
  * بازی مار — پلتفرم وب (Phaser 3)
  * بدون build — index.html + game.js + style.css
+ * + بهینه‌سازی موبایل: دکمه لمسی، Swipe، مقیاس واکنشی
  */
 
 (function () {
@@ -19,6 +20,48 @@
   const MIN_TICK = 52;
   const HIGH_SCORE_KEY = "phaser_snake_high_score";
 
+  const STAGE_THRESHOLDS = [0, 8, 18];
+  const STAGE_NAMES = ["مرحله ۱: دیوارهای ساده", "مرحله ۲: دیوارهای متحرک", "مرحله ۳: موانع پیشرفته"];
+
+  const STAGE_1_WALLS = [
+    { x: 4, y: 4 }, { x: 4, y: 5 }, { x: 4, y: 6 },
+    { x: 15, y: 4 }, { x: 15, y: 5 }, { x: 15, y: 6 },
+    { x: 4, y: 13 }, { x: 4, y: 14 }, { x: 4, y: 15 },
+    { x: 15, y: 13 }, { x: 15, y: 14 }, { x: 15, y: 15 },
+    { x: 9, y: 2 }, { x: 10, y: 2 },
+    { x: 9, y: 17 }, { x: 10, y: 17 },
+  ];
+
+  const STAGE_2_WALLS_STATIC = [
+    { x: 5, y: 9 }, { x: 5, y: 10 },
+    { x: 14, y: 9 }, { x: 14, y: 10 },
+    { x: 9, y: 5 }, { x: 10, y: 5 },
+    { x: 9, y: 14 }, { x: 10, y: 14 },
+  ];
+
+  const STAGE_2_MOVING_WALLS = [
+    { segments: [{ x: 7, y: 3 }], dx: 1, dy: 0, minX: 7, maxX: 12 },
+    { segments: [{ x: 12, y: 16 }], dx: -1, dy: 0, minX: 7, maxX: 12 },
+    { segments: [{ x: 3, y: 7 }], dx: 0, dy: 1, minY: 7, maxY: 12 },
+    { segments: [{ x: 16, y: 12 }], dx: 0, dy: -1, minY: 7, maxY: 12 },
+  ];
+
+  const STAGE_3_WALLS_STATIC = [
+    { x: 3, y: 9 }, { x: 3, y: 10 },
+    { x: 16, y: 9 }, { x: 16, y: 10 },
+    { x: 9, y: 3 }, { x: 10, y: 3 },
+    { x: 9, y: 16 }, { x: 10, y: 16 },
+  ];
+
+  const STAGE_3_MOVING_WALLS = [
+    { segments: [{ x: 6, y: 6 }], dx: 1, dy: 0, minX: 6, maxX: 13 },
+    { segments: [{ x: 13, y: 13 }], dx: -1, dy: 0, minX: 6, maxX: 13 },
+    { segments: [{ x: 6, y: 13 }], dx: 0, dy: 1, minY: 6, maxY: 13 },
+    { segments: [{ x: 13, y: 6 }], dx: 0, dy: -1, minY: 6, maxY: 13 },
+    { segments: [{ x: 2, y: 2 }], dx: 1, dy: 0, minX: 2, maxX: 5 },
+    { segments: [{ x: 17, y: 17 }], dx: -1, dy: 0, minX: 14, maxX: 17 },
+  ];
+
   const FOOD_COLORS = [
     { fill: 0xf472b6, glow: 0xec4899 },
     { fill: 0x22d3ee, glow: 0x06b6d4 },
@@ -36,10 +79,27 @@
   };
 
   let sharedHighScore = 0;
+  let soundMuted = false;
+  const SOUND_MUTE_KEY = "phaser_snake_sound_muted";
 
   function loadHighScore() {
     const v = parseInt(localStorage.getItem(HIGH_SCORE_KEY) || "0", 10);
     sharedHighScore = Number.isFinite(v) ? v : 0;
+  }
+
+  function loadSoundState() {
+    const v = localStorage.getItem(SOUND_MUTE_KEY);
+    soundMuted = v === "true";
+  }
+
+  function saveSoundState() {
+    localStorage.setItem(SOUND_MUTE_KEY, String(soundMuted));
+  }
+
+  function toggleSound() {
+    soundMuted = !soundMuted;
+    saveSoundState();
+    return soundMuted;
   }
 
   function saveHighScore(score) {
@@ -82,6 +142,7 @@
   }
 
   function playEatSound(scene) {
+    if (soundMuted) return;
     const ctx = getAudioContext(scene);
     if (!ctx) return;
     try {
@@ -103,6 +164,7 @@
   }
 
   function playGameOverSound(scene) {
+    if (soundMuted) return;
     const ctx = getAudioContext(scene);
     if (!ctx) return;
     try {
@@ -123,6 +185,98 @@
     }
   }
 
+  function playStageUpSound(scene) {
+    if (soundMuted) return;
+    const ctx = getAudioContext(scene);
+    if (!ctx) return;
+    try {
+      const t = ctx.currentTime;
+      const notes = [523, 659, 784, 1047];
+      notes.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "square";
+        osc.frequency.setValueAtTime(freq, t + i * 0.08);
+        gain.gain.setValueAtTime(0.08, t + i * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.01, t + i * 0.08 + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(t + i * 0.08);
+        osc.stop(t + i * 0.08 + 0.15);
+      });
+    } catch (_) {
+      /* ignore */
+    }
+  }
+
+  /* ===== Swipe Detection ===== */
+  function setupSwipe(scene) {
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+    const SWIPE_THRESHOLD = 20;
+
+    scene.input.on("pointerdown", (pointer) => {
+      startX = pointer.x;
+      startY = pointer.y;
+      tracking = true;
+    });
+
+    scene.input.on("pointermove", (pointer) => {
+      if (!tracking || !scene.isRunning || !scene.snake || !scene.snake.length) return;
+      const dx = pointer.x - startX;
+      const dy = pointer.y - startY;
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+      if (absDx < SWIPE_THRESHOLD && absDy < SWIPE_THRESHOLD) return;
+
+      let dir;
+      if (absDx > absDy) {
+        dir = dx > 0 ? DIR.right : DIR.left;
+      } else {
+        dir = dy > 0 ? DIR.down : DIR.up;
+      }
+      if (!opposite(scene.direction, dir)) {
+        scene.nextDirection = dir;
+      }
+      tracking = false;
+    });
+
+    scene.input.on("pointerup", () => {
+      tracking = false;
+    });
+  }
+
+  /* ===== Mobile D-Pad Buttons ===== */
+  function setupDpad(scene) {
+    const dpadBtns = document.querySelectorAll("#touch-controls .dpad-btn[data-dir]");
+    if (!dpadBtns.length) return;
+
+    dpadBtns.forEach((btn) => {
+      const dirName = btn.getAttribute("data-dir");
+      const dir = DIR[dirName];
+      if (!dir) return;
+
+      btn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        unlockAudio(scene);
+        if (!scene.isRunning || !scene.snake || !scene.snake.length) return;
+        if (!opposite(scene.direction, dir)) {
+          scene.nextDirection = dir;
+        }
+      }, { passive: false });
+
+      btn.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        unlockAudio(scene);
+        if (!scene.isRunning || !scene.snake || !scene.snake.length) return;
+        if (!opposite(scene.direction, dir)) {
+          scene.nextDirection = dir;
+        }
+      });
+    });
+  }
+
   class BootScene extends Phaser.Scene {
     constructor() {
       super({ key: "BootScene" });
@@ -134,6 +288,7 @@
 
     create() {
       loadHighScore();
+      loadSoundState();
       this.scene.start("MenuScene");
     }
   }
@@ -173,8 +328,13 @@
         }
       );
 
+      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const hint = isMobile
+        ? "اسکروپ · دکمه جهت‌دار · Swipe"
+        : "فلش‌ها · کلیک روی صفحه برای جهت";
+
       this.add
-        .text(BOARD_W / 2, GAME_H - 36, "فلش‌ها · کلیک روی صفحه برای جهت", {
+        .text(BOARD_W / 2, GAME_H - 36, hint, {
           fontFamily: "system-ui, sans-serif",
           fontSize: "14px",
           color: "#94a3b8",
@@ -241,8 +401,12 @@
       this.foodPulse = 0;
       this.gameOverReason = "";
       this.isRunning = true;
+      this.isPaused = false;
+      this.currentLevel = 0;
+      this.obstacles = { static: [], moving: [] };
 
       this.gridGfx = this.add.graphics();
+      this.obstacleGfx = this.add.graphics();
       this.snakeGfx = this.add.graphics();
       this.foodGfx = this.add.graphics();
       this.fxGfx = this.add.graphics();
@@ -267,12 +431,72 @@
           color: "#94a3b8",
         })
         .setOrigin(0.5, 0);
+      this.levelText = this.add
+        .text(BOARD_W / 2, 34, STAGE_NAMES[0], {
+          fontFamily: "system-ui, sans-serif",
+          fontSize: "12px",
+          color: "#a78bfa",
+        })
+        .setOrigin(0.5, 0);
+
+      this.soundBtn = this.add
+        .rectangle(BOARD_W - 90, 14, 36, 28, 0x22d3ee, 0.3)
+        .setStrokeStyle(1, 0x22d3ee, 0.6)
+        .setInteractive({ useHandCursor: true });
+      this.soundText = this.add
+        .text(BOARD_W - 90, 14, soundMuted ? "🔇" : "🔊", {
+          fontFamily: "system-ui, sans-serif",
+          fontSize: "18px",
+          color: "#e2e8f0",
+        })
+        .setOrigin(0.5);
+
+      this.pauseBtn = this.add
+        .rectangle(BOARD_W - 50, 14, 36, 28, 0x22d3ee, 0.3)
+        .setStrokeStyle(1, 0x22d3ee, 0.6)
+        .setInteractive({ useHandCursor: true });
+      this.pauseText = this.add
+        .text(BOARD_W - 50, 14, "⏸", {
+          fontFamily: "system-ui, sans-serif",
+          fontSize: "18px",
+          color: "#e2e8f0",
+        })
+        .setOrigin(0.5);
 
       this.hudLine = this.add.graphics();
       this.hudLine.lineStyle(2, 0x22d3ee, 0.4);
       this.hudLine.lineBetween(0, HUD_H - 1, BOARD_W, HUD_H - 1);
 
+      this.pauseOverlay = this.add.rectangle(
+        BOARD_W / 2, GAME_H / 2, BOARD_W, BOARD_H,
+        0x0f0a1e, 0.7
+      ).setDepth(10).setVisible(false);
+      this.pauseLabel = this.add
+        .text(BOARD_W / 2, GAME_H / 2, "PAUSED", {
+          fontFamily: "system-ui, sans-serif",
+          fontSize: "36px",
+          color: "#22d3ee",
+          fontStyle: "bold",
+        })
+        .setOrigin(0.5).setDepth(11).setVisible(false);
+      this.pauseHint = this.add
+        .text(BOARD_W / 2, GAME_H / 2 + 40, "P یا کلیک روی ⏸", {
+          fontFamily: "system-ui, sans-serif",
+          fontSize: "14px",
+          color: "#94a3b8",
+        })
+        .setOrigin(0.5).setDepth(11).setVisible(false);
+
+      this.soundBtn.on("pointerdown", () => {
+        const muted = toggleSound();
+        this.soundText.setText(muted ? "🔇" : "🔊");
+      });
+
+      this.pauseBtn.on("pointerdown", () => this.togglePause());
+
       this.setupInput();
+      setupSwipe(this);
+      setupDpad(this);
       unlockAudio(this);
       this.resetRound();
       this.scheduleTick();
@@ -313,10 +537,86 @@
       this.nextDirection = DIR.right;
       this.score = 0;
       this.particles = [];
+      this.currentLevel = 0;
       this.isRunning = true;
+      this.buildStage();
       this.updateHud();
       this.spawnFood();
       this.redraw();
+    }
+
+    buildStage() {
+      this.obstacles = { static: [], moving: [] };
+      if (this.currentLevel === 0) {
+        this.obstacles.static = STAGE_1_WALLS.map((w) => ({ ...w }));
+      } else if (this.currentLevel === 1) {
+        this.obstacles.static = STAGE_2_WALLS_STATIC.map((w) => ({ ...w }));
+        this.obstacles.moving = STAGE_2_MOVING_WALLS.map((m) => ({
+          segments: m.segments.map((s) => ({ ...s })),
+          dx: m.dx, dy: m.dy,
+          minX: m.minX, maxX: m.maxX, minY: m.minY || 0, maxY: m.maxY || 19,
+        }));
+      } else {
+        this.obstacles.static = STAGE_3_WALLS_STATIC.map((w) => ({ ...w }));
+        this.obstacles.moving = STAGE_3_MOVING_WALLS.map((m) => ({
+          segments: m.segments.map((s) => ({ ...s })),
+          dx: m.dx, dy: m.dy,
+          minX: m.minX, maxX: m.maxX, minY: m.minY || 0, maxY: m.maxY || 19,
+        }));
+      }
+    }
+
+    checkStageAdvance() {
+      if (this.currentLevel < STAGE_THRESHOLDS.length - 1 &&
+          this.score >= STAGE_THRESHOLDS[this.currentLevel + 1]) {
+        this.currentLevel++;
+        this.buildStage();
+        this.spawnFood();
+        this.showStageNotification(STAGE_NAMES[this.currentLevel]);
+      }
+    }
+
+    showStageNotification(text) {
+      playStageUpSound(this);
+      const overlay = this.add.rectangle(
+        BOARD_W / 2, GAME_H / 2, BOARD_W, 60, 0x0f0a1e, 0.85
+      ).setDepth(20);
+      const label = this.add
+        .text(BOARD_W / 2, GAME_H / 2, text, {
+          fontFamily: "system-ui, sans-serif",
+          fontSize: "22px",
+          color: "#a78bfa",
+          fontStyle: "bold",
+        })
+        .setOrigin(0.5).setDepth(21);
+      this.time.delayedCall(1500, () => {
+        overlay.destroy();
+        label.destroy();
+      });
+    }
+
+    obstacleAt(x, y) {
+      for (const w of this.obstacles.static) {
+        if (w.x === x && w.y === y) return true;
+      }
+      for (const m of this.obstacles.moving) {
+        for (const s of m.segments) {
+          if (s.x === x && s.y === y) return true;
+        }
+      }
+      return false;
+    }
+
+    updateMovingWalls() {
+      for (const m of this.obstacles.moving) {
+        const seg = m.segments[0];
+        const nx = seg.x + m.dx;
+        const ny = seg.y + m.dy;
+        if (nx < m.minX || nx > m.maxX) { m.dx = -m.dx; }
+        else { seg.x = nx; }
+        if (ny < m.minY || ny > m.maxY) { m.dy = -m.dy; }
+        else { seg.y = ny; }
+      }
     }
 
     scheduleTick() {
@@ -343,7 +643,7 @@
           y: Phaser.Math.Between(0, GRID_ROWS - 1),
         };
         tries++;
-      } while (this.snakeOccupies(spot) && tries < 500);
+      } while ((this.snakeOccupies(spot) || this.obstacleAt(spot.x, spot.y)) && tries < 500);
 
       const palette = Phaser.Utils.Array.GetRandom(FOOD_COLORS);
       this.food = { ...spot, ...palette };
@@ -362,6 +662,8 @@
       if (this.cursors.up.isDown) this.tryDir(DIR.up);
       if (this.cursors.down.isDown) this.tryDir(DIR.down);
 
+      this.updateMovingWalls();
+
       this.direction = this.nextDirection;
       const head = this.snake[0];
       const newHead = {
@@ -369,15 +671,12 @@
         y: head.y + this.direction.y,
       };
 
-      if (
-        newHead.x < 0 ||
-        newHead.y < 0 ||
-        newHead.x >= GRID_COLS ||
-        newHead.y >= GRID_ROWS
-      ) {
-        this.endGame("به دیوار خوردی!");
-        return;
-      }
+      if (newHead.x < 0) newHead.x = GRID_COLS - 1;
+      else if (newHead.x >= GRID_COLS) newHead.x = 0;
+      if (newHead.y < 0) newHead.y = GRID_ROWS - 1;
+      else if (newHead.y >= GRID_ROWS) newHead.y = 0;
+
+      // Obstacles are now passable (skip walls feature)
 
       const ate = this.food && newHead.x === this.food.x && newHead.y === this.food.y;
       const bodyCheck = ate ? this.snake : this.snake.slice(0, -1);
@@ -396,6 +695,7 @@
         playEatSound(this);
         this.spawnFood();
         this.updateHud();
+        this.checkStageAdvance();
         if (newTier > prevTier) this.refreshTickSpeed();
       } else {
         this.snake.pop();
@@ -461,6 +761,7 @@
       this.scoreText.setText("امتیاز: " + this.score);
       this.highText.setText("رکورد: " + sharedHighScore);
       this.speedText.setText("سرعت: " + speedLevel(this.score));
+      this.levelText.setText(STAGE_NAMES[this.currentLevel]);
     }
 
     endGame(reason) {
@@ -479,6 +780,7 @@
 
     redraw() {
       this.drawGrid();
+      this.drawObstacles();
       this.drawFood();
       this.drawSnake();
       this.drawParticles();
@@ -503,6 +805,29 @@
       }
       g.lineStyle(2, 0xa855f7, 0.35);
       g.strokeRect(1, this.boardOriginY + 1, BOARD_W - 2, BOARD_H - 2);
+    }
+
+    drawObstacles() {
+      const g = this.obstacleGfx;
+      g.clear();
+      for (const w of this.obstacles.static) {
+        const px = w.x * CELL;
+        const py = this.boardOriginY + w.y * CELL;
+        g.fillStyle(0x7c3aed, 0.85);
+        g.fillRoundedRect(px + 1, py + 1, CELL - 2, CELL - 2, 3);
+        g.lineStyle(1, 0xa78bfa, 0.9);
+        g.strokeRoundedRect(px + 1, py + 1, CELL - 2, CELL - 2, 3);
+      }
+      for (const m of this.obstacles.moving) {
+        for (const seg of m.segments) {
+          const px = seg.x * CELL;
+          const py = this.boardOriginY + seg.y * CELL;
+          g.fillStyle(0xf59e0b, 0.85);
+          g.fillRoundedRect(px + 1, py + 1, CELL - 2, CELL - 2, 3);
+          g.lineStyle(1, 0xfbbf24, 0.9);
+          g.strokeRoundedRect(px + 1, py + 1, CELL - 2, CELL - 2, 3);
+        }
+      }
     }
 
     drawFood() {
@@ -646,8 +971,10 @@
         this.scene.start("PlayScene");
       });
 
+      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const menuHint = isMobile ? "منو: لمس صفحه" : "منو: M";
       this.add
-        .text(BOARD_W / 2, GAME_H - 28, "منو: M", {
+        .text(BOARD_W / 2, GAME_H - 28, menuHint, {
           fontFamily: "system-ui, sans-serif",
           fontSize: "13px",
           color: "#64748b",
@@ -664,6 +991,8 @@
     }
   }
 
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
   const gameConfig = {
     type: Phaser.AUTO,
     width: BOARD_W,
@@ -675,7 +1004,20 @@
       disableWebAudio: false,
     },
     scale: {
-      mode: Phaser.Scale.NONE,
+      mode: Phaser.Scale.FIT,
+      autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+    input: {
+      activePointers: 2,
+    },
+    fps: {
+      target: 60,
+      forceSetTimeOut: false,
+    },
+    render: {
+      antialias: false,
+      pixelArt: false,
+      roundPixels: true,
     },
   };
 

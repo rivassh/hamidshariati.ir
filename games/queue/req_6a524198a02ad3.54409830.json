@@ -8,6 +8,8 @@
   "description": "دیواره‌هاش قابل عبور باشه",
   "priority": "medium",
   "notes": "",
-  "status": "processing",
-  "started": "2026-07-11T16:44:01+03:30"
+  "status": "failed",
+  "started": "2026-07-11T16:44:01+03:30",
+  "finished": "2026-07-11T16:54:52+03:30",
+  "error": "exit 143"
 }

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Terminal</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0f;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px}
+h1{font-size:1.8rem;margin-bottom:8px;color:#22d3ee}
+.sub{color:#64748b;margin-bottom:30px;font-size:.95rem}
+.mic-btn{width:100px;height:100px;border-radius:50%;border:3px solid #334155;background:#1e293b;color:#64748b;font-size:2.5rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.mic-btn:hover{border-color:#22d3ee;color:#22d3ee}
+.mic-btn.active{background:#dc2626;border-color:#ef4444;color:#fff;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.5)}50%{box-shadow:0 0 0 20px rgba(220,38,38,0)}}
+.status{margin-top:16px;font-size:.9rem;color:#64748b}
+.transcript{margin-top:20px;width:100%;max-width:600px;min-height:80px;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:16px;font-size:1.1rem;line-height:1.8;color:#f1f5f9;direction:rtl;text-align:right}
+.log{margin-top:20px;width:100%;max-width:600px;background:#0c0a18;border:1px solid #334155;border-radius:12px;padding:16px;max-height:300px;overflow-y:auto;font-family:'Fira Code',monospace;font-size:.85rem;line-height:1.6;color:#a5f3fc;direction:ltr;text-align:left}
+.log-entry{padding:4px 0;border-bottom:1px solid #1e293b}
+.log-entry.sent{color:#4ade80}
+.log-entry.error{color:#f87171}
+.log-entry.info{color:#94a3b8}
+.controls{margin-top:20px;display:flex;gap:12px}
+.btn{padding:10px 20px;border:none;border-radius:8px;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-send{background:#22d3ee;color:#0a0a0f;font-weight:600}
+.btn-send:hover{background:#06b6d4}
+.btn-send:disabled{opacity:.4;cursor:not-allowed}
+.btn-clear{background:#334155;color:#e2e8f0}
+.btn-clear:hover{background:#475569}
+footer{margin-top:auto;padding-top:40px;color:#334155;font-size:.8rem}
+</style>
+</head>
+<body>
+<h1>Voice Terminal</h1>
+<p class="sub">میکروفون رو فشار بده و صحبت کن — دستور توی tmux اجرا میشه</p>
+
+<button class="mic-btn" id="mic">🎤</button>
+<p class="status" id="status">آماده</p>
+
+<div class="transcript" id="transcript">...</div>
+
+<div class="controls">
+<button class="btn btn-send" id="sendBtn" disabled>ارسال به tmux</button>
+<button class="btn btn-clear" onclick="clearLog()">پاک کردن</button>
+</div>
+
+<div class="log" id="log">
+<div class="log-entry info">منتظر دستور...</div>
+</div>
+
+<footer>hamidshariati.ir &copy; 2026</footer>
+
+<script>
+let recognition=null;
+let isRecording=false;
+let finalText='';
+const micBtn=document.getElementById('mic');
+const statusEl=document.getElementById('status');
+const transcriptEl=document.getElementById('transcript');
+const sendBtn=document.getElementById('sendBtn');
+const logEl=document.getElementById('log');
+
+if('webkitSpeechRecognition' in window||'SpeechRecognition' in window){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SR();
+  recognition.continuous=true;
+  recognition.interimResults=true;
+  recognition.lang='fa-IR';
+
+  recognition.onresult=(e)=>{
+    let interim='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal){
+        finalText+=e.results[i][0].transcript+' ';
+        transcriptEl.textContent=finalText;
+      }else{
+        interim+=e.results[i][0].transcript;
+      }
+    }
+    if(interim) transcriptEl.textContent=finalText+interim;
+    sendBtn.disabled=!finalText.trim();
+  };
+
+  recognition.onend=()=>{
+    isRecording=false;
+    micBtn.classList.remove('active');
+    statusEl.textContent='آماده';
+    sendBtn.disabled=!finalText.trim();
+  };
+
+  recognition.onerror=(e)=>{
+    isRecording=false;
+    micBtn.classList.remove('active');
+    statusEl.textContent='خطا: '+e.error;
+    addLog('error','خطا: '+e.error);
+  };
+
+  micBtn.addEventListener('click',()=>{
+    if(isRecording){
+      recognition.stop();
+    }else{
+      recognition.start();
+      isRecording=true;
+      micBtn.classList.add('active');
+      statusEl.textContent='در حال ضبط...';
+    }
+  });
+}else{
+  micBtn.disabled=true;
+  statusEl.textContent='مرورگر پشتیبانی نمی‌کنه';
+}
+
+sendBtn.addEventListener('click',async()=>{
+  const cmd=finalText.trim();
+  if(!cmd)return;
+  sendBtn.disabled=true;
+  addLog('sent',cmd);
+  try{
+    const r=await fetch('voice-run.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({command:cmd})});
+    const res=await r.json();
+    if(res.success){
+      addLog('info','✅ ارسال شد → '+res.session);
+    }else{
+      addLog('error','❌ '+res.error);
+    }
+  }catch(e){
+    addLog('error','خطا: '+e.message);
+  }
+  finalText='';
+  transcriptEl.textContent='...';
+});
+
+function addLog(type,msg){
+  const d=document.createElement('div');
+  d.className='log-entry '+type;
+  const ts=new Date().toLocaleTimeString('en-US',{hour12:false});
+  d.textContent='['+ts+'] '+msg;
+  logEl.appendChild(d);
+  logEl.scrollTop=logEl.scrollHeight;
+}
+
+function clearLog(){
+  logEl.innerHTML='<div class="log-entry info">منتظر دستور...</div>';
+}
+</script>
+</body>
+</html>

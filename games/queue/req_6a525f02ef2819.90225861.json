@@ -1,0 +1,15 @@
+{
+  "id": "req_6a525f02ef2819.90225861",
+  "timestamp": "2026-07-11T15:19:30+00:00",
+  "games": [
+    "snake"
+  ],
+  "changeType": "feature",
+  "description": "باگی هست که باید رفع بشه:\nUnity WebGL slot ready\n\nCopy your build output into Build/ and TemplateData/, then reload.\n\nURL: /games/unity-game\nچطور تکرار میشه:\nهر دفعه که صفحه باز میشه در موبایل با فایرفاکس. صفح خالی با این نوشته\n\nرفتار مورد انتظار:\n[چی باید بشه]",
+  "priority": "high",
+  "notes": "",
+  "status": "done",
+  "started": "2026-07-11T18:50:01+03:30",
+  "completed": "2026-07-11T18:55:00+03:30",
+  "finished": "2026-07-11T19:23:01+03:30"
+}
