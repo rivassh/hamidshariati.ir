@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>آمیرزا | hamidshariati.ir</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #0f0a1e 0%, #1a1035 50%, #0f0a1e 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .header { text-align: center; margin-bottom: 15px; width: 100%; max-width: 400px; }
+        .title { font-size: 2rem; font-weight: bold; background: linear-gradient(135deg, #f59e0b, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .level-info { font-size: 1rem; color: #94a3b8; margin-top: 5px; }
+
+        .score-board { display: flex; justify-content: space-around; background: rgba(30, 41, 59, 0.8); border: 1px solid #334155; border-radius: 12px; padding: 12px; margin-bottom: 15px; width: 100%; max-width: 400px; }
+        .score-item { text-align: center; }
+        .score-label { font-size: 0.75rem; color: #94a3b8; }
+        .score-value { font-size: 1.5rem; font-weight: bold; color: #facc15; }
+
+        .target-words { background: rgba(30, 41, 59, 0.6); border: 1px solid #334155; border-radius: 12px; padding: 12px; margin-bottom: 15px; width: 100%; max-width: 400px; }
+        .target-title { font-size: 0.8rem; color: #94a3b8; margin-bottom: 8px; }
+        .target-list { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+        .target-word { padding: 6px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; font-size: 0.9rem; color: #cbd5e1; font-family: monospace; letter-spacing: 2px; }
+        .target-word.found { background: #166534; border-color: #22c55e; color: #4ade80; }
+
+        .letter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px; width: 100%; max-width: 320px; }
+        .letter-cell { aspect-ratio: 1; background: linear-gradient(135deg, #1e293b, #0f172a); border: 2px solid #475569; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; cursor: pointer; transition: all 0.15s; }
+        .letter-cell:active { transform: scale(0.95); }
+        .letter-cell.selected { background: linear-gradient(135deg, #f59e0b, #ef4444); border-color: #fbbf24; color: white; transform: scale(1.05); }
+
+        .current-word { min-height: 50px; background: rgba(30, 41, 59, 0.6); border: 2px dashed #475569; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; letter-spacing: 4px; margin-bottom: 15px; width: 100%; max-width: 400px; color: #facc15; }
+        .current-word.has-content { border-color: #f59e0b; border-style: solid; }
+
+        .controls { display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 10px 20px; border-radius: 8px; border: none; font-size: 0.9rem; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+        .btn-primary { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+        .btn-secondary { background: #334155; color: #cbd5e1; }
+        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .btn:hover { transform: translateY(-2px); }
+
+        .message { text-align: center; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-weight: bold; animation: fadeIn 0.3s ease; width: 100%; max-width: 400px; }
+        .message.success { background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; color: #4ade80; }
+        .message.error { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #f87171; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .level-complete { position: fixed; inset: 0; background: rgba(15, 10, 30, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; }
+        .level-complete-title { font-size: 2.5rem; font-weight: bold; color: #22c55e; margin-bottom: 20px; }
+        .hidden { display: none !important; }
+
+        @media (max-width: 400px) { .letter-cell { font-size: 1.4rem; } .title { font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">🎲 آمیرزا</div>
+        <div class="level-info" id="level-info">مرحله ۱</div>
+    </div>
+
+    <div class="score-board">
+        <div class="score-item"><div class="score-label">امتیاز</div><div class="score-value" id="score">0</div></div>
+        <div class="score-item"><div class="score-label">کلمات</div><div class="score-value" id="words-found">0</div></div>
+        <div class="score-item"><div class="score-label">باقی‌مانده</div><div class="score-value" id="words-left">0</div></div>
+    </div>
+
+    <div class="target-words">
+        <div class="target-title">کلمات مورد نیاز:</div>
+        <div class="target-list" id="target-list"></div>
+    </div>
+
+    <div class="current-word" id="current-word">...</div>
+    <div class="letter-grid" id="letter-grid"></div>
+
+    <div class="controls">
+        <button class="btn btn-secondary" onclick="clearSelection()">پاک کردن</button>
+        <button class="btn btn-primary" onclick="submitWord()">تایید</button>
+        <button class="btn btn-danger" onclick="shuffleLetters()">🔄</button>
+    </div>
+
+    <div id="message-container"></div>
+
+    <div class="level-complete hidden" id="level-complete">
+        <div class="level-complete-title">مرحله تموم شد! 🎉</div>
+        <div style="font-size:1.5rem; color:#facc15; margin-bottom:20px;" id="level-score"></div>
+        <button class="btn btn-primary" onclick="nextLevel()" style="font-size:1.2rem; padding:15px 40px;">مرحله بعد</button>
+    </div>
+
+    <script>
+        const WORDS = {
+            2: ['آب', 'اک', 'ام', 'ان', 'او', 'بر', 'بز', 'بت', 'پا', 'پر', 'تک', 'را', 'زا', 'سا', 'شی', 'کا', 'ما', 'نا', 'وا', 'ها', 'یا'],
+            3: ['ابر', 'آتش', 'آباد', 'آرام', 'باغ', 'بالا', 'بازی', 'بچه', 'پدر', 'پسر', 'تازه', 'جادو', 'جوان', 'چمن', 'خاک', 'خانه', 'خوب', 'دست', 'زیبا', 'ساعت', 'سبز', 'سیب', 'شاد', 'صدا', 'طوفان', 'غذا', 'کتاب', 'کودک', 'گل', 'ماه', 'مرد', 'مادر', 'میوه', 'نور', 'هوا'],
+            4: ['آبشار', 'آسمان', 'باغچه', 'پرنده', 'تقویم', 'چراغ', 'خاطره', 'درخت', 'دیوانه', 'ستاره', 'شنیدن', 'صبر', 'عشق', 'غروب', 'کوهستان', 'گنجشک', 'مزرعه', 'نقره', 'یاقوت'],
+            5: ['آسمانی', 'بازیکن', 'پرواز', 'تختخواب', 'جادوگر', 'خاطره‌ها', 'دریاچه', 'زنگار', 'شبنم', 'شیرین', 'ظاهر', 'قانون', 'گربه', 'نیلوفر']
+        };
+
+        const LEVELS = [
+            { words: 3, lengths: [2, 2, 3] },
+            { words: 4, lengths: [2, 3, 3, 2] },
+            { words: 5, lengths: [3, 3, 2, 2, 3] },
+            { words: 5, lengths: [3, 3, 3, 3, 2] },
+            { words: 6, lengths: [3, 4, 3, 2, 3, 3] },
+            { words: 6, lengths: [4, 3, 3, 4, 2, 3] },
+            { words: 7, lengths: [3, 4, 3, 3, 4, 2, 3] },
+            { words: 8, lengths: [4, 3, 4, 3, 3, 4, 2, 3] }
+        ];
+
+        let currentLevel = 0, score = 0, selectedLetters = [], selectedIndices = [], targetWords = [], foundWords = [], letters = [];
+
+        function init() { loadLevel(); }
+
+        function loadLevel() {
+            const level = LEVELS[currentLevel % LEVELS.length];
+            targetWords = []; foundWords = []; selectedLetters = []; selectedIndices = [];
+            level.lengths.forEach(len => {
+                const available = WORDS[len].filter(w => !targetWords.includes(w));
+                if (available.length > 0) targetWords.push(available[Math.floor(Math.random() * available.length)]);
+            });
+            letters = [];
+            targetWords.forEach(word => { for (let c of word) letters.push(c); });
+            const allChars = 'ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی';
+            const extraCount = Math.min(4, 16 - letters.length);
+            for (let i = 0; i < extraCount; i++) letters.push(allChars[Math.floor(Math.random() * allChars.length)]);
+            letters = letters.sort(() => Math.random() - 0.5);
+            while (letters.length < 16) letters.push(allChars[Math.floor(Math.random() * allChars.length)]);
+            letters = letters.slice(0, 16);
+            updateUI(); renderGrid(); renderTargets();
+        }
+
+        function renderGrid() {
+            document.getElementById('letter-grid').innerHTML = letters.map((l, i) => `
+                <div class="letter-cell ${selectedIndices.includes(i) ? 'selected' : ''}" onclick="selectLetter(${i})" data-index="${i}">${l}</div>
+            `).join('');
+        }
+
+        function renderTargets() {
+            document.getElementById('target-list').innerHTML = targetWords.map(w => `
+                <div class="target-word ${foundWords.includes(w) ? 'found' : ''}">${w}</div>
+            `).join('');
+        }
+
+        function selectLetter(index) {
+            if (selectedIndices.includes(index)) {
+                if (selectedIndices[selectedIndices.length - 1] === index) { selectedIndices.pop(); selectedLetters.pop(); }
+            } else { selectedIndices.push(index); selectedLetters.push(letters[index]); }
+            updateCurrentWord(); renderGrid();
+        }
+
+        function updateCurrentWord() {
+            const w = selectedLetters.join('');
+            const el = document.getElementById('current-word');
+            el.textContent = w || '...';
+            el.classList.toggle('has-content', w.length > 0);
+        }
+
+        function clearSelection() { selectedLetters = []; selectedIndices = []; updateCurrentWord(); renderGrid(); }
+
+        function submitWord() {
+            const word = selectedLetters.join('');
+            if (word.length < 2) { showMessage('حداقل ۲ حرف لازم است!', 'error'); return; }
+            if (foundWords.includes(word)) { showMessage('این کلمه قبلاً پیدا شده!', 'error'); clearSelection(); return; }
+            if (targetWords.includes(word)) {
+                foundWords.push(word); score += word.length * 10;
+                showMessage(`+${word.length * 10} امتیاز! "${word}" پیدا شد!`, 'success');
+                clearSelection(); updateUI(); renderTargets();
+                if (foundWords.length === targetWords.length) {
+                    setTimeout(() => { document.getElementById('level-complete').classList.remove('hidden'); document.getElementById('level-score').textContent = `امتیاز: ${score}`; }, 500);
+                }
+            } else { showMessage(`"${word}" کلمه معتبری نیست!`, 'error'); clearSelection(); }
+        }
+
+        function shuffleLetters() { letters = letters.sort(() => Math.random() - 0.5); clearSelection(); renderGrid(); }
+        function nextLevel() { currentLevel++; document.getElementById('level-complete').classList.add('hidden'); loadLevel(); }
+        function updateUI() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('words-found').textContent = foundWords.length;
+            document.getElementById('words-left').textContent = targetWords.length - foundWords.length;
+            document.getElementById('level-info').textContent = `مرحله ${currentLevel + 1}`;
+        }
+        function showMessage(text, type) {
+            const c = document.getElementById('message-container');
+            const m = document.createElement('div'); m.className = `message ${type}`; m.textContent = text;
+            c.innerHTML = ''; c.appendChild(m); setTimeout(() => m.remove(), 2000);
+        }
+
+        let touchStartIndex = null;
+        document.addEventListener('touchstart', (e) => { const c = e.target.closest('.letter-cell'); if (c) { touchStartIndex = parseInt(c.dataset.index); selectLetter(touchStartIndex); } }, { passive: true });
+        document.addEventListener('touchmove', (e) => { if (touchStartIndex === null) return; const t = e.touches[0]; const el = document.elementFromPoint(t.clientX, t.clientY); const c = el?.closest('.letter-cell'); if (c) { const i = parseInt(c.dataset.index); if (!selectedIndices.includes(i)) selectLetter(i); } }, { passive: true });
+        document.addEventListener('touchend', () => { touchStartIndex = null; }, { passive: true });
+
+        init();
+    </script>
+</body>
+</html>
