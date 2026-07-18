@@ -60,7 +60,7 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === 'GET' && req.url === '/config') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ botName: BOT_NAME }));
+    res.end(JSON.stringify({ botName: BOT_NAME, topic: process.env.TOPIC || 'games' }));
     return;
   }
 

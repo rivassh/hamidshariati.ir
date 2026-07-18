@@ -539,7 +539,7 @@
                     </button>
                     <button class="game-link new-game-link" onclick="requestNewGame()">
                         <span class="game-icon">✨</span>
-                        <span class="game-name">بازی جدید</span>
+                        <span class="game-name" id="new-item-text">بازی جدید</span>
                     </button>
                 </div>
                 
@@ -631,9 +631,21 @@
         let recognition = null;
         let isRecording = false;
         let botName = 'دانا';
+        let newItemText = 'بازی جدید'; // Context-aware text
         
         // Target selection
         let currentTarget = { id: 'snake', name: '🐍 مار نئون', url: '/game-platform/' };
+
+        function getNewItemText() {
+            const topic = CONFIG.topic || 'games';
+            const texts = {
+                'games': 'بازی جدید',
+                'religion': 'سوال جدید',
+                'education': 'موضوع جدید',
+                'custom': 'جدید'
+            };
+            return texts[topic] || 'جدید';
+        }
 
         function selectTarget(id, name, url) {
             currentTarget = { id, name, url };
@@ -724,6 +736,8 @@
 
         // ========== New Game Request ==========
         function requestNewGame() {
+            const newItem = getNewItemText();
+            
             // Reset mode
             currentMode = 'chat';
             currentChatId = 'chat_' + Date.now();
@@ -734,13 +748,13 @@
                 btn.classList.remove('selected');
             });
             
-            currentTarget = { id: null, name: 'بازی جدید', url: null };
+            currentTarget = { id: null, name: newItem, url: null };
             selectedGames = [];
             
-            chatTitle.textContent = '✨ بازی جدید';
+            chatTitle.textContent = `✨ ${newItem}`;
             messagesEl.innerHTML = `
-                <div class="message message-system">بازی جدید می‌خوای؟ 🎮</div>
-                <div class="message message-system">چه بازی‌ای مد نظرته؟</div>
+                <div class="message message-system">${newItem} جدید می‌خوای؟</div>
+                <div class="message message-system">توضیح بده تا بسازمش.</div>
             `;
             renderChatList();
             toggleSidebar(false);
@@ -1124,7 +1138,18 @@
 
         // ========== Init ==========
         async function init() {
-            try { const r = await fetch(`${API_URL}/mimo-api/config`); const d = await r.json(); botName = d.botName || 'دانا'; } catch(e) {}
+            try { 
+                const r = await fetch(`${API_URL}/mimo-api/config`); 
+                const d = await r.json(); 
+                botName = d.botName || 'دана';
+                CONFIG.topic = d.topic || 'games';
+            } catch(e) {}
+            
+            // Update new item button text based on topic
+            newItemText = getNewItemText();
+            const newItemEl = document.getElementById('new-item-text');
+            if (newItemEl) newItemEl.textContent = newItemText;
+            
             setupVoice();
             renderChatList();
             messageInput.focus();
