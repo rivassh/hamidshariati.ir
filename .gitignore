@@ -1,6 +1,7 @@
 # Sensitive files
 wp-config.php
 wp-config.php0
+.env
 
 # Large directories
 wp-content/uploads/
