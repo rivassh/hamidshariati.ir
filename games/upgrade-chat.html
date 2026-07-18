@@ -52,8 +52,8 @@
         }
         
         .new-chat-btn {
-            width: 36px;
-            height: 36px;
+            width: 44px;
+            height: 44px;
             border-radius: 8px;
             border: none;
             background: linear-gradient(135deg, #22d3ee, #a855f7);
@@ -63,6 +63,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            min-touch-target: 44px;
         }
         
         .sidebar-tabs {
@@ -429,8 +430,8 @@
         }
         
         .input-btn {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: none;
             background: transparent;
@@ -440,7 +441,8 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            min-touch-target: 44px;
         }
         
         .input-btn:hover, .input-btn:active { background: #334155; color: #22d3ee; }
@@ -530,7 +532,7 @@
             .chat-header { padding: 10px 12px; }
             .chat-header-avatar { width: 36px; height: 36px; font-size: 1rem; }
             .chat-header-name { font-size: 0.85rem; }
-            .input-btn { width: 28px; height: 28px; font-size: 0.9rem; }
+            .input-btn { width: 36px; height: 36px; font-size: 1rem; min-touch-target: 44px; }
             .send-btn { width: 40px; height: 40px; }
         }
         
@@ -1122,6 +1124,7 @@
                     isRecording = true; 
                     lastTranscript = '';
                     voiceBtn.classList.add('recording'); 
+                    addMessage('system', 'در حال گوش دادن...');
                 };
                 recognition.onresult = (e) => {
                     const result = e.results[e.results.length - 1];
@@ -1145,19 +1148,31 @@
                     isRecording = false; 
                     voiceBtn.classList.remove('recording');
                     if (e.error === 'not-allowed') {
-                        addMessage('system', 'دسترسی میکروفون رد شد.');
+                        addMessage('system', 'دسترسی میکروفون رد شد. لطفاً در تنظیمات مرورگر فعال کنید.');
                     } else if (e.error === 'no-speech') {
                         addMessage('system', 'صدایی شنیده نشد. دوباره امتحان کن.');
+                    } else if (e.error === 'network') {
+                        addMessage('system', 'خطای شبکه. اتصال اینترنت را بررسی کنید.');
                     }
                 };
-                voiceBtn.addEventListener('click', () => { 
+                
+                // Use both click and touchstart for mobile
+                const startRecognition = (e) => {
+                    e.preventDefault();
                     if (isRecording) {
                         recognition.stop();
                     } else {
                         lastTranscript = '';
-                        recognition.start();
+                        try {
+                            recognition.start();
+                        } catch (err) {
+                            addMessage('system', 'خطا در شروع ضبط صدا.');
+                        }
                     }
-                });
+                };
+                
+                voiceBtn.addEventListener('click', startRecognition);
+                voiceBtn.addEventListener('touchstart', startRecognition, { passive: false });
             } else {
                 // No Web Speech API - show message
                 voiceBtn.style.opacity = '0.5';
