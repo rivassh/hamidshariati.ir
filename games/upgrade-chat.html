@@ -1156,9 +1156,12 @@
                     }
                 };
                 
-                // Use both click and touchstart for mobile
+                // Use touchstart on mobile, click on desktop
+                const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                
                 const startRecognition = (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     if (isRecording) {
                         recognition.stop();
                     } else {
@@ -1171,8 +1174,11 @@
                     }
                 };
                 
-                voiceBtn.addEventListener('click', startRecognition);
-                voiceBtn.addEventListener('touchstart', startRecognition, { passive: false });
+                if (isMobile) {
+                    voiceBtn.addEventListener('touchstart', startRecognition, { passive: false });
+                } else {
+                    voiceBtn.addEventListener('click', startRecognition);
+                }
             } else {
                 // No Web Speech API - show message
                 voiceBtn.style.opacity = '0.5';
