@@ -64,6 +64,7 @@
             align-items: center;
             justify-content: center;
             min-touch-target: 44px;
+            touch-action: manipulation;
         }
         
         .sidebar-tabs {
@@ -443,6 +444,7 @@
             transition: all 0.2s;
             font-size: 1.1rem;
             min-touch-target: 44px;
+            touch-action: manipulation;
         }
         
         .input-btn:hover, .input-btn:active { background: #334155; color: #22d3ee; }
@@ -578,7 +580,7 @@
                     <span class="game-icon">🐛</span>
                     <span class="game-name">گزارش خطا</span>
                 </button>
-                <div style="margin-top:8px">hamidshariati.ir © 2026 | v1.0.7</div>
+                <div style="margin-top:8px">hamidshariati.ir © 2026 | v1.0.8</div>
             </div>
         </aside>
 
@@ -588,7 +590,7 @@
                 <div class="chat-header-avatar">د</div>
                 <div class="chat-header-info">
                 <div class="chat-header-name" id="chat-title">🐍 مار نئون</div>
-                <div class="chat-header-status" id="status-text">آنلاین | v1.0.7</div>
+                <div class="chat-header-status" id="status-text">آنلاین | v1.0.8</div>
                 </div>
                 <button class="view-btn" onclick="viewTarget()" title="مشاهده نتیجه">👁️</button>
             </div>
@@ -1156,10 +1158,13 @@
                     }
                 };
                 
-                // Use touchstart on mobile, click on desktop
-                const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-                
+                // Use both click and touchstart with debounce
+                let lastTap = 0;
                 const startRecognition = (e) => {
+                    const now = Date.now();
+                    if (now - lastTap < 300) return; // Debounce
+                    lastTap = now;
+                    
                     e.preventDefault();
                     e.stopPropagation();
                     if (isRecording) {
@@ -1174,11 +1179,8 @@
                     }
                 };
                 
-                if (isMobile) {
-                    voiceBtn.addEventListener('touchstart', startRecognition, { passive: false });
-                } else {
-                    voiceBtn.addEventListener('click', startRecognition);
-                }
+                voiceBtn.addEventListener('click', startRecognition);
+                voiceBtn.addEventListener('touchstart', startRecognition, { passive: false });
             } else {
                 // No Web Speech API - show message
                 voiceBtn.style.opacity = '0.5';
