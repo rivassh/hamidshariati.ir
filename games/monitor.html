@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مانیتور چت‌بات | hamidshariati.ir</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0f0f23; color: #e2e8f0; padding: 20px; }
+        h1 { color: #22d3ee; margin-bottom: 20px; }
+        .status { padding: 10px; background: #1e293b; border-radius: 8px; margin-bottom: 20px; }
+        .status.ok { border-left: 4px solid #22c55e; }
+        .status.error { border-left: 4px solid #ef4444; }
+        .jobs { display: flex; flex-direction: column; gap: 10px; }
+        .job { background: #1e293b; padding: 15px; border-radius: 8px; border: 1px solid #334155; }
+        .job-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .job-id { color: #94a3b8; font-size: 0.8rem; }
+        .job-status { padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }
+        .job-status.queued { background: #854d0e; color: #fbbf24; }
+        .job-status.processing { background: #1e40af; color: #60a5fa; }
+        .job-status.done { background: #166534; color: #4ade80; }
+        .job-status.error { background: #7f1d1d; color: #f87171; }
+        .job-message { color: #e2e8f0; margin-bottom: 5px; }
+        .job-response { color: #94a3b8; font-size: 0.9rem; }
+        .refresh { background: #22d3ee; color: #0f0f23; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; }
+        .refresh:hover { background: #0ea5e9; }
+    </style>
+</head>
+<body>
+    <h1>📊 مانیتور چت‌بات</h1>
+    <button class="refresh" onclick="loadJobs()">🔄 بروزرسانی</button>
+    <div class="status" id="status">در حال بررسی...</div>
+    <div class="jobs" id="jobs"></div>
+
+    <script>
+        const API = window.location.origin + '/games/mimo-api';
+
+        async function loadJobs() {
+            try {
+                const res = await fetch(`${API}/health`);
+                const data = await res.json();
+                document.getElementById('status').className = 'status ok';
+                document.getElementById('status').textContent = `✅ سرور فعال | ${new Date().toLocaleTimeString('fa-IR')}`;
+            } catch (e) {
+                document.getElementById('status').className = 'status error';
+                document.getElementById('status').textContent = '❌ سرور در دسترس نیست';
+            }
+        }
+
+        loadJobs();
+        setInterval(loadJobs, 5000);
+    </script>
+</body>
+</html>
