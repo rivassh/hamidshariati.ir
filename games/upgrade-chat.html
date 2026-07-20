@@ -582,7 +582,7 @@
                     <span class="game-icon">🐛</span>
                     <span class="game-name">گزارش خطا</span>
                 </button>
-                <div style="margin-top:8px">hamidshariati.ir © 2026 | v1.0.10 | 2026-07-18</div>
+                <div style="margin-top:8px">hamidshariati.ir © 2026 | v1.0.11 | 2026-07-18</div>
             </div>
         </aside>
 
@@ -592,7 +592,7 @@
                 <div class="chat-header-avatar">د</div>
                 <div class="chat-header-info">
                 <div class="chat-header-name" id="chat-title">🐍 مار نئون</div>
-                <div class="chat-header-status" id="status-text">آنلاین | v1.0.10</div>
+                <div class="chat-header-status" id="status-text">آنلاین | v1.0.11</div>
                 </div>
                 <button class="view-btn" onclick="viewTarget()" title="مشاهده نتیجه">👁️</button>
             </div>
@@ -1164,8 +1164,7 @@
                 const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
                 
                 const startRecognition = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    // Don't preventDefault - it blocks speech recognition on mobile
                     if (isRecording) {
                         recognition.stop();
                     } else {
@@ -1179,7 +1178,7 @@
                 };
                 
                 if (isMobile) {
-                    voiceBtn.addEventListener('touchstart', startRecognition, { passive: false });
+                    voiceBtn.addEventListener('touchstart', startRecognition, { passive: true });
                 } else {
                     voiceBtn.addEventListener('click', startRecognition);
                 }
@@ -1194,7 +1193,7 @@
         }
 
         // ========== Init ==========
-        const BUILD_VERSION = '1.0.10';
+        const BUILD_VERSION = '1.0.11';
         const BUILD_TIME = '2026-07-18T14:30:00Z';
         
         async function init() {
