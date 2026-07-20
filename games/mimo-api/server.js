@@ -1,11 +1,34 @@
 require('dotenv').config();
 const http = require('http');
 const { randomBytes } = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
 const PORT = 3456;
 const BOT_NAME = process.env.BOT_NAME || 'دانا';
+const LOG_FILE = '/tmp/chatbot-jobs.json';
 
 const jobs = new Map();
+let recentJobs = [];
+
+// Load recent jobs from file
+function loadJobs() {
+  try {
+    if (fs.existsSync(LOG_FILE)) {
+      recentJobs = JSON.parse(fs.readFileSync(LOG_FILE, 'utf8'));
+    }
+  } catch (e) {
+    recentJobs = [];
+  }
+}
+
+// Save recent jobs to file
+function saveJobs() {
+  recentJobs = Array.from(jobs.values()).slice(-50); // Keep last 50
+  fs.writeFileSync(LOG_FILE, JSON.stringify(recentJobs, null, 2));
+}
+
+loadJobs();
 
 function createJob(data) {
   const id = randomBytes(8).toString('hex');
@@ -43,6 +66,7 @@ function processJob(job) {
     
     job.status = 'done';
     job.response = response;
+    saveJobs();
   }, 1500);
 }
 
@@ -55,6 +79,12 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'GET' && req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 'ok' }));
+    return;
+  }
+
+  if (req.method === 'GET' && req.url === '/jobs') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ jobs: recentJobs, count: recentJobs.length }));
     return;
   }
 

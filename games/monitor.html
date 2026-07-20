@@ -4,50 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مانیتور چت‌بات | hamidshariati.ir</title>
+    <meta name="refresh" content="5">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0f0f23; color: #e2e8f0; padding: 20px; }
-        h1 { color: #22d3ee; margin-bottom: 20px; }
-        .status { padding: 10px; background: #1e293b; border-radius: 8px; margin-bottom: 20px; }
+        h1 { color: #22d3ee; margin-bottom: 10px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .status { padding: 10px 15px; background: #1e293b; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; }
         .status.ok { border-left: 4px solid #22c55e; }
         .status.error { border-left: 4px solid #ef4444; }
-        .jobs { display: flex; flex-direction: column; gap: 10px; }
-        .job { background: #1e293b; padding: 15px; border-radius: 8px; border: 1px solid #334155; }
-        .job-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
-        .job-id { color: #94a3b8; font-size: 0.8rem; }
-        .job-status { padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }
+        .refresh { background: #22d3ee; color: #0f0f23; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .refresh:hover { background: #0ea5e9; }
+        .count { color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px; }
+        .jobs { display: flex; flex-direction: column; gap: 12px; }
+        .job { background: #1e293b; padding: 15px; border-radius: 10px; border: 1px solid #334155; }
+        .job-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .job-time { color: #64748b; font-size: 0.8rem; }
+        .job-status { padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
         .job-status.queued { background: #854d0e; color: #fbbf24; }
         .job-status.processing { background: #1e40af; color: #60a5fa; }
         .job-status.done { background: #166534; color: #4ade80; }
         .job-status.error { background: #7f1d1d; color: #f87171; }
-        .job-message { color: #e2e8f0; margin-bottom: 5px; }
-        .job-response { color: #94a3b8; font-size: 0.9rem; }
-        .refresh { background: #22d3ee; color: #0f0f23; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; }
-        .refresh:hover { background: #0ea5e9; }
+        .job-message { color: #e2e8f0; margin-bottom: 8px; padding: 8px; background: #0f172a; border-radius: 6px; }
+        .job-response { color: #94a3b8; font-size: 0.9rem; padding: 8px; background: #0f172a; border-radius: 6px; }
+        .job-label { color: #64748b; font-size: 0.75rem; margin-bottom: 4px; }
+        .empty { text-align: center; color: #64748b; padding: 40px; }
     </style>
 </head>
 <body>
-    <h1>📊 مانیتور چت‌بات</h1>
-    <button class="refresh" onclick="loadJobs()">🔄 بروزرسانی</button>
+    <div class="header">
+        <h1>📊 مانیتور چت‌بات</h1>
+        <button class="refresh" onclick="loadJobs()">🔄 بروزرسانی</button>
+    </div>
+    
     <div class="status" id="status">در حال بررسی...</div>
-    <div class="jobs" id="jobs"></div>
+    <div class="count" id="count"></div>
+    <div class="jobs" id="jobs">
+        <div class="empty">در حال بارگذاری...</div>
+    </div>
 
     <script>
         const API = window.location.origin + '/games/mimo-api';
 
         async function loadJobs() {
             try {
-                const res = await fetch(`${API}/health`);
-                const data = await res.json();
-                document.getElementById('status').className = 'status ok';
-                document.getElementById('status').textContent = `✅ سرور فعال | ${new Date().toLocaleTimeString('fa-IR')}`;
+                // Check server health
+                const healthRes = await fetch(`${API}/health`);
+                const healthData = await healthRes.json();
+                
+                if (healthData.status === 'ok') {
+                    document.getElementById('status').className = 'status ok';
+                    document.getElementById('status').textContent = `✅ سرور فعال | ${new Date().toLocaleTimeString('fa-IR')}`;
+                } else {
+                    throw new Error('Server not ok');
+                }
+
+                // Get recent jobs
+                const jobsRes = await fetch(`${API}/jobs`);
+                const jobsData = await jobsRes.json();
+                
+                document.getElementById('count').textContent = `تعداد پیام‌ها: ${jobsData.count}`;
+                
+                if (jobsData.jobs.length === 0) {
+                    document.getElementById('jobs').innerHTML = '<div class="empty">هنوز پیامی ثبت نشده</div>';
+                    return;
+                }
+
+                // Sort by newest first
+                const sortedJobs = jobsData.jobs.sort((a, b) => b.created - a.created);
+                
+                document.getElementById('jobs').innerHTML = sortedJobs.map(job => `
+                    <div class="job">
+                        <div class="job-header">
+                            <span class="job-time">${new Date(job.created).toLocaleString('fa-IR')}</span>
+                            <span class="job-status ${job.status}">${getStatusText(job.status)}</span>
+                        </div>
+                        <div class="job-label">پیام:</div>
+                        <div class="job-message">${escapeHtml(job.message)}</div>
+                        ${job.response ? `
+                            <div class="job-label">پاسخ:</div>
+                            <div class="job-response">${escapeHtml(job.response)}</div>
+                        ` : ''}
+                    </div>
+                `).join('');
+                
             } catch (e) {
                 document.getElementById('status').className = 'status error';
-                document.getElementById('status').textContent = '❌ سرور در دسترس نیست';
+                document.getElementById('status').textContent = `❌ خطا: ${e.message}`;
             }
         }
 
+        function getStatusText(status) {
+            const texts = {
+                'queued': 'در صف',
+                'processing': 'در حال پردازش',
+                'done': 'انجام شد',
+                'error': 'خطا'
+            };
+            return texts[status] || status;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Load on page load
         loadJobs();
+        
+        // Auto-refresh every 5 seconds
         setInterval(loadJobs, 5000);
     </script>
 </body>
