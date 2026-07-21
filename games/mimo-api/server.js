@@ -1,30 +1,32 @@
 require('dotenv').config();
 const http = require('http');
 const { randomBytes } = require('crypto');
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
 const PORT = 3456;
 const BOT_NAME = process.env.BOT_NAME || 'دانا';
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'admin123';
 const LOG_FILE = '/tmp/chatbot-jobs.json';
+
+// Mutable session - can be changed at runtime
+let currentSession = process.env.TMUX_SESSION || '0';
+let currentWindow = process.env.TMUX_WINDOW || '0';
 
 const jobs = new Map();
 let recentJobs = [];
 
-// Load recent jobs from file
 function loadJobs() {
   try {
     if (fs.existsSync(LOG_FILE)) {
       recentJobs = JSON.parse(fs.readFileSync(LOG_FILE, 'utf8'));
     }
-  } catch (e) {
-    recentJobs = [];
-  }
+  } catch (e) { recentJobs = []; }
 }
 
-// Save recent jobs to file
 function saveJobs() {
-  recentJobs = Array.from(jobs.values()).slice(-50); // Keep last 50
+  recentJobs = Array.from(jobs.values()).slice(-50);
   fs.writeFileSync(LOG_FILE, JSON.stringify(recentJobs, null, 2));
 }
 
@@ -32,42 +34,95 @@ loadJobs();
 
 function createJob(data) {
   const id = randomBytes(8).toString('hex');
-  jobs.set(id, { id, message: data.message, status: 'queued', response: null, created: Date.now() });
+  jobs.set(id, { id, message: data.message, session: currentSession, status: 'queued', response: null, created: Date.now() });
   return id;
+}
+
+function getTmuxSessions() {
+  try {
+    const output = execSync('tmux list-sessions 2>/dev/null', { encoding: 'utf8' });
+    return output.trim().split('\n').map(line => {
+      const match = line.match(/^(\d+):/);
+      return match ? { id: match[1], info: line.trim() } : null;
+    }).filter(Boolean);
+  } catch (e) { return []; }
+}
+
+function sendToTmux(session, message) {
+  try {
+    const tmpFile = `/tmp/chatbot-cmd-${Date.now()}.txt`;
+    fs.writeFileSync(tmpFile, message, 'utf8');
+    execSync(`tmux load-buffer ${tmpFile} && tmux paste-buffer -t ${session}:0 -d && tmux send-keys -t ${session}:0 Enter`);
+    try { fs.unlinkSync(tmpFile); } catch (e) {}
+    return true;
+  } catch (e) { return false; }
 }
 
 function processJob(job) {
   job.status = 'processing';
   
-  // Simulate processing
-  setTimeout(() => {
-    const msg = job.message.toLowerCase();
-    let response = '';
-    
-    if (msg.includes('سلام') || msg.includes('حال')) {
-      response = `سلام! خوبم ممنون. ${BOT_NAME} در خدمتم. چه کمکی می‌خوای؟`;
-    } else if (msg.includes('شطرنج')) {
-      response = 'شطرنج ساختم! به صفحه بازی‌ها برو و شطرنج رو انتخاب کن. ♟️';
-    } else if (msg.includes('بازی جدید') || msg.includes('بازی بساز')) {
-      response = 'چه بازی‌ای می‌خوای؟ مثلاً:\n• بازی فکری\n• بازی ماجراجویی\n• بازی ورزشی\n\nبگو تا بسازمش!';
-    } else if (msg.includes('قدرت ویژه')) {
-      response = 'قدرت ویژه اضافه شد! حالا می‌تونی از اون استفاده کنی.';
-    } else if (msg.includes('صدا')) {
-      response = 'صدا اضافه شد! حالا بازی صدا داره.';
-    } else if (msg.includes('تم جدید')) {
-      response = 'تم جدید اعمال شد! رنگ‌ها عوض شدن.';
-    } else if (msg.includes('باگ') || msg.includes('خطا')) {
-      response = 'باگ گزارش شد. در اسرع وقت رفع می‌کنم.';
-    } else if (msg.includes('موبایل')) {
-      response = 'بازی موبایل‌فرندلی شد! حالا راحت‌تر بازی کن.';
-    } else {
-      response = `درخواستت دریافت شد: "${job.message.slice(0, 50)}..."\n\nدارم روش کار می‌کنم! 🎮`;
-    }
-    
+  const sent = sendToTmux(job.session, job.message);
+  
+  if (!sent) {
     job.status = 'done';
-    job.response = response;
+    job.response = `${BOT_NAME} در دسترس نیست. لطفاً session رو چک کن.`;
     saveJobs();
-  }, 1500);
+    return;
+  }
+
+  // Wait and capture response from tmux
+  let attempts = 0;
+  const beforeLines = parseInt(
+    execSync(`tmux capture-pane -t ${job.session}:0 -p 2>/dev/null | wc -l`, { encoding: 'utf8' }).trim() || '0'
+  );
+
+  const checkResponse = () => {
+    if (attempts >= 30) {
+      job.status = 'done';
+      job.response = 'پاسخی دریافت نشد. لطفاً بررسی کن.';
+      saveJobs();
+      return;
+    }
+
+    setTimeout(() => {
+      try {
+        const content = execSync(`tmux capture-pane -t ${job.session}:0 -p 2>/dev/null`, { encoding: 'utf8' }).trim();
+        const lines = content.split('\n');
+        const newLines = lines.slice(beforeLines);
+        let response = newLines.join('\n').trim()
+          .replace(/\x1b\[[0-9;]*m/g, '')
+          .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+          .trim();
+
+        if (response && response.length > 3 && response !== job.lastContent) {
+          job.lastContent = response;
+          job.stableCount = (job.stableCount || 0) + 1;
+          if (job.stableCount >= 2) {
+            job.status = 'done';
+            job.response = response;
+            saveJobs();
+            return;
+          }
+        } else if (response) {
+          job.lastContent = response;
+          job.stableCount = 0;
+        }
+        attempts++;
+        checkResponse();
+      } catch (e) {
+        attempts++;
+        checkResponse();
+      }
+    }, 1000);
+  };
+
+  checkResponse();
+}
+
+function checkAuth(req) {
+  const url = new URL(req.url, `http://localhost`);
+  const token = url.searchParams.get('token');
+  return token === ADMIN_TOKEN;
 }
 
 const server = http.createServer(async (req, res) => {
@@ -76,6 +131,7 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') { res.writeHead(200); res.end(); return; }
 
+  // Public endpoints
   if (req.method === 'GET' && req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 'ok' }));
@@ -104,7 +160,7 @@ const server = http.createServer(async (req, res) => {
         const jobId = createJob(data);
         processJob(jobs.get(jobId));
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ jobId, status: 'queued' }));
+        res.end(JSON.stringify({ jobId, status: 'queued', session: currentSession }));
       } catch (e) { res.writeHead(400, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Invalid JSON' })); }
     });
     return;
@@ -119,6 +175,52 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // Admin endpoints (require token)
+  if (req.url.startsWith('/admin')) {
+    if (!checkAuth(req)) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Unauthorized' }));
+      return;
+    }
+
+    if (req.method === 'GET' && req.url.startsWith('/admin/config')) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ botName: BOT_NAME, session: currentSession, window: currentWindow }));
+      return;
+    }
+
+    if (req.method === 'GET' && req.url.startsWith('/admin/sessions')) {
+      const sessions = getTmuxSessions();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ sessions, current: currentSession }));
+      return;
+    }
+
+    if (req.method === 'POST' && req.url.startsWith('/admin/session')) {
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', () => {
+        try {
+          const data = JSON.parse(body);
+          if (data.session) currentSession = String(data.session);
+          if (data.window) currentWindow = String(data.window);
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ session: currentSession, window: currentWindow }));
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Invalid JSON' }));
+        }
+      });
+      return;
+    }
+
+    if (req.method === 'GET' && req.url.startsWith('/admin/jobs')) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ jobs: recentJobs, count: recentJobs.length }));
+      return;
+    }
+  }
+
   res.writeHead(404);
   res.end('Not found');
 });
@@ -129,5 +231,5 @@ setInterval(() => {
 }, 300000);
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Chatbot API running on port ${PORT}`);
+  console.log(`[${BOT_NAME}] Chatbot API running on port ${PORT} | Session: ${currentSession}`);
 });
