@@ -8,9 +8,9 @@ const path = require('path');
 const PORT = 3456;
 const BOT_NAME = process.env.BOT_NAME || 'دانا';
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'admin123';
+const QUEUE_DIR = '/root/nginx-certbot/websites/hamidshariati.ir/games/queue';
 const LOG_FILE = '/tmp/chatbot-jobs.json';
 
-// Mutable session - can be changed at runtime
 let currentSession = process.env.TMUX_SESSION || '0';
 let currentWindow = process.env.TMUX_WINDOW || '0';
 
@@ -32,10 +32,59 @@ function saveJobs() {
 
 loadJobs();
 
+// Write message to queue file for cron to process
+function writeToQueue(job) {
+  const queueFile = path.join(QUEUE_DIR, `chatbot_${job.id}.json`);
+  const queueData = {
+    id: job.id,
+    source: 'chatbot',
+    games: job.games || ['snake'],
+    changeType: 'chat',
+    description: job.message,
+    priority: 'normal',
+    notes: '',
+    status: 'queued',
+    created: new Date().toISOString(),
+    session: currentSession
+  };
+  fs.writeFileSync(queueFile, JSON.stringify(queueData, null, 2));
+  return queueFile;
+}
+
+// Check if queue file has response
+function checkQueueResponse(jobId) {
+  const queueFile = path.join(QUEUE_DIR, `chatbot_${jobId}.json`);
+  if (!fs.existsSync(queueFile)) return null;
+  
+  try {
+    const data = JSON.parse(fs.readFileSync(queueFile, 'utf8'));
+    return {
+      status: data.status,
+      response: data.response || data.error || null,
+      finished: data.finished
+    };
+  } catch (e) {
+    return null;
+  }
+}
+
 function createJob(data) {
   const id = randomBytes(8).toString('hex');
-  jobs.set(id, { id, message: data.message, session: currentSession, status: 'queued', response: null, created: Date.now() });
-  return id;
+  const job = {
+    id,
+    message: data.message,
+    games: data.games || ['snake'],
+    session: currentSession,
+    status: 'queued',
+    response: null,
+    created: Date.now()
+  };
+  jobs.set(id, job);
+  
+  // Write to queue for processing
+  writeToQueue(job);
+  
+  return job;
 }
 
 function getTmuxSessions() {
@@ -48,75 +97,39 @@ function getTmuxSessions() {
   } catch (e) { return []; }
 }
 
-function sendToTmux(session, message) {
-  try {
-    const tmpFile = `/tmp/chatbot-cmd-${Date.now()}.txt`;
-    fs.writeFileSync(tmpFile, message, 'utf8');
-    execSync(`tmux load-buffer ${tmpFile} && tmux paste-buffer -t ${session}:0 -d && tmux send-keys -t ${session}:0 Enter`);
-    try { fs.unlinkSync(tmpFile); } catch (e) {}
-    return true;
-  } catch (e) { return false; }
-}
-
-function processJob(job) {
-  job.status = 'processing';
-  
-  const sent = sendToTmux(job.session, job.message);
-  
-  if (!sent) {
-    job.status = 'done';
-    job.response = `${BOT_NAME} در دسترس نیست. لطفاً session رو چک کن.`;
-    saveJobs();
-    return;
-  }
-
-  // Wait and capture response from tmux
+// Poll queue for response
+function pollForResponse(job) {
   let attempts = 0;
-  const beforeLines = parseInt(
-    execSync(`tmux capture-pane -t ${job.session}:0 -p 2>/dev/null | wc -l`, { encoding: 'utf8' }).trim() || '0'
-  );
-
-  const checkResponse = () => {
-    if (attempts >= 30) {
-      job.status = 'done';
-      job.response = 'پاسخی دریافت نشد. لطفاً بررسی کن.';
+  const maxAttempts = 120; // 2 minutes
+  
+  const check = () => {
+    if (attempts >= maxAttempts) {
+      job.status = 'timeout';
+      job.response = 'پاسخی دریافت نشد.';
       saveJobs();
       return;
     }
-
-    setTimeout(() => {
-      try {
-        const content = execSync(`tmux capture-pane -t ${job.session}:0 -p 2>/dev/null`, { encoding: 'utf8' }).trim();
-        const lines = content.split('\n');
-        const newLines = lines.slice(beforeLines);
-        let response = newLines.join('\n').trim()
-          .replace(/\x1b\[[0-9;]*m/g, '')
-          .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
-          .trim();
-
-        if (response && response.length > 3 && response !== job.lastContent) {
-          job.lastContent = response;
-          job.stableCount = (job.stableCount || 0) + 1;
-          if (job.stableCount >= 2) {
-            job.status = 'done';
-            job.response = response;
-            saveJobs();
-            return;
-          }
-        } else if (response) {
-          job.lastContent = response;
-          job.stableCount = 0;
-        }
-        attempts++;
-        checkResponse();
-      } catch (e) {
-        attempts++;
-        checkResponse();
-      }
-    }, 1000);
+    
+    const result = checkQueueResponse(job.id);
+    if (result && result.status === 'done') {
+      job.status = 'done';
+      job.response = result.response || 'انجام شد.';
+      saveJobs();
+      return;
+    }
+    
+    if (result && result.status === 'failed') {
+      job.status = 'error';
+      job.response = result.response || 'خطا در پردازش.';
+      saveJobs();
+      return;
+    }
+    
+    attempts++;
+    setTimeout(check, 1000);
   };
-
-  checkResponse();
+  
+  check();
 }
 
 function checkAuth(req) {
@@ -156,12 +169,21 @@ const server = http.createServer(async (req, res) => {
     req.on('end', () => {
       try {
         const data = JSON.parse(body);
-        if (!data.message) { res.writeHead(400, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Message required' })); return; }
-        const jobId = createJob(data);
-        processJob(jobs.get(jobId));
+        if (!data.message) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Message required' }));
+          return;
+        }
+        
+        const job = createJob(data);
+        pollForResponse(job);
+        
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ jobId, status: 'queued', session: currentSession }));
-      } catch (e) { res.writeHead(400, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Invalid JSON' })); }
+        res.end(JSON.stringify({ jobId: job.id, status: 'queued', session: currentSession }));
+      } catch (e) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid JSON' }));
+      }
     });
     return;
   }
@@ -169,13 +191,17 @@ const server = http.createServer(async (req, res) => {
   const statusMatch = req.url.match(/^\/status\/([a-f0-9]+)$/);
   if (req.method === 'GET' && statusMatch) {
     const job = jobs.get(statusMatch[1]);
-    if (!job) { res.writeHead(404, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Not found' })); return; }
+    if (!job) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Not found' }));
+      return;
+    }
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ id: job.id, status: job.status, response: job.response }));
     return;
   }
 
-  // Admin endpoints (require token)
+  // Admin endpoints
   if (req.url.startsWith('/admin')) {
     if (!checkAuth(req)) {
       res.writeHead(401, { 'Content-Type': 'application/json' });
@@ -227,9 +253,12 @@ const server = http.createServer(async (req, res) => {
 
 setInterval(() => {
   const now = Date.now();
-  for (const [id, job] of jobs) { if (now - job.created > 300000) jobs.delete(id); }
+  for (const [id, job] of jobs) {
+    if (now - job.created > 300000) jobs.delete(id);
+  }
 }, 300000);
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`[${BOT_NAME}] Chatbot API running on port ${PORT} | Session: ${currentSession}`);
+  console.log(`Queue dir: ${QUEUE_DIR}`);
 });
