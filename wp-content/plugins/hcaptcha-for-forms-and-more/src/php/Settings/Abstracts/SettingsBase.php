@@ -274,7 +274,7 @@ abstract class SettingsBase {
 		add_action( 'admin_page_access_denied', [ $this, 'base_admin_page_access_denied' ] );
 
 		if ( $this->is_main_menu_page() ) {
-			add_action( 'plugins_loaded', [ $this, 'load_plugin_textdomain' ] );
+			add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
 			add_filter( 'plugin_action_links_' . $this->plugin_basename(), [ $this, 'add_settings_link' ] );
 			add_filter( 'network_admin_plugin_action_links_' . $this->plugin_basename(), [ $this, 'add_settings_link' ] );
 		}
@@ -1490,6 +1490,10 @@ abstract class SettingsBase {
 	 * @return void
 	 */
 	public function load_plugin_textdomain(): void {
+		add_action( 'init', [ $this, 'do_load_plugin_textdomain' ], 20 );
+	}
+
+	public function do_load_plugin_textdomain(): void {
 		load_plugin_textdomain(
 			$this->text_domain(),
 			false,

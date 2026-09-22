@@ -23,6 +23,10 @@
   const STAGE_THRESHOLDS = [0, 8, 18];
   const STAGE_NAMES = ["مرحله ۱: دیوارهای ساده", "مرحله ۲: دیوارهای متحرک", "مرحله ۳: موانع پیشرفته"];
 
+  const GROWTH_PER_FOOD = 0.04;
+  const MAX_SNAKE_SCALE = 2.5;
+  const GROW_MILESTONES = [1.5, 2.0, 2.5];
+
   const STAGE_1_WALLS = [
     { x: 4, y: 4 }, { x: 4, y: 5 }, { x: 4, y: 6 },
     { x: 15, y: 4 }, { x: 15, y: 5 }, { x: 15, y: 6 },
@@ -203,6 +207,30 @@
         gain.connect(ctx.destination);
         osc.start(t + i * 0.08);
         osc.stop(t + i * 0.08 + 0.15);
+      });
+    } catch (_) {
+      /* ignore */
+    }
+  }
+
+  function playGrowthSound(scene) {
+    if (soundMuted) return;
+    const ctx = getAudioContext(scene);
+    if (!ctx) return;
+    try {
+      const t = ctx.currentTime;
+      const notes = [440, 554, 659, 880];
+      notes.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, t + i * 0.06);
+        gain.gain.setValueAtTime(0.09, t + i * 0.06);
+        gain.gain.exponentialRampToValueAtTime(0.01, t + i * 0.06 + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(t + i * 0.06);
+        osc.stop(t + i * 0.06 + 0.12);
       });
     } catch (_) {
       /* ignore */
@@ -536,6 +564,7 @@
       this.direction = DIR.right;
       this.nextDirection = DIR.right;
       this.score = 0;
+      this.snakeScale = 1.0;
       this.particles = [];
       this.currentLevel = 0;
       this.isRunning = true;
@@ -673,8 +702,11 @@
 
       if (newHead.x < 0) newHead.x = GRID_COLS - 1;
       else if (newHead.x >= GRID_COLS) newHead.x = 0;
-      if (newHead.y < 0) newHead.y = GRID_ROWS - 1;
-      else if (newHead.y >= GRID_ROWS) newHead.y = 0;
+
+      if (newHead.y < 0 || newHead.y >= GRID_ROWS) {
+        this.endGame("به دیوار خوردی!");
+        return;
+      }
 
       // Obstacles are now passable (skip walls feature)
 
@@ -689,10 +721,19 @@
 
       if (ate) {
         const prevTier = Math.floor((this.score - 0) / 5);
+        const prevScale = this.snakeScale;
         this.score++;
+        this.snakeScale = Math.min(MAX_SNAKE_SCALE, this.snakeScale + GROWTH_PER_FOOD);
         const newTier = Math.floor(this.score / 5);
         this.spawnEatFx(this.food.x, this.food.y, this.food.fill, this.food.glow);
         playEatSound(this);
+        if (this.snakeScale >= prevScale + GROWTH_PER_FOOD) {
+          playGrowthSound(this);
+        }
+        const hitMilestone = GROW_MILESTONES.some(m => prevScale < m && this.snakeScale >= m);
+        if (hitMilestone) {
+          this.showGrowthNotification();
+        }
         this.spawnFood();
         this.updateHud();
         this.checkStageAdvance();
@@ -757,11 +798,30 @@
       }
     }
 
+    showGrowthNotification() {
+      playGrowthSound(this);
+      const overlay = this.add.rectangle(
+        BOARD_W / 2, GAME_H / 2, BOARD_W, 60, 0x0f0a1e, 0.85
+      ).setDepth(20);
+      const label = this.add
+        .text(BOARD_W / 2, GAME_H / 2, "🔥 مار بزرگتر شد! 🔥", {
+          fontFamily: "system-ui, sans-serif",
+          fontSize: "22px",
+          color: "#f97316",
+          fontStyle: "bold",
+        })
+        .setOrigin(0.5).setDepth(21);
+      this.time.delayedCall(1500, () => {
+        overlay.destroy();
+        label.destroy();
+      });
+    }
+
     updateHud() {
       this.scoreText.setText("امتیاز: " + this.score);
       this.highText.setText("رکورد: " + sharedHighScore);
       this.speedText.setText("سرعت: " + speedLevel(this.score));
-      this.levelText.setText(STAGE_NAMES[this.currentLevel]);
+      this.levelText.setText(STAGE_NAMES[this.currentLevel] + "  ·  اندازه: " + this.snakeScale.toFixed(1) + "x");
     }
 
     endGame(reason) {
@@ -775,6 +835,7 @@
         highScore: sharedHighScore,
         reason: reason,
         isNewRecord: isNew,
+        snakeScale: this.snakeScale,
       });
     }
 
@@ -847,21 +908,34 @@
     drawSnake() {
       const g = this.snakeGfx;
       g.clear();
+      const sc = this.snakeScale;
+      const maxPad = 4;
+      const padHead = Math.max(0, maxPad - Math.floor((sc - 1) * 3));
+      const padBody = Math.max(0, maxPad - Math.floor((sc - 1) * 2.5));
       this.snake.forEach((part, i) => {
-        const px = part.x * CELL + (i === 0 ? 1 : 2);
-        const py = this.boardOriginY + part.y * CELL + (i === 0 ? 1 : 2);
-        const size = CELL - (i === 0 ? 2 : 4);
+        const px = part.x * CELL + padHead;
+        const py = this.boardOriginY + part.y * CELL + padHead;
+        const size = CELL - padHead * 2;
         const head = i === 0;
+        const bodyPad = padBody;
+        const bx = part.x * CELL + bodyPad;
+        const by = this.boardOriginY + part.y * CELL + bodyPad;
+        const bSize = CELL - bodyPad * 2;
         g.fillStyle(head ? 0xa5f3fc : Phaser.Display.Color.GetColor(34 + i * 2, 200 - i * 3, 238), 1);
-        g.fillRoundedRect(px, py, size, size, head ? 6 : 4);
         if (head) {
+          g.fillRoundedRect(px, py, size, size, 6);
+        } else {
+          g.fillRoundedRect(bx, by, bSize, bSize, 4);
+        }
+        if (head) {
+          const eyeSize = 2.5 * Math.min(sc, 1.5);
           g.fillStyle(0x0f172a, 1);
           const cx = part.x * CELL + CELL / 2;
           const cy = this.boardOriginY + part.y * CELL + CELL / 2;
           const ex = this.direction.x * 3;
           const ey = this.direction.y * 3;
-          g.fillCircle(cx - 4 + ex, cy - 3 + ey, 2.5);
-          g.fillCircle(cx + 4 + ex, cy - 3 + ey, 2.5);
+          g.fillCircle(cx - 4 + ex, cy - 3 + ey, eyeSize);
+          g.fillCircle(cx + 4 + ex, cy - 3 + ey, eyeSize);
         }
       });
     }
@@ -892,6 +966,7 @@
       this.finalHigh = data.highScore || 0;
       this.reason = data.reason || "بازی تمام شد";
       this.isNewRecord = !!data.isNewRecord;
+      this.finalScale = data.snakeScale || 1.0;
     }
 
     create() {
@@ -939,9 +1014,19 @@
         })
         .setOrigin(0.5);
 
+      if (this.finalScale > 1.0) {
+        this.add
+          .text(BOARD_W / 2, GAME_H / 2 + 62, "اندازه مار: " + this.finalScale.toFixed(1) + "x", {
+            fontFamily: "system-ui, sans-serif",
+            fontSize: "16px",
+            color: "#f97316",
+          })
+          .setOrigin(0.5);
+      }
+
       if (this.isNewRecord) {
         this.add
-          .text(BOARD_W / 2, GAME_H / 2 + 68, "رکورد جدید!", {
+          .text(BOARD_W / 2, GAME_H / 2 + 88, "رکورد جدید!", {
             fontFamily: "system-ui, sans-serif",
             fontSize: "18px",
             color: "#4ade80",
@@ -951,12 +1036,12 @@
       }
 
       const restartBtn = this.add
-        .rectangle(BOARD_W / 2, GAME_H / 2 + 120, 220, 50, 0x22d3ee, 0.3)
+        .rectangle(BOARD_W / 2, GAME_H / 2 + 140, 220, 50, 0x22d3ee, 0.3)
         .setStrokeStyle(2, 0xa855f7, 1)
         .setInteractive({ useHandCursor: true });
 
       const restartLabel = this.add
-        .text(BOARD_W / 2, GAME_H / 2 + 120, "Restart", {
+        .text(BOARD_W / 2, GAME_H / 2 + 140, "Restart", {
           fontFamily: "system-ui, sans-serif",
           fontSize: "20px",
           color: "#f8fafc",

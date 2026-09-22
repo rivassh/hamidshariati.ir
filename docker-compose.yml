@@ -1,0 +1,20 @@
+services:
+  hamidshariati-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hamidshariati-app:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

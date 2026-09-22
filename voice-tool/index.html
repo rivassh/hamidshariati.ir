@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Voice Command Tool</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0f;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px}
+h1{font-size:1.8rem;margin-bottom:6px;color:#22d3ee}
+.sub{color:#64748b;margin-bottom:30px;font-size:.95rem;text-align:center}
+.tabs{display:flex;gap:8px;margin-bottom:24px}
+.tab{padding:8px 20px;border:1px solid #334155;border-radius:8px;background:#1e293b;color:#94a3b8;cursor:pointer;font-size:.9rem}
+.tab.active{background:#164e63;border-color:#22d3ee;color:#22d3ee}
+.section{display:none;width:100%;max-width:600px}
+.section.active{display:block}
+.mic-btn{width:100px;height:100px;border-radius:50%;border:3px solid #334155;background:#1e293b;color:#64748b;font-size:2.5rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.mic-btn:hover{border-color:#22d3ee;color:#22d3ee}
+.mic-btn.active{background:#dc2626;border-color:#ef4444;color:#fff;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.5)}50%{box-shadow:0 0 0 20px rgba(220,38,38,0)}}
+.upload-zone{border:2px dashed #334155;border-radius:12px;padding:40px;text-align:center;cursor:pointer;transition:border-color .2s;position:relative}
+.upload-zone:hover{border-color:#22d3ee}
+.upload-zone input[type="file"]{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:1}
+.upload-zone p{color:#64748b;font-size:.95rem;margin-top:8px;pointer-events:none}
+.upload-zone .icon{font-size:2.5rem;pointer-events:none}
+.file-name{color:#22d3ee;font-size:.85rem;margin-top:8px}
+.status{font-size:.9rem;color:#64748b;margin:8px 0}
+.transcript{width:100%;min-height:80px;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:16px;font-size:1.1rem;line-height:1.8;color:#f1f5f9;direction:rtl;text-align:right;margin-top:16px}
+.controls{margin-top:16px;display:flex;gap:12px}
+.btn{padding:10px 20px;border:none;border-radius:8px;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-primary{background:#22d3ee;color:#0a0a0f;font-weight:600}
+.btn-primary:hover{background:#06b6d4}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-secondary{background:#334155;color:#e2e8f0}
+.btn-secondary:hover{background:#475569}
+.lang-select{margin-bottom:16px;text-align:center}
+.lang-select select{background:#1e293b;border:1px solid #334155;border-radius:8px;padding:8px 12px;color:#e2e8f0;font-size:.9rem}
+.log{margin-top:20px;width:100%;max-width:600px;background:#0c0a18;border:1px solid #334155;border-radius:12px;padding:16px;max-height:300px;overflow-y:auto;font-family:'Fira Code',monospace;font-size:.85rem;line-height:1.6;color:#a5f3fc;direction:ltr;text-align:left}
+.log-entry{padding:4px 0;border-bottom:1px solid #1e293b}
+.log-entry.sent{color:#4ade80}
+.log-entry.error{color:#f87171}
+.log-entry.info{color:#94a3b8}
+.progress{width:100%;height:6px;background:#1e293b;border-radius:3px;margin-top:8px;overflow:hidden;display:none}
+.progress-bar{height:100%;background:#22d3ee;width:0%;transition:width .3s}
+footer{margin-top:auto;padding-top:40px;color:#334155;font-size:.8rem;text-align:center}
+@media(hover:none){.mic-btn{width:120px;height:120px;font-size:3rem}}
+</style>
+</head>
+<body>
+<h1>ابزار صوتی</h1>
+<p class="sub">ضبط یا آپلود صدا، تبدیل به متن در مرورگر، اجرا در tmux</p>
+
+<div class="lang-select">
+<label style="color:#94a3b8;font-size:.85rem">زبان: </label>
+<select id="langSelect">
+<option value="fa">فارسی</option>
+<option value="en">English</option>
+<option value="ar">عربی</option>
+<option value="tr">ترکی</option>
+</select>
+</div>
+
+<div class="tabs">
+<div class="tab active" onclick="switchTab('record')">ضبط صدا</div>
+<div class="tab" onclick="switchTab('upload')">آپلود فایل</div>
+</div>
+
+<div class="section active" id="record-section">
+<button class="mic-btn" id="mic">🎤</button>
+<p class="status" id="rec-status">آماده</p>
+</div>
+
+<div class="section" id="upload-section">
+<div class="upload-zone" id="dropzone">
+<div class="icon">📁</div>
+<p>فایل صوتی رو اینجا بکشید یا کلیک کنید</p>
+<p style="font-size:.8rem;color:#475569;margin-top:4px">MP3, WAV, M4A, WEBM, MP4, OGG</p>
+<input type="file" id="fileInput" accept="audio/*,.mp3,.wav,.m4a,.webm,.mp4,.ogg,.flac">
+<div class="file-name" id="fileName"></div>
+</div>
+<div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
+<p class="status" id="upload-status"></p>
+<button class="btn btn-primary" id="uploadBtn" disabled style="margin-top:12px;width:100%">تبدیل به متن</button>
+</div>
+
+<div class="transcript" id="transcript">...</div>
+
+<div class="controls">
+<button class="btn btn-primary" id="sendBtn" disabled>ارسال به tmux</button>
+<button class="btn btn-secondary" onclick="clearAll()">پاک کردن</button>
+</div>
+
+<div class="log" id="log">
+<div class="log-entry info">در حال بارگذاری مدل whisper...</div>
+</div>
+
+<footer>hamidshariati.ir &copy; 2026 — تبدیل صدا در مرورگر شما انجام می‌شود، نیازی به API نیست</footer>
+
+<script type="module">
+import {pipeline} from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js';
+
+let recognition=null,isRecording=false,finalText='';
+let uploadedFile=null,whisper=null;
+const micBtn=document.getElementById('mic');
+const recStatus=document.getElementById('rec-status');
+const transcriptEl=document.getElementById('transcript');
+const sendBtn=document.getElementById('sendBtn');
+const logEl=document.getElementById('log');
+const fileInput=document.getElementById('fileInput');
+const uploadBtn=document.getElementById('uploadBtn');
+const uploadStatus=document.getElementById('upload-status');
+const fileName=document.getElementById('fileName');
+const dropzone=document.getElementById('dropzone');
+const progressEl=document.getElementById('progress');
+const progressBar=document.getElementById('progressBar');
+const langSelect=document.getElementById('langSelect');
+
+function addLog(type,msg){
+  const d=document.createElement('div');d.className='log-entry '+type;
+  const ts=new Date().toLocaleTimeString('en-US',{hour12:false});
+  d.textContent='['+ts+'] '+msg;logEl.appendChild(d);logEl.scrollTop=logEl.scrollHeight;
+}
+window.addLog=addLog;
+
+// Load Whisper model
+try{
+  whisper=await pipeline('automatic-speech-recognition','Xenova/whisper-tiny',{
+    progress_callback:p=>{
+      if(p.status==='progress'){
+        progressEl.style.display='block';
+        progressBar.style.width=p.progress+'%';
+        uploadStatus.textContent='بارگذاری مدل: '+Math.round(p.progress)+'%';
+      }
+      if(p.status==='done'){
+        progressEl.style.display='none';
+        uploadStatus.textContent='مدل آماده است';
+        addLog('info','Whisper model loaded');
+        logEl.querySelector('.log-entry.info').textContent='آماده';
+      }
+    }
+  });
+}catch(e){addLog('error','Model load failed: '+e.message)}
+
+// Tab switching
+window.switchTab=tab=>{
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  if(tab==='record'){
+    document.querySelectorAll('.tab')[0].classList.add('active');
+    document.getElementById('record-section').classList.add('active');
+  }else{
+    document.querySelectorAll('.tab')[1].classList.add('active');
+    document.getElementById('upload-section').classList.add('active');
+  }
+};
+
+// Live recording via Web Speech API
+function setupSpeech(){
+  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){
+    micBtn.disabled=true;recStatus.textContent='مرورگر پشتیبانی نمی‌کنه';return;
+  }
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SR();
+  recognition.continuous=true;
+  recognition.interimResults=true;
+  recognition.lang=langSelect.value+'-'+(langSelect.value==='fa'?'IR':langSelect.value==='en'?'US':langSelect.value==='ar'?'SA':'TR');
+
+  recognition.onresult=e=>{
+    let interim='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal){finalText+=e.results[i][0].transcript+' ';transcriptEl.textContent=finalText}
+      else{interim+=e.results[i][0].transcript}
+    }
+    if(interim)transcriptEl.textContent=finalText+interim;
+    sendBtn.disabled=!finalText.trim();
+  };
+  recognition.onend=()=>{isRecording=false;micBtn.classList.remove('active');recStatus.textContent='آماده';sendBtn.disabled=!finalText.trim()};
+  recognition.onerror=e=>{isRecording=false;micBtn.classList.remove('active');recStatus.textContent='خطا: '+e.error;addLog('error',e.error)};
+}
+setupSpeech();
+
+micBtn.addEventListener('click',()=>{
+  if(!recognition)return;
+  if(isRecording){recognition.stop()}
+  else{
+    recognition.lang=langSelect.value+'-'+(langSelect.value==='fa'?'IR':langSelect.value==='en'?'US':langSelect.value==='ar'?'SA':'TR');
+    recognition.start();isRecording=true;micBtn.classList.add('active');recStatus.textContent='در حال ضبط...';
+  }
+});
+
+langSelect.addEventListener('change',()=>{
+  if(isRecording&&recognition){recognition.stop()}
+});
+
+// File upload - works on mobile
+fileInput.addEventListener('change',e=>{
+  const f=e.target.files[0];
+  if(f){
+    uploadedFile=f;
+    fileName.textContent=f.name+' ('+Math.round(f.size/1024)+'KB)';
+    uploadBtn.disabled=!whisper;
+    uploadStatus.textContent=whisper?'آماده تبدیل':'مدل در حال بارگذاری...';
+  }
+});
+
+dropzone.addEventListener('dragover',e=>{e.preventDefault();dropzone.style.borderColor='#22d3ee'});
+dropzone.addEventListener('dragleave',()=>{dropzone.style.borderColor='#334155'});
+dropzone.addEventListener('drop',e=>{
+  e.preventDefault();dropzone.style.borderColor='#334155';
+  const f=e.dataTransfer.files[0];
+  if(f){
+    uploadedFile=f;
+    fileName.textContent=f.name+' ('+Math.round(f.size/1024)+'KB)';
+    uploadBtn.disabled=!whisper;
+    uploadStatus.textContent=whisper?'آماده تبدیل':'مدل در حال بارگذاری...';
+  }
+});
+
+uploadBtn.addEventListener('click',async()=>{
+  if(!uploadedFile||!whisper)return;
+  uploadBtn.disabled=true;
+  uploadStatus.textContent='در حال تبدیل...';
+  addLog('info','Transcribing: '+uploadedFile.name);
+  try{
+    const audioCtx=new AudioContext();
+    const arrayBuf=await uploadedFile.arrayBuffer();
+    const audioBuf=await audioCtx.decodeAudioData(arrayBuf);
+    const audioData=audioBuf.getChannelData(0);
+    const lang=langSelect.value;
+    const result=await whisper(audioData,{language:lang});
+    finalText=result.text;
+    transcriptEl.textContent=finalText;
+    sendBtn.disabled=false;
+    uploadStatus.textContent='تبدیل شد';
+    addLog('info','Text: '+finalText.substring(0,100));
+  }catch(e){
+    uploadStatus.textContent='خطا: '+e.message;
+    addLog('error',e.message);
+  }
+  uploadBtn.disabled=false;
+});
+
+// Send to tmux
+sendBtn.addEventListener('click',async()=>{
+  const cmd=finalText.trim();
+  if(!cmd)return;
+  sendBtn.disabled=true;
+  addLog('sent',cmd);
+  try{
+    const r=await fetch('run.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({command:cmd})});
+    const res=await r.json();
+    if(res.success){addLog('info','Sent to tmux: '+res.session)}
+    else{addLog('error',res.error)}
+  }catch(e){addLog('error',e.message)}
+  finalText='';transcriptEl.textContent='...';sendBtn.disabled=true;
+});
+
+window.clearAll=()=>{finalText='';transcriptEl.textContent='...';sendBtn.disabled=true;logEl.innerHTML='<div class="log-entry info">آماده</div>'};
+</script>
+</body>
+</html>
