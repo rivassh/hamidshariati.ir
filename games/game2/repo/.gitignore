@@ -1,6 +1,0 @@
-# Symlinks and artifacts (stored on server under ../builds and ../android)
-../web
-../builds/*
-!../builds/.gitkeep
-../android/*.apk
-*.meta.json
