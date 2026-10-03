@@ -28,3 +28,4 @@ vendor/
 .mimcode
 games/
 mimocode/
+.mim*
